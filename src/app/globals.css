@@ -10,8 +10,8 @@
   --accent: #2e31ba;
   --accent-deep: #070cb9;
   --heading: #32404f;
-  --muted: rgba(50, 64, 79, 0.58);
-  --tag: #7c7fda;
+  --muted: rgba(50, 64, 79, 0.71); /* Figma 0.58 darkened to meet WCAG AA (4.5:1) */
+  --tag: #6c6ebe; /* Figma #7c7fda darkened to meet WCAG AA (4.5:1) */
   --footer-highlight: #cecfff;
   --footer-text: rgba(255, 255, 255, 0.9);
 }
@@ -51,6 +51,7 @@
   --text-footer-title--line-height: 41px;
   --text-footer-title--letter-spacing: -1.44px;
   --text-title: 20px;
+  --text-title--line-height: 26px; /* Figma 25.5; "normal" renders 30px in Source Serif 4 */
   --text-title--letter-spacing: -0.34px;
   --text-subline: 20px;
   --text-subline--line-height: 23px;
@@ -85,6 +86,9 @@
   --spacing-hero-line-gap: 10px; /* extra space between headline lines */
   --spacing-hero-sub-gap: 35px; /* headline to subline */
   --spacing-hero-emblem: 2.0179em; /* panda: 121px at the 60px headline */
+  --spacing-projects-top: 72px; /* hero bottom to first project card */
+  --spacing-eyebrow-mark: 8px; /* the ✦ inside eyebrows (Figma: 10px glyph) */
+  --spacing-card-desc: 26px; /* Figma's description frame is 26px tall (19px text) */
   --spacing-hero-glow-top: -61px; /* glow SVG canvas (ellipse at y=89, 75px blur) */
 
   /* Radius */
@@ -107,8 +111,9 @@
   font-variation-settings: "opsz" 50;
 }
 
-/* Figma renders the hero subline's spaces 6px wide (half a mono cell). */
-@utility word-tight-subline {
+/* Figma renders spaces in Geist Mono Regular at about half a mono cell
+   (hero subline, card eyebrows). */
+@utility word-tight-mono {
   word-spacing: -0.3em;
 }
 
@@ -127,6 +132,29 @@ body {
   background: var(--paper);
   color: var(--heading);
   font-family: var(--font-geist-sans), system-ui, sans-serif;
+}
+
+/* Custom cursor (CustomCursor.tsx adds .custom-cursor for mouse users only).
+   Hide the native cursor except over links, buttons and inputs outside the
+   project cards, which keep their usual cursors. */
+@media (hover: hover) and (pointer: fine) {
+  html.custom-cursor,
+  html.custom-cursor * {
+    cursor: none;
+  }
+  html.custom-cursor
+    :is(a, button, input, textarea, select, label, summary, [role="button"], [contenteditable="true"]):not(
+      [data-cursor="case-study"],
+      [data-cursor="case-study"] *
+    ),
+  html.custom-cursor
+    :is(a, button, input, textarea, select, label, summary, [role="button"], [contenteditable="true"]):not(
+      [data-cursor="case-study"],
+      [data-cursor="case-study"] *
+    )
+    * {
+    cursor: revert;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

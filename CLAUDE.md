@@ -33,8 +33,8 @@
 | `accent` | `#2e31ba` | "threads" accent |
 | `accent-deep` | `#070cb9` | hero subline |
 | `heading` | `#32404f` | project titles |
-| `muted` | `rgba(50,64,79,0.58)` | nav, eyebrows, descriptions |
-| `tag` | `#7c7fda` | tag border and text |
+| `muted` | `rgba(50,64,79,0.71)` | nav, eyebrows, descriptions (Figma 0.58, darkened for AA) |
+| `tag` | `#6c6ebe` | tag border and text (Figma #7c7fda, darkened for AA) |
 | `footer-highlight` | `#cecfff` | footer "SAY HI!!" |
 | `footer-text` | `rgba(255,255,255,0.9)` | footer links |
 
@@ -53,12 +53,12 @@ The footer background is an image, not a color.
 |---|---|---|
 | `text-hero` | 60 / 70 / −2.4px | hero headline |
 | `text-footer-title` | 36 / 41 / −1.44px | footer headline |
-| `text-title` | 20 / normal / −0.34px | project titles |
+| `text-title` | 20 / 26 / −0.34px | project titles |
 | `text-subline` | 20 / 23 | hero subline |
 | `text-body` | 16 / 19 | descriptions |
 | `text-nav` | 15 / 23 | nav links |
 | `text-eyebrow` | 13 / 23 | eyebrows (the ✦ is 10px) |
-| `text-tag` | 12 / 13 | tags |
+| `text-tag` | 12 / 13 | tags (`text-tag` resolves to the tag *color*; set the size with `text-(length:--text-tag)`) |
 
 ### Spacing and layout
 | Token | Value | Use |
@@ -104,6 +104,7 @@ Tags have a 6px radius (`rounded-tag`) and a 1px `tag` border. Thumbnails have s
     highlights: ["2.44%", "1.7M+ daily active users"], // phrases bolded in the description
     tags: ["Internship", "AI Prototyping", "Motion Design"],
     thumbnail: "./thumbnail.png",
+    video: "/videos/story-beats.mp4", // optional: hover preview in public/videos/
     order: 1,
   }
 

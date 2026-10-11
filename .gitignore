@@ -42,3 +42,6 @@ next-env.d.ts
 
 # full-resolution design sources (too large for git; derived assets live in public/)
 /design-sources/
+
+# original design exports (posters, videos, cursor art); optimized copies live in public/ and content/
+/design-assets/

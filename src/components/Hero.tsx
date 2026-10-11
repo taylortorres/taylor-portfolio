@@ -71,7 +71,7 @@ export default function Hero() {
           </span>
           <span className="block lg:mt-hero-line-gap">tie people, ideas, and systems together.</span>
         </h1>
-        <p className="font-mono text-subline-sm text-accent-deep uppercase text-balance word-tight-subline sm:text-subline">
+        <p className="font-mono text-subline-sm text-accent-deep uppercase text-balance word-tight-mono sm:text-subline">
           <span aria-hidden="true">⌯⌲ </span>
           currently @ <span className="font-medium whitespace-nowrap">stanford d.school</span>
           <span aria-hidden="true" className="whitespace-pre">{"  ⊹ ࣪ ˖  "}</span>
