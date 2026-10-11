@@ -35,6 +35,26 @@ const stamps: Piece[] = [
   { src: "/footer/stamp-hike.svg", w: 153, h: 152, left: 76.424, top: 15.618, width: 15.803, height: 27.427 },
 ];
 
+// Cursor zones (invisible): cream surfaces get the purple dot ("dark"), the ink
+// pad's blue center gets the white circle ("light"). Everything else in the
+// footer inherits the footer's "light". Sizes are each piece's solid body,
+// measured from the artwork; same coordinate systems as above.
+type Zone = Omit<Piece, "src" | "w" | "h"> & { tone: "light" | "dark" };
+const frameZones: Zone[] = [
+  { tone: "dark", left: 7.785, top: 11.871, width: 84.43, height: 144.478, rotate: -4.84 }, // paper sheet (inside its transparent margin)
+  { tone: "dark", left: 15.734, top: 7.53, width: 15.339, height: 24.358, rotate: -27.79 }, // music stamp
+];
+const stampZones: Zone[] = [
+  { tone: "dark", left: 76.174, top: 50.452, width: 21.365, height: 37.505, rotate: -9.96 }, // ink pad rim
+  { tone: "light", left: 79.286, top: 55.127, width: 15.284, height: 26.022, rotate: -9.96 }, // ink pad center
+  { tone: "dark", left: 3.134, top: 42.127, width: 12.461, height: 22.369, rotate: -22.06 }, // laptop stamp
+  { tone: "dark", left: 79.012, top: 16.989, width: 12.151, height: 21.067 }, // hike stamp
+];
+
+function CursorZones({ zones }: { zones: Zone[] }) {
+  return zones.map(({ tone, ...box }, i) => <div key={i} data-cursor={tone} className="absolute" style={place(box)} />);
+}
+
 const place = ({ left, top, width, height, rotate }: Omit<Piece, "src" | "w" | "h">) => ({
   left: `${left}%`,
   top: `${top}%`,
@@ -79,7 +99,7 @@ function Contact({ label, href }: ContactLink) {
 
 export default function Footer() {
   return (
-    <footer className="relative mt-section-gap overflow-hidden text-paper">
+    <footer data-cursor="light" className="relative mt-section-gap overflow-hidden text-paper">
       <Image src="/footer/background.jpg" alt="" fill sizes="100vw" className="object-cover" />
 
       <div className="relative mx-auto max-w-footer-max lg:h-footer-h">
@@ -123,10 +143,12 @@ export default function Footer() {
                 className="absolute top-[-3.55%] left-[-16.93%] h-[122.34%] w-[122.4%] max-w-none"
               />
             </div>
+            <CursorZones zones={frameZones} />
           </div>
           {stamps.map((piece) => (
             <ArtImage key={piece.src} piece={piece} sizes="(min-width: 1280px) 255px, 25vw" />
           ))}
+          <CursorZones zones={stampZones} />
         </div>
       </div>
     </footer>
