@@ -1,10 +1,13 @@
+import Hero from "@/components/Hero";
 import Nav from "@/components/Nav";
 
 export default function Home() {
   return (
     <>
       <Nav />
-      <main className="flex-1" />
+      <main className="flex-1">
+        <Hero />
+      </main>
     </>
   );
 }

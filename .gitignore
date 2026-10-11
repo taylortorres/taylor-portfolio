@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# full-resolution design sources (too large for git; derived assets live in public/)
+/design-sources/

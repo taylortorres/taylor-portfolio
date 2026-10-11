@@ -40,6 +40,13 @@
   --text-hero: 60px;
   --text-hero--line-height: 70px;
   --text-hero--letter-spacing: -2.4px;
+  /* Hero headline on smaller screens (same 7:6 leading, −0.04em tracking) */
+  --text-hero-md: 48px;
+  --text-hero-md--line-height: 56px;
+  --text-hero-md--letter-spacing: -1.92px;
+  --text-hero-sm: 36px;
+  --text-hero-sm--line-height: 42px;
+  --text-hero-sm--letter-spacing: -1.44px;
   --text-footer-title: 36px;
   --text-footer-title--line-height: 41px;
   --text-footer-title--letter-spacing: -1.44px;
@@ -47,6 +54,8 @@
   --text-title--letter-spacing: -0.34px;
   --text-subline: 20px;
   --text-subline--line-height: 23px;
+  --text-subline-sm: 14px;
+  --text-subline-sm--line-height: 20px;
   --text-body: 16px;
   --text-body--line-height: 19px;
   --text-nav: 15px;
@@ -72,6 +81,11 @@
   --spacing-nav-start: 31px;
   --spacing-nav-end: 44px;
   --spacing-nav-link-gap: 32px;
+  --spacing-hero-top: 189px; /* hero top to headline line box (desktop) */
+  --spacing-hero-line-gap: 10px; /* extra space between headline lines */
+  --spacing-hero-sub-gap: 35px; /* headline to subline */
+  --spacing-hero-emblem: 2.0179em; /* panda: 121px at the 60px headline */
+  --spacing-hero-glow-top: -61px; /* glow SVG canvas (ellipse at y=89, 75px blur) */
 
   /* Radius */
   --radius-tag: 6px;
@@ -79,6 +93,23 @@
   /* Signature handwriting reveal. Each stroke sets its own delay and
      duration (see Signature.tsx), then holds the final state. */
   --animate-write-stroke: write-stroke 1s linear both;
+}
+
+/* Hero fade (Figma "Grid Fade Mask"): alpha 1 at 121px from the top, center,
+   fading to 0 over a 1756 × 759px ellipse. Applied to the grid, glow and
+   paper texture only, so the headline and subline keep full contrast. */
+@utility mask-hero-fade {
+  mask-image: radial-gradient(1756px 759px at 50% 121px, #000, transparent);
+}
+
+/* Newsreader optical size used by the Figma hero headline. */
+@utility opsz-hero {
+  font-variation-settings: "opsz" 50;
+}
+
+/* Figma renders the hero subline's spaces 6px wide (half a mono cell). */
+@utility word-tight-subline {
+  word-spacing: -0.3em;
 }
 
 /* Masks use pathLength="1" and stroke-dasharray="1 2": a dashoffset of 0 is
