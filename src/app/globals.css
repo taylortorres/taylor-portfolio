@@ -69,9 +69,27 @@
   --spacing-grid-cell: 46px;
   --spacing-tag-x: 7px;
   --spacing-tag-y: 5px;
+  --spacing-nav-start: 31px;
+  --spacing-nav-end: 44px;
+  --spacing-nav-link-gap: 32px;
 
   /* Radius */
   --radius-tag: 6px;
+
+  /* Signature handwriting reveal. Each stroke sets its own delay and
+     duration (see Signature.tsx), then holds the final state. */
+  --animate-write-stroke: write-stroke 1s linear both;
+}
+
+/* Masks use pathLength="1" and stroke-dasharray="1 2": a dashoffset of 0 is
+   fully drawn and 1.05 is fully hidden (past 1 so no round cap shows).
+   Easing matches every Figma stroke: ease-in to 12% over the first 18% of the
+   time, linear to 88%, then ease-out over the last 18%. */
+@keyframes write-stroke {
+  0% { stroke-dashoffset: 1.05; animation-timing-function: cubic-bezier(0.42, 0, 1, 1); }
+  18% { stroke-dashoffset: 0.88; animation-timing-function: linear; }
+  82% { stroke-dashoffset: 0.12; animation-timing-function: cubic-bezier(0, 0, 0.58, 1); }
+  100% { stroke-dashoffset: 0; }
 }
 
 body {
