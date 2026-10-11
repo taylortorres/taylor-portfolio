@@ -1,26 +1,92 @@
 @import "tailwindcss";
 
+/* Design tokens from Figma: Taylor's Portfolio Website, node 2606:48270.
+   Fractional Figma values are rounded to the nearest whole pixel. */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --paper: #ffffff;
+  --grid-line: #ececec;
+  --hairline: #ebeced;
+  --ink: #291e1e;
+  --accent: #2e31ba;
+  --accent-deep: #070cb9;
+  --heading: #32404f;
+  --muted: rgba(50, 64, 79, 0.58);
+  --tag: #7c7fda;
+  --footer-highlight: #cecfff;
+  --footer-text: rgba(255, 255, 255, 0.9);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  /* Colors → bg-*, text-*, border-* */
+  --color-paper: var(--paper);
+  --color-grid-line: var(--grid-line);
+  --color-hairline: var(--hairline);
+  --color-ink: var(--ink);
+  --color-accent: var(--accent);
+  --color-accent-deep: var(--accent-deep);
+  --color-heading: var(--heading);
+  --color-muted: var(--muted);
+  --color-tag: var(--tag);
+  --color-footer-highlight: var(--footer-highlight);
+  --color-footer-text: var(--footer-text);
+
+  /* Fonts (variables set by next/font in layout.tsx) */
+  --font-display: var(--font-newsreader);
+  --font-serif: var(--font-source-serif);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /* Type scale → text-* */
+  --text-hero: 60px;
+  --text-hero--line-height: 70px;
+  --text-hero--letter-spacing: -2.4px;
+  --text-footer-title: 36px;
+  --text-footer-title--line-height: 41px;
+  --text-footer-title--letter-spacing: -1.44px;
+  --text-title: 20px;
+  --text-title--letter-spacing: -0.34px;
+  --text-subline: 20px;
+  --text-subline--line-height: 23px;
+  --text-body: 16px;
+  --text-body--line-height: 19px;
+  --text-nav: 15px;
+  --text-nav--line-height: 23px;
+  --text-eyebrow: 13px;
+  --text-eyebrow--line-height: 23px;
+  --text-tag: 12px;
+  --text-tag--line-height: 13px;
+
+  /* Spacing → p-*, gap-*, h-*, max-w-* */
+  --spacing-nav-h: 64px;
+  --spacing-hero-h: 445px;
+  --spacing-content-max: 1275px;
+  --spacing-gutter: 14px;
+  --spacing-stack: 24px;
+  --spacing-card-gap: 9px;
+  --spacing-meta-gap: 4px;
+  --spacing-tag-gap: 8px;
+  --spacing-section-gap: 95px;
+  --spacing-grid-cell: 46px;
+  --spacing-tag-x: 7px;
+  --spacing-tag-y: 5px;
+
+  /* Radius */
+  --radius-tag: 6px;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--paper);
+  color: var(--heading);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
