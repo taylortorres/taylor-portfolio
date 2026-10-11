@@ -35,7 +35,7 @@
 | `heading` | `#32404f` | project titles |
 | `muted` | `rgba(50,64,79,0.71)` | nav, eyebrows, descriptions (Figma 0.58, darkened for AA) |
 | `tag` | `#6c6ebe` | tag border and text (Figma #7c7fda, darkened for AA) |
-| `footer-highlight` | `#cecfff` | footer "SAY HI!!" |
+| `footer-highlight` | `#dadbff` | footer "SAY HI!!" (Figma #cecfff, lightened for AA on the grain) |
 | `footer-text` | `rgba(255,255,255,0.9)` | footer links |
 
 The footer background is an image, not a color.

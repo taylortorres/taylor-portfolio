@@ -12,7 +12,7 @@
   --heading: #32404f;
   --muted: rgba(50, 64, 79, 0.71); /* Figma 0.58 darkened to meet WCAG AA (4.5:1) */
   --tag: #6c6ebe; /* Figma #7c7fda darkened to meet WCAG AA (4.5:1) */
-  --footer-highlight: #cecfff;
+  --footer-highlight: #dadbff; /* Figma #cecfff lightened to meet WCAG AA on the grain */
   --footer-text: rgba(255, 255, 255, 0.9);
 }
 
@@ -50,6 +50,15 @@
   --text-footer-title: 36px;
   --text-footer-title--line-height: 41px;
   --text-footer-title--letter-spacing: -1.44px;
+  --text-footer-meta: 16px; /* copyright */
+  --text-footer-meta--line-height: 41px;
+  --text-footer-meta--letter-spacing: -0.64px;
+  --text-footer-label: 20px; /* "SAY HI!!" */
+  --text-footer-label--line-height: 41px;
+  --text-footer-label--letter-spacing: -0.8px;
+  --text-footer-link: 18px;
+  --text-footer-link--line-height: 20px;
+  --text-footer-link--letter-spacing: -0.72px;
   --text-title: 20px;
   --text-title--line-height: 26px; /* Figma 25.5; "normal" renders 30px in Source Serif 4 */
   --text-title--letter-spacing: -0.34px;
@@ -87,6 +96,16 @@
   --spacing-hero-sub-gap: 35px; /* headline to subline */
   --spacing-hero-emblem: 2.0179em; /* panda: 121px at the 60px headline */
   --spacing-projects-top: 72px; /* hero bottom to first project card */
+  --spacing-projects-bottom: 53px; /* longest column's last card to section end */
+  --spacing-footer-h: 580px;
+  --spacing-footer-max: 1440px;
+  --spacing-footer-x: 55px; /* text column left edge */
+  --spacing-footer-top: 77px; /* footer top to headline */
+  --spacing-footer-contact: 393px; /* footer top to "SAY HI!!" */
+  --spacing-footer-row: 20px; /* contact link row height */
+  --spacing-footer-link-gap: 10px;
+  --spacing-footer-art-x: 309px; /* artwork region (incl. stamp shadows): x 309–1276, y 27–580 */
+  --spacing-footer-art-w: 967px;
   --spacing-eyebrow-mark: 8px; /* the ✦ inside eyebrows (Figma: 10px glyph) */
   --spacing-card-desc: 26px; /* Figma's description frame is 26px tall (19px text) */
   --spacing-hero-glow-top: -61px; /* glow SVG canvas (ellipse at y=89, 75px blur) */
