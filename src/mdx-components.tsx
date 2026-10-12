@@ -1,5 +1,6 @@
 import type { MDXComponents } from "mdx/types";
 import BeforeAfter from "@/components/BeforeAfter";
+import BodyLabel from "@/components/BodyLabel";
 import CaptionedPhotos from "@/components/CaptionedPhotos";
 import CaseImage from "@/components/CaseImage";
 import Callout from "@/components/Callout";
@@ -17,11 +18,13 @@ import MotionDemos from "@/components/MotionDemos";
 import MotionOptions from "@/components/MotionOptions";
 import PhasePlan from "@/components/PhasePlan";
 import PhonePair from "@/components/PhonePair";
+import PostCollage from "@/components/PostCollage";
 import PostPanel from "@/components/PostPanel";
 import PrincipleCards from "@/components/PrincipleCards";
 import QuitRateChart from "@/components/QuitRateChart";
 import Section from "@/components/Section";
 import SectionPart from "@/components/SectionPart";
+import SiteReviews from "@/components/SiteReviews";
 import SolutionCompare from "@/components/SolutionCompare";
 import SyncedVideos from "@/components/SyncedVideos";
 
@@ -30,6 +33,7 @@ const components: MDXComponents = {
   Section,
   SectionPart,
   BeforeAfter,
+  BodyLabel,
   CaptionedPhotos,
   CaseImage,
   CaseVideo,
@@ -47,9 +51,11 @@ const components: MDXComponents = {
   MotionOptions,
   PhasePlan,
   PhonePair,
+  PostCollage,
   PostPanel,
   PrincipleCards,
   QuitRateChart,
+  SiteReviews,
   SolutionCompare,
   SyncedVideos,
 };

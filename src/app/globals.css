@@ -56,6 +56,8 @@
   --callout: #2e8550; /* "How might we" block (Figma #3b9d5c darkened so the 14px label meets WCAG AA) */
   /* Treeats Challenge and Solution (Figma 2691:70778, 2691:70802, 2691:70836, 2691:70880) */
   --principle: #5758b9; /* CLARITY / ENGAGEMENT / INCENTIVE cards (Figma #5455b7 on the first, #5758b9 on the others: unified) */
+  /* Treeats Research (Figma 2691:70928, 2691:70967) */
+  --caution-ink: #946800; /* "COULD BE IMPROVED" (Figma #e9ab10 darkened to meet WCAG AA, 4.95:1; "WORKS GREAT!" uses choice-ink) */
 }
 
 @theme inline {
@@ -94,6 +96,7 @@
   --color-figure-arrow: var(--figure-arrow);
   --color-callout: var(--callout);
   --color-principle: var(--principle);
+  --color-caution-ink: var(--caution-ink);
   --color-plan-bg: var(--plan-bg);
   --color-status-bg: var(--status-bg);
   --color-status-border: var(--status-border);
@@ -361,6 +364,14 @@
   --spacing-feature-widget-top: 100px; /* widget row's top and bottom padding */
   --spacing-feature-widget-bottom: 120px;
   --spacing-feature-text-gap: 20px; /* feature title to description (Figma 20, 27 on the last two: unified) */
+  --spacing-case-tight: 30px; /* Treeats Research: text right after the Fizz collage and after the site rows */
+  --spacing-site-gap: 32px; /* site screenshot panel to its WORKS GREAT! / COULD BE IMPROVED notes (Figma 31 / 36: unified) */
+  --spacing-site-head: 12px; /* site title to its panel */
+  --spacing-site-rows: 37px; /* between the R&DE and Stanfood rows */
+  --spacing-site-notes: 28px; /* WORKS GREAT! group to COULD BE IMPROVED group */
+  --spacing-body-label-top: 32px; /* paragraph to an in-body mono label ("SO, I INTERVIEWED 6 STUDENTS") */
+  --spacing-body-label-gap: 12px; /* that label to its list */
+  --spacing-direction-top: 10px; /* extra space above the Design Direction cards (Figma 32 below the headline) */
 
   /* Radius */
   --radius-tag: 6px;
@@ -377,11 +388,13 @@
   --radius-effort: 4px; /* effort bars (Figma 3.6) */
   --radius-phone: 18px; /* phone frame around a demo video */
   --radius-feature: 15px; /* Treeats feature phone recordings */
+  --radius-screenshot: 6px; /* Treeats Fizz posts in the Research collage, site screenshots (Figma 6–6.6) */
 
   /* Shadows */
   --shadow-photo: 0 4px 8px var(--photo-shadow); /* intern photos */
   --shadow-post: 0 6px 13px rgb(0 0 0 / 0.06), 0 18px 23px rgb(0 0 0 / 0.09), 0 9px 32px rgb(0 0 0 / 0.05), 0 94px 37px rgb(0 0 0 / 0.01); /* Treeats Fizz post (Figma 12.75 / 23.25 / 31.5 / 37.1 blurs) */
   --shadow-feature: 0 5px 40px rgb(0 0 0 / 0.25); /* Treeats feature phones */
+  --shadow-site: 0 2px 9px rgb(0 0 0 / 0.08); /* Treeats Research site screenshots (Figma 0 2.2 8.4–8.7) */
 
   /* Signature handwriting reveal. Each stroke sets its own delay and
      duration (see Signature.tsx), then holds the final state. */

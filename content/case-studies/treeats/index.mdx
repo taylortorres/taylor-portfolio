@@ -28,6 +28,20 @@ import stanfoodUpright from "./solution-stanfood-upright.png"
 import treeatsCommunity from "./solution-treeats-community.png"
 import leaderboard from "./feature-leaderboard.png"
 import widget from "./treeats-widget.png"
+import fizz01 from "./research-fizz-01.png"
+import fizz02 from "./research-fizz-02.png"
+import fizz04 from "./research-fizz-04.png"
+import fizz05 from "./research-fizz-05.png"
+import fizz06 from "./research-fizz-06.jpg"
+import fizz07 from "./research-fizz-07.png"
+import fizz08 from "./research-fizz-08.png"
+import fizz09 from "./research-fizz-09.jpg"
+import fizz10 from "./research-fizz-10.jpg"
+import fizz11 from "./research-fizz-11.png"
+import fizz12 from "./research-fizz-12.png"
+import fizz13 from "./research-fizz-13.png"
+import researchRde from "./research-rde-site.png"
+import researchStanfood from "./research-stanfood.png"
 
 <Impact
   stats={[
@@ -133,9 +147,79 @@ Treeats is a campus dining app where students share real-time busyness, browse m
 
 </Section>
 
-<Section id="research" title="Research" />
+<Section id="research" title="Research" label="The Research" headline="Dining info was hard to find, hard to trust, or both">
 
-<Section id="digging-deeper" title="Digging Deeper" />
+I analyzed posts from **Fizz**, a social media app **used by 95% of Stanford students**, where food is a trending topic. Many students voiced **frustrations over the lack of transparency** in dining hall information.
+
+<PostCollage
+  posts={[
+    { src: fizz01, x: 39.29, y: 16.24, w: 26.99, rotate: 3, alt: "Fizz post, 123 upvotes: “i hate having a meal plan and not knowing the nutrition info. i genuinely am panicking lmao what a great start to my college years”" },
+    { src: fizz02, x: 13.23, y: 24.38, w: 21.89, rotate: -6, alt: "Fizz post, 38 upvotes: “Is there some way check what specials each dining hall has before. Cs people should create an app or some of system that shows us all the specials each week btw,” with the poster’s reply: “Also with line estimates that update every 10 seconds or something”" },
+    { src: fizz04, x: 42.63, y: 47.91, w: 20.3, rotate: -5, alt: "Fizz post, 179 upvotes: “ASSU pls can you advocate for this, especially to go boxes and nutrition info/variety would be so helpful,” quoting a list of things students wish Stanford dining had: to-go boxes, soda, nutrition info online, more variety in meal plans" },
+    { src: fizz05, x: 17.33, y: 58.92, w: 28.66, alt: "Fizz post, 58 upvotes: “One day, I wanna live in a world where I can go to any dining hall and not sigh”" },
+    { src: fizz06, x: 86.73, y: 27.22, w: 19.35, rotate: 6, alt: "Fizz post, 870 upvotes: “The world if R&DE consistently publicized dining hall specials,” over a picture of a gleaming futuristic city" },
+    { src: fizz07, x: 64.26, y: 43.08, w: 19.67, alt: "Fizz post, 7 upvotes: “ricker dining SLAYING tonight (thanksgiving specials + fresh warm monkey bread)”" },
+    { src: fizz08, x: 13.89, y: 79.75, w: 23.03, rotate: -4, alt: "Fizz post, 14 upvotes: “bring salmon back to the dining halls,” with a clapping emoji between every word" },
+    { src: fizz09, x: 54.27, y: 70.31, w: 14.7, alt: "Fizz post, 953 upvotes: “My body trying to gain protein from the nutritious and healthy CHICK’N I HAD FOR THE FIFTH. TIME. THIS. WEEK.” over a Sisyphus-pushing-a-boulder meme" },
+    { src: fizz10, x: 68.85, y: 73.64, w: 15.12, rotate: 6, alt: "Fizz meme post, 1.1k upvotes: “I don’t know how many more plates of Huli Huli Chick’n I can take,” over a picture of a bedraggled fuzzy yellow bird" },
+    { src: fizz11, x: 40.05, y: 82.24, w: 25.01, alt: "Fizz post, 1.1k upvotes: “Rise up against the 5 trays of “Huli Huli Chick’n””" },
+    { src: fizz12, x: 88.11, y: 70.48, w: 17.87, alt: "Three Fizz posts: “Please when are the days for dining hall specials and what are the specials” (9 upvotes), “i did NOT just stand in the wilbur specials line for 20min just to receive 2 pieces of meat” (344) and “Why did evgr get rid of specials” (69)" },
+    { src: fizz13, x: 64.73, y: 22.09, w: 22.21, rotate: -1, alt: "Fizz post, 2.0k upvotes: “Someone make an app where we can see exactly what each dining hall is serving and we can also leave reviews of each meal”" },
+  ]}
+/>
+
+These posts revealed a clear student pain point: dining feels **disorganized and inefficient.**
+
+<SiteReviews
+  sites={[
+    {
+      title: "Official R&DE site",
+      screen: { src: researchRde, alt: "The official R&DE dining hall menu for Saturday lunch at Arrillaga: a plain text list of dishes with ingredients, allergens and small dietary icons, and no photos" },
+      works: ["A week of menu items for each dining hall", "Filters for allergens"],
+      improve: ["No photos, and no labels for specials", "Outdated design and inaccurate menu listings", "No real-time busyness"],
+    },
+    {
+      title: "Stanfood (a student-run initiative)",
+      screen: { src: researchStanfood, alt: "Stanfood’s live dining hall menu in dark mode: a date, location and meal picker, allergen filters, and dish cards with a student photo or a placeholder, star ratings and zero reviews" },
+      works: ["Photos for some items (taken by students!)", "Allergen filters and student ratings", "A modern layout and a social tab"],
+      improve: ["Missing photos, and specials aren’t centralized", "No real-time busyness or wait-time data", "Few reviews and little community engagement"],
+    },
+  ]}
+/>
+
+Between them, one had menus students couldn't trust and the other had no live info. Neither could say how busy a dining hall was.
+
+</Section>
+
+<Section id="digging-deeper" title="Digging Deeper" headline="Why wasn’t anyone contributing? ( ರ_•́)">
+
+Stanfood was the closest attempt at delivering student-driven dining info with student-taken photos, ratings, and a social tab. But **reviews were sparse, and the social tab was mostly its founder posting on his own (-‿-")**.
+
+That made me wonder: If students cared this much about dining info, ***why weren’t they pitching in?***
+
+<BodyLabel>so, **i interviewed 6 students**. this is what i heard.</BodyLabel>
+
+- Hard to tell what's good on any given day
+- Always in a rush, just want to eat in peace
+- Like seeing where friends are
+
+<Callout label="Student quote">“They had sushi at Wilbur last week AND halo halo, which is my favorite, and I had no idea. I saw people post about it afterwards.”</Callout>
+
+<Insight label="Key insight">While students value a platform that combines essential dining information with a sense of community, their busy schedules mean ***they’re unlikely to engage without clear incentives.***</Insight>
+
+<SectionPart label="Design direction" headline="Treeats had to be easy to use and worth the effort">
+
+<Lessons
+  variant="direction"
+  lessons={[
+    { title: "Make contributing worth a busy student’s time", text: "Students are too busy to write reviews, so contributing needed to take seconds and give something back." },
+    { title: "Design for the phone, not the laptop", text: "Both existing sites were built for the web, so the solution needed to be mobile-first and glanceable." },
+  ]}
+/>
+
+</SectionPart>
+
+</Section>
 
 <Section id="ideation" title="Ideation" />
 
