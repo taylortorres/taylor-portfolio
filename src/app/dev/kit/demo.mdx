@@ -1,0 +1,70 @@
+import propsShot from "../../../../content/case-studies/props/thumbnail.jpg"
+import treeats from "../../../../content/case-studies/treeats/thumbnail.jpg"
+import duorooms from "../../../../content/case-studies/duorooms/thumbnail.jpg"
+
+<Section id="overview" title="Overview">
+**Try:** scroll and watch the sidebar follow along (Overview is active at the very top). Click a section to smooth-scroll there. Tab through the sidebar with the keyboard. After about one screen, BACK TO TOP fades in at the bottom of the sidebar (bottom-right on phones).
+
+**Page transition:** reload this page, or go [home](/) and come back with the browser or a link. The new page sharpens from a soft blur as it fades in. On client navigations the old page also fades out.
+
+Phones and tablets (below 1024px) get a sticky bar instead of the sidebar. Tap the current section to open the list.
+</Section>
+
+<Section id="context" title="Context">
+**Zoom viewer (image):** click or tap the image. It opens centered over a blurred scrim. Close it by clicking outside, pressing Escape or using the × button. Focus returns to the image and the page stays where it was. The full-resolution file only downloads when the viewer opens (check the Network tab).
+
+<CaseImage src={propsShot} alt="Props project thumbnail" zoomable />
+</Section>
+
+<Section id="problem" title="Problem">
+**Zoom viewer (video):** the inline video loops while on screen. Click it to play it large with controls. The inline copy pauses while the viewer is open.
+
+<CaseVideo src="/videos/treeats.mp4" poster="/videos/posters/treeats.jpg" label="Treeats widget walkthrough" width={1236} height={1072} zoomable />
+</Section>
+
+<Section id="early-explorations" title="Early Explorations">
+**Not zoomable:** the same image without the `zoomable` prop. Normal cursor, no button.
+
+<CaseImage src={treeats} alt="Treeats home screen" />
+</Section>
+
+<Section id="pivoting-to-motion" title="Pivoting to Motion">
+**Synced video pair:** Story Beats (10.3s) and DuoRooms (13.0s). Both start together once both have loaded. Story Beats ends first and holds its last frame. When DuoRooms ends, both rewind and play again together. Scroll this off screen and they pause, then resume when it comes back. With reduced motion you see the posters. The button in the corner pauses both.
+
+<VideoPair
+  left={{ src: "/videos/story-beats.mp4", poster: "/videos/posters/story-beats.jpg", label: "Story Beats drag interaction", width: 1600, height: 1882 }}
+  right={{ src: "/videos/duorooms.mp4", poster: "/videos/posters/duorooms.jpg", label: "DuoRooms room tour", width: 1234, height: 1286 }}
+/>
+</Section>
+
+<Section id="design-crit" title="Design Crit">
+**Cursor with a caption:** with a mouse, move over the photo. The purple dot morphs into a pill with the caption. On a touch screen the caption sits on the photo as a small label. Screen readers get it as the figure caption either way.
+
+<CursorCaption caption="Crit with the Stories team">
+  <CaseImage src={duorooms} alt="DuoRooms project thumbnail" />
+</CursorCaption>
+</Section>
+
+<Section id="design-decisions" title="Design Decisions">
+Filler so the scroll-spy has room. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+
+Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+</Section>
+
+<Section id="converging" title="Converging">
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.
+
+Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
+</Section>
+
+<Section id="the-plan" title="The Plan">
+Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.
+</Section>
+
+<Section id="shipped-up-next" title="Shipped & Up Next">
+Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur.
+</Section>
+
+<Section id="reflections" title="Reflections">
+A short last section. At the very bottom of the page it becomes active even if its heading never reaches the top.
+</Section>

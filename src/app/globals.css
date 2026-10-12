@@ -14,6 +14,12 @@
   --tag: #6c6ebe; /* Figma #7c7fda darkened to meet WCAG AA (4.5:1) */
   --footer-highlight: #dadbff; /* Figma #cecfff lightened to meet WCAG AA on the grain */
   --footer-text: rgba(255, 255, 255, 0.9);
+  /* Case study sidebar (Figma node 2682:68508) */
+  --chip: #e7e7e7; /* HOME and BACK TO TOP fill */
+  --chip-text: #3d3d3d;
+  --section-active: #5354b7;
+  --section-idle: rgba(88, 88, 88, 0.84); /* Figma 0.64 darkened to meet WCAG AA (4.5:1) */
+  --scrim: rgba(0, 0, 0, 0.5); /* zoom viewer backdrop */
 }
 
 @theme inline {
@@ -29,6 +35,11 @@
   --color-tag: var(--tag);
   --color-footer-highlight: var(--footer-highlight);
   --color-footer-text: var(--footer-text);
+  --color-chip: var(--chip);
+  --color-chip-text: var(--chip-text);
+  --color-section-active: var(--section-active);
+  --color-section-idle: var(--section-idle);
+  --color-scrim: var(--scrim);
 
   /* Fonts (variables set by next/font in layout.tsx) */
   --font-display: var(--font-newsreader);
@@ -74,6 +85,10 @@
   --text-eyebrow--line-height: 23px;
   --text-tag: 12px;
   --text-tag--line-height: 13px;
+  --text-sidebar: 16px; /* case study section links */
+  --text-sidebar--line-height: 24px;
+  --text-chip-label: 14px; /* HOME, BACK TO TOP (not text-chip: that is the chip color) */
+  --text-chip-label--line-height: 20px;
 
   /* Spacing → p-*, gap-*, h-*, max-w-* */
   --spacing-nav-h: 64px;
@@ -107,15 +122,70 @@
   --spacing-footer-art-x: 309px; /* artwork region (incl. stamp shadows): x 309–1276, y 27–580 */
   --spacing-footer-art-w: 967px;
   --spacing-eyebrow-mark: 8px; /* the ✦ inside eyebrows (Figma: 10px glyph) */
+  --spacing-cursor-halo: 40px; /* soft halo behind the cursor dot over links: 2.2× the 1.15× dot (18px) */
   --spacing-card-desc: 26px; /* Figma's description frame is 26px tall (19px text) */
   --spacing-hero-glow-top: -61px; /* glow SVG canvas (ellipse at y=89, 75px blur) */
+  --spacing-sidebar-w: 306px; /* case study sidebar column */
+  --spacing-sidebar-pad: 40px;
+  --spacing-sidebar-list-w: 219px;
+  --spacing-section-bar: 56px; /* phone/tablet sticky section bar */
+  --spacing-case-content-max: 720px; /* PROVISIONAL: case study text column, until the content frame is in Figma */
+  --spacing-lightbox-pad: 40px; /* zoom viewer space around the media */
+  --spacing-lightbox-pad-sm: 16px; /* same, below sm */
 
   /* Radius */
   --radius-tag: 6px;
+  --radius-chip: 4px; /* HOME, BACK TO TOP */
+  --radius-section: 8px; /* sidebar section links */
 
   /* Signature handwriting reveal. Each stroke sets its own delay and
      duration (see Signature.tsx), then holds the final state. */
   --animate-write-stroke: write-stroke 1s linear both;
+
+  /* Page enter: blur-to-sharp and fade on every page load and navigation
+     (template.tsx). Fills backwards only, so no filter is left behind. */
+  --animate-page-enter: page-enter 450ms cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+
+/* Zoom viewer (Zoomable.tsx): space around the media, used for padding and
+   for fitting the media to the screen height. */
+.lightbox {
+  --lightbox-pad: --theme(--spacing-lightbox-pad-sm inline);
+}
+@media (width >= 40rem) {
+  .lightbox {
+    --lightbox-pad: --theme(--spacing-lightbox-pad inline);
+  }
+}
+
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    filter: blur(6px);
+  }
+}
+
+/* Page exit on client navigations: React's <ViewTransition exit="page-exit">
+   in template.tsx snapshots the old page; it softens and fades out quickly
+   while the new page runs page-enter underneath. */
+@keyframes page-exit {
+  to {
+    opacity: 0;
+    filter: blur(4px);
+  }
+}
+::view-transition-old(.page-exit) {
+  animation: page-exit 150ms ease-in both;
+}
+::view-transition {
+  pointer-events: none; /* clicks during the 150ms go to the live page */
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
 }
 
 /* Hero fade (Figma "Grid Fade Mask"): alpha 1 at 121px from the top, center,
@@ -123,6 +193,15 @@
    paper texture only, so the headline and subline keep full contrast. */
 @utility mask-hero-fade {
   mask-image: radial-gradient(1756px 759px at 50% 121px, #000, transparent);
+}
+
+/* Cursor halo over links (CustomCursor.tsx): the dot's color at low opacity
+   in the middle, fading smoothly to transparent at the edge. No border. */
+@utility halo-accent {
+  background-image: radial-gradient(closest-side, color-mix(in srgb, var(--accent) 25%, transparent), transparent);
+}
+@utility halo-paper {
+  background-image: radial-gradient(closest-side, color-mix(in srgb, var(--paper) 30%, transparent), transparent);
 }
 
 /* Newsreader optical size used by the Figma hero headline. */
@@ -154,25 +233,29 @@ body {
 }
 
 /* Custom cursor (CustomCursor.tsx adds .custom-cursor for mouse users only).
-   Hide the native cursor except over links, buttons and inputs outside the
-   project cards, which keep their usual cursors. */
+   The dot replaces the native cursor everywhere, links and buttons included.
+   Native cursors stay only where they tell you something the dot can't:
+   the I-beam in text fields, zoom-in on zoomable media and zoom-out on the
+   zoom viewer's backdrop (a click there closes it). The dot hides there. */
 @media (hover: hover) and (pointer: fine) {
   html.custom-cursor,
   html.custom-cursor * {
     cursor: none;
   }
   html.custom-cursor
-    :is(a, button, input, textarea, select, label, summary, [role="button"], [contenteditable="true"]):not(
-      [data-cursor="case-study"],
-      [data-cursor="case-study"] *
-    ),
-  html.custom-cursor
-    :is(a, button, input, textarea, select, label, summary, [role="button"], [contenteditable="true"]):not(
-      [data-cursor="case-study"],
-      [data-cursor="case-study"] *
-    )
-    * {
-    cursor: revert;
+    :is(
+      input:not([type="button"], [type="submit"], [type="reset"], [type="checkbox"], [type="radio"], [type="range"], [type="color"], [type="file"], [type="image"]),
+      textarea,
+      [contenteditable="true"]
+    ) {
+    cursor: text;
+  }
+  html.custom-cursor [data-zoomable],
+  html.custom-cursor [data-zoomable] * {
+    cursor: zoom-in;
+  }
+  html.custom-cursor [data-scrim] {
+    cursor: zoom-out;
   }
 }
 
