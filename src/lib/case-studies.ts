@@ -14,7 +14,8 @@ import { getSections, type SectionLink } from "./sections";
 // `meta.externalTag` (a visible "Slides ↗" style tag on that card).
 //
 // `meta.hero` is optional (placeholder case studies don't have one yet); when
-// present, every field in it is required.
+// present, every field in it is required except `zoomable` (default true;
+// false keeps the hero image out of the zoom viewer, e.g. Props).
 
 const DIR = path.join(process.cwd(), "content", "case-studies");
 export const DEFAULT_CURSOR_LABEL = "view case study";
@@ -29,6 +30,7 @@ export type CaseStudyHero = {
   timeline: string[];
   team: string[];
   skills: string[];
+  zoomable: boolean;
 };
 
 export type CaseStudy = {
@@ -115,6 +117,7 @@ function validateHero(slug: string, hero: unknown) {
       fail(slug, `meta.hero.${key} must be a non-empty array of strings (one per line or tag).`);
     }
   }
+  if (h.zoomable !== undefined && typeof h.zoomable !== "boolean") fail(slug, "meta.hero.zoomable must be true or false, or left out.");
   const image = h.image as string;
   if (!image.startsWith("./") || !fs.existsSync(path.join(DIR, slug, image))) {
     fail(slug, `meta.hero.image "${image}" must be a "./" path to an image in the case study folder.`);
@@ -145,6 +148,7 @@ async function load(slug: string): Promise<CaseStudy> {
     timeline: rawHero.timeline as string[],
     team: rawHero.team as string[],
     skills: rawHero.skills as string[],
+    zoomable: rawHero.zoomable !== false,
   };
   return {
     slug,

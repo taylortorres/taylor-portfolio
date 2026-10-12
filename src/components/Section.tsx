@@ -10,6 +10,8 @@ type Props = {
   headline?: string;
   /** Sidebar item for the top of the page (hero and Impact): renders nothing here. Must be the first section. */
   top?: boolean;
+  /** Keep the label for screen readers and the sidebar jump, but don't show it (Props' Reach Out!, whose Figma has none). */
+  labelHidden?: boolean;
   children?: ReactNode;
 };
 
@@ -19,7 +21,7 @@ type Props = {
 // the sidebar jumps here, so keyboard and screen reader users land in place.
 // With `top` (Treeats' Overview) the sidebar keeps the item but the page shows
 // no label: clicking it scrolls to the top (SectionNav).
-export default function Section({ id, title, label, headline, top = false, children }: Props) {
+export default function Section({ id, title, label, headline, top = false, labelHidden = false, children }: Props) {
   if (top) return null;
   return (
     <section
@@ -32,14 +34,16 @@ export default function Section({ id, title, label, headline, top = false, child
         id={`${id}-title`}
         tabIndex={-1}
         aria-label={label ? title : undefined}
-        className="font-mono text-detail text-muted uppercase focus:outline-none"
+        className={`font-mono text-detail text-muted uppercase focus:outline-none ${labelHidden ? "sr-only" : ""}`}
       >
         {label ?? title}
       </h2>
       {headline && (
         <h3 className="mt-case-label-gap font-serif text-section-title-sm text-heading md:text-section-title">{emphasize(headline)}</h3>
       )}
-      {children && <div className={`${headline ? "mt-case-headline-gap" : "mt-case-label-gap"} ${SECTION_BODY}`}>{children}</div>}
+      {children && (
+        <div className={`${headline ? "mt-case-headline-gap" : labelHidden ? "" : "mt-case-label-gap"} ${SECTION_BODY}`}>{children}</div>
+      )}
     </section>
   );
 }

@@ -61,6 +61,10 @@
   --choice-note: #5f6873; /* gray caption on the green AFTER panel (Figma #7e8286 darkened for AA: 4.95:1 on choice-bg) */
   --fail-ink: #c33e35; /* "Failed" under the accessibility BEFORE screen (Figma value, 4.9:1 on figure-bg) */
   --link: #5658ac; /* inline links in case study text (Treeats "the original promo vid", Figma value, 6.6:1) */
+  /* Props overview (Figma 2697:5450) */
+  --nda-bg: rgba(97, 105, 122, 0.04); /* "under NDA" box fill */
+  --nda-border: rgba(97, 105, 122, 0.1); /* its border */
+  --nda-ink: #61697a; /* its text (5.2:1 on the fill) */
   --caution-ink: #946800; /* "COULD BE IMPROVED" (Figma #e9ab10 darkened to meet WCAG AA, 4.95:1; "WORKS GREAT!" uses choice-ink) */
 }
 
@@ -101,6 +105,9 @@
   --color-callout: var(--callout);
   --color-principle: var(--principle);
   --color-caution-ink: var(--caution-ink);
+  --color-nda-bg: var(--nda-bg);
+  --color-nda-border: var(--nda-border);
+  --color-nda-ink: var(--nda-ink);
   --color-link: var(--link);
   --color-choice-note: var(--choice-note);
   --color-fail-ink: var(--fail-ink);
@@ -260,6 +267,9 @@
   --text-feature-title: 25px; /* Treeats feature title beside a phone (Source Serif 4) */
   --text-feature-title--line-height: 28px;
   --text-feature-title--letter-spacing: -0.64px;
+  --text-nda-title: 25px; /* "This case study is under NDA" (Source Serif 4 semibold) */
+  --text-nda-title--line-height: 38px;
+  --text-nda-title--letter-spacing: -0.64px;
   --text-feature: 17px; /* its description (Geist; Figma Inter 16.7–17.4, unified) */
   --text-feature--line-height: 22px;
 
@@ -388,6 +398,11 @@
   --spacing-takeaway-icon: 37px; /* icon row above the title (Figma icons 33–40.5 with 8–12 below: unified) */
   --spacing-step-head: 15px; /* Design Evolution step title to its panels (Figma 16 below a 26.5px title box) */
   --spacing-step-notes: 20px; /* panels to FEEDBACK / ✓ CHANGE */
+  --spacing-preview-img: 460px; /* Props preview panel width (from md), beside 273px of text */
+  --spacing-preview-text: 273px;
+  --spacing-nda-x: 64px; /* "under NDA" box padding (from md) */
+  --spacing-nda-y: 80px;
+  --spacing-nda-text: 614px; /* its paragraph width */
   --spacing-video-panel-y: 27px; /* Treeats Reflections: video panel's top and bottom padding (Figma 768 × 453) */
   --spacing-video-w: 85.5%; /* the video's width in the panel (Figma 656.64 of 768) */
   --spacing-play: 68px; /* play button on the video poster */

@@ -19,10 +19,12 @@ import Insight from "@/components/Insight";
 import Lessons from "@/components/Lessons";
 import MotionDemos from "@/components/MotionDemos";
 import MotionOptions from "@/components/MotionOptions";
+import NdaNote from "@/components/NdaNote";
 import PhasePlan from "@/components/PhasePlan";
 import PhonePair from "@/components/PhonePair";
 import PostCollage from "@/components/PostCollage";
 import PostPanel from "@/components/PostPanel";
+import PreviewRows from "@/components/PreviewRows";
 import PrincipleCards from "@/components/PrincipleCards";
 import QuitRateChart from "@/components/QuitRateChart";
 import Section from "@/components/Section";
@@ -56,10 +58,12 @@ const components: MDXComponents = {
   Lessons,
   MotionDemos,
   MotionOptions,
+  NdaNote,
   PhasePlan,
   PhonePair,
   PostCollage,
   PostPanel,
+  PreviewRows,
   PrincipleCards,
   QuitRateChart,
   SiteReviews,

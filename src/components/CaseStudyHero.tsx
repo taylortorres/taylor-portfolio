@@ -4,7 +4,7 @@ import TagList from "./TagList";
 
 // Top of a case study (Figma node 2682:69211), fed by `meta.hero`: tags, title
 // (its own Title Case field; meta.title stays the card title), hero media
-// (zoomable), then ROLE / TIMELINE / TEAM / SKILLS.
+// (zoomable unless hero.zoomable is false), then ROLE / TIMELINE / TEAM / SKILLS.
 // Each detail is a list of lines; long lines wrap within their column.
 
 const DETAILS: { key: keyof Pick<Hero, "role" | "timeline" | "team" | "skills">; label: string }[] = [
@@ -27,7 +27,7 @@ export default function CaseStudyHero({ study }: { study: CaseStudy & { hero: He
         <CaseImage
           src={hero.image}
           alt={hero.imageAlt}
-          zoomable
+          zoomable={hero.zoomable}
           preload
           className="rounded-media"
           sizes="(min-width: 1280px) 768px, (min-width: 1024px) calc(100vw - 386px), 100vw"

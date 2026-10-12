@@ -7,8 +7,65 @@ export const meta = {
   thumbnail: "./thumbnail.jpg",
   order: 2,
   cursorLabel: "view overview",
+  hero: {
+    title: "Bringing Stories to Life with Props, at Scale",
+    tags: ["Internship", "Systems Design", "Data Synthesis"],
+    image: "./hero.jpg",
+    imageAlt: "The Duolingo wordmark in white on bright green, with Duo the owl peeking up from the bottom edge",
+    zoomable: false,
+    role: ["Product Design Intern"],
+    timeline: ["August - September", "2026 (4 weeks)"],
+    team: ["1 Product Manager", "2 Software Engineers", "1 Designer (me!)", "1 Studio Manager"],
+    skills: ["Systems Design", "Data Synthesis", "Product Strategy"],
+  },
 }
 
-## Coming soon
+import previewAudit from "./preview-audit.png"
+import previewPlacement from "./preview-placement.png"
+import previewEdgeCases from "./preview-edge-cases.png"
 
-This case study is on its way.
+<Impact
+  stats={[
+    { value: "1,000+", label: "Stories audited" },
+    { value: "134", label: "Props categorized" },
+    { value: "12+", label: "Edge cases designed for" },
+  ]}
+/>
+
+<Section id="overview" title="Overview" headline="Building a scalable system for 1,000+ stories">
+
+Over the summer I joined the Reading & Writing team to work on an unreleased, more visual version of Duolingo Stories.
+
+My task was to explore ways to add “props” to these stories, bridging the gap between what learners read and what they see on screen. The catch was that every scene needed to be assembled automatically, so bespoke designs were out of the question. **Whatever I designed had to work across thousands of scenes without any human oversight.**
+
+So **I built a rules-based system**. Collecting data on how often props appeared and in what forms, I sorted every prop into a small set of categories, designed specialized treatments for the most common ones, and worked through the edge cases that could break it. **I documented the full system and presented it in a cross-functional handoff with engineering, PM, design studio, and design managers, giving the team a strong foundation to build off during implementation.**
+
+</Section>
+
+<Section id="solution-preview" title="Solution Preview" label="Process & Solution Preview">
+
+<PreviewRows
+  rows={[
+    { src: previewAudit, title: "Synthesizing messy script data", text: "I distilled 1,000+ stories and 134 props into one clear definition and scope, so the team knew exactly what to design for", alt: "Blurred preview of the props audit and script analysis: a bar chart of how often props appear beside a grid of tagged scripts" },
+    { src: previewPlacement, title: "Defining a framework that works for any prop", text: "I created one set of rules that decides how every prop appears, replacing one-off designs with a single comprehensive system", alt: "Blurred preview of background prop placement zones: two story scenes with clear surfaces marked as good, and two cluttered scenes marked as not" },
+    { src: previewEdgeCases, title: "Stress-testing the system with (a lot of) edge cases", text: "I identified various edge cases and designed specialized treatments and low-lift fallbacks, so the system always had a default", alt: "Blurred preview of edge case sticky notes around the words “a lot of questions arose…”, with a worried Duo" },
+  ]}
+/>
+
+</Section>
+
+<Section id="reflection" title="Reflection" headline="Learning to bend without breaking">
+
+Early on, my PM called this project “an edge case <strong className="text-caution-ink">goldmine</strong>,” and he wasn’t kidding (ᵕˆヮˆ).
+
+Just when I thought I had the framework figured out, another script would come along and break it. I kept coming back to one of the first questions I asked, which seemed deceptively simple: ***what even counts as a prop?***
+
+I expected a project this rules-heavy to feel restrictive, but it ended up being one of the most creative things I worked on all summer! My favorite part was determining which rules to hold on to and which ones to stretch.
+
+</Section>
+
+<Section id="reach-out" title="Reach Out!" labelHidden>
+
+<NdaNote email="tjulest@stanford.edu" />
+
+</Section>
