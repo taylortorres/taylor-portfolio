@@ -22,7 +22,7 @@ export default function Kit() {
       <Nav />
       <main className="flex-1">
         <CaseStudyLayout sections={sections}>
-          <h1 className="font-display text-footer-title text-ink">Case study kit</h1>
+          <h1 className="pt-8 font-display text-footer-title text-ink lg:pt-case-top">Case study kit</h1>
           <div className="mt-stack flex flex-col gap-section-gap [&_p]:mt-3 [&_p]:text-body [&_p]:text-muted [&_strong]:font-medium [&_strong]:text-heading [&_a]:underline [&_figure]:mt-stack [&_section>button]:mt-stack [&_section>img]:mt-stack [&_section>video]:mt-stack [&_section>div]:mt-stack">
             <Demo />
           </div>

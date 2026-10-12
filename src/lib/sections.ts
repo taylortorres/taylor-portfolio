@@ -4,6 +4,7 @@ import path from "node:path";
 // Sidebar links come straight from a case study's MDX source: every
 // <Section id="..." title="..."> becomes one link, in order. Adding, renaming or
 // reordering sections needs no code changes. Bad sections fail the build.
+// A file with no sections returns [] (placeholder case studies).
 
 export type SectionLink = { id: string; title: string };
 
@@ -33,8 +34,5 @@ export function getSections(file: string): SectionLink[] {
     sections.push({ id, title: title.trim() });
   }
 
-  if (sections.length === 0) {
-    throw new Error(`${where}: no <Section id="..." title="..."> found. Wrap each part of the case study in one.`);
-  }
-  return sections;
+  return sections; // empty for placeholder case studies: they render without the sidebar
 }

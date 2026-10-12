@@ -1,6 +1,7 @@
 import Image from "next/image";
 import type { CaseStudy } from "@/lib/case-studies";
 import ProjectCardLink from "./ProjectCardLink";
+import TagList from "./TagList";
 
 type Props = {
   study: CaseStudy;
@@ -68,16 +69,7 @@ export default function ProjectCard({ study, preload = false }: Props) {
             <Description text={description} highlights={highlights} />
           </p>
         </div>
-        <ul className="flex flex-wrap gap-tag-gap" aria-label="Tags">
-          {tags.map((tag) => (
-            <li
-              key={tag}
-              className="rounded-tag border border-tag bg-paper px-tag-x py-tag-y font-mono text-(length:--text-tag) leading-(--text-tag--line-height) font-medium whitespace-nowrap text-tag uppercase"
-            >
-              {tag}
-            </li>
-          ))}
-        </ul>
+        <TagList tags={tags} />
       </div>
     </ProjectCardLink>
   );

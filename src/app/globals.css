@@ -20,6 +20,15 @@
   --section-active: #5354b7;
   --section-idle: rgba(88, 88, 88, 0.84); /* Figma 0.64 darkened to meet WCAG AA (4.5:1) */
   --scrim: rgba(0, 0, 0, 0.5); /* zoom viewer backdrop */
+  /* Case study top and bottom (Figma nodes 2682:69211, 2682:69255, 2682:69791) */
+  --case-ink: #242424; /* case study title (not case-title: that is its size) */
+  --impact: #494ab3; /* stat callout fill */
+  --impact-border: rgba(141, 148, 199, 0.3);
+  --impact-label: #c7cbec;
+  --next-bg: #484aa6; /* "next up" block fill */
+  --next-text: #d4d6f8;
+  --next-ring: rgba(153, 144, 121, 0.32);
+  --next-ink: #4a4cb0; /* "READ NEXT" text on the white pill */
 }
 
 @theme inline {
@@ -40,6 +49,14 @@
   --color-section-active: var(--section-active);
   --color-section-idle: var(--section-idle);
   --color-scrim: var(--scrim);
+  --color-case-ink: var(--case-ink);
+  --color-impact: var(--impact);
+  --color-impact-border: var(--impact-border);
+  --color-impact-label: var(--impact-label);
+  --color-next-bg: var(--next-bg);
+  --color-next-text: var(--next-text);
+  --color-next-ring: var(--next-ring);
+  --color-next-ink: var(--next-ink);
 
   /* Fonts (variables set by next/font in layout.tsx) */
   --font-display: var(--font-newsreader);
@@ -89,6 +106,27 @@
   --text-sidebar--line-height: 24px;
   --text-chip-label: 14px; /* HOME, BACK TO TOP (not text-chip: that is the chip color) */
   --text-chip-label--line-height: 20px;
+  --text-case-title: 40px; /* case study title (Figma 40/44) */
+  --text-case-title--line-height: 44px;
+  --text-case-title-sm: 30px; /* same, on phones */
+  --text-case-title-sm--line-height: 34px;
+  --text-detail: 15px; /* hero ROLE / TIMELINE / TEAM / SKILLS and IMPACT label (Figma 15/22.5) */
+  --text-detail--line-height: 23px;
+  --text-stat: 30px; /* impact numbers (Figma 30 in a 31px box) */
+  --text-stat--line-height: 31px;
+  --text-stat-label: 13px; /* Figma 13/19.5 */
+  --text-stat-label--line-height: 20px;
+  --text-stat-label--letter-spacing: 0.52px;
+  --text-next-label: 14px; /* "NEXT UP" */
+  --text-next-label--line-height: 21px;
+  --text-next-label--letter-spacing: 0.84px;
+  --text-next-title: 26px; /* Figma 26/28.6 */
+  --text-next-title--line-height: 29px;
+  --text-next-desc: 14px;
+  --text-next-desc--line-height: 19px;
+  --text-next-button: 13px; /* "READ NEXT →" */
+  --text-next-button--line-height: 13px;
+  --text-next-button--letter-spacing: 0.65px;
 
   /* Spacing → p-*, gap-*, h-*, max-w-* */
   --spacing-nav-h: 64px;
@@ -129,7 +167,18 @@
   --spacing-sidebar-pad: 40px;
   --spacing-sidebar-list-w: 219px;
   --spacing-section-bar: 56px; /* phone/tablet sticky section bar */
-  --spacing-case-content-max: 720px; /* PROVISIONAL: case study text column, until the content frame is in Figma */
+  --spacing-case-content-max: 768px; /* case study column (Figma frames are 770 with 768 media: see notes) */
+  --spacing-case-content-x: 180px; /* sidebar to column at xl+ (column x=486 at 1440) */
+  --spacing-case-top: 42px; /* nav to the hero tags: lines them up with the sidebar HOME chip (40px padding + 2px). Figma has 64 (22px lower than HOME). */
+  --spacing-case-gap: 64px; /* between hero, Impact and sections */
+  --spacing-case-title-gap: 14px; /* tags to title line box (Figma 14.5: title centered in a 49px box; our tags are 1px taller) */
+  --spacing-case-media-gap: 36px; /* title line box to hero media */
+  --spacing-details-top: 55px; /* hero media to ROLE / TIMELINE / ... (Figma 56 padding, labels sit 1px above it) */
+  --spacing-details-gap: 48px; /* between the four detail columns */
+  --spacing-detail-label-gap: 8px; /* label to values */
+  --spacing-impact-label-gap: 21px; /* IMPACT label to the stat callouts */
+  --spacing-next-top: 91px; /* last section to the "next up" block */
+  --spacing-case-bottom: 162px; /* "next up" block to the footer */
   --spacing-lightbox-pad: 40px; /* zoom viewer space around the media */
   --spacing-lightbox-pad-sm: 16px; /* same, below sm */
 
@@ -137,6 +186,8 @@
   --radius-tag: 6px;
   --radius-chip: 4px; /* HOME, BACK TO TOP */
   --radius-section: 8px; /* sidebar section links */
+  --radius-media: 16px; /* case study hero media, "next up" block */
+  --radius-stat: 8px; /* impact stat callouts */
 
   /* Signature handwriting reveal. Each stroke sets its own delay and
      duration (see Signature.tsx), then holds the final state. */
@@ -202,6 +253,13 @@
 }
 @utility halo-paper {
   background-image: radial-gradient(closest-side, color-mix(in srgb, var(--paper) 30%, transparent), transparent);
+}
+
+/* Figma's "Noise" effect on the purple case study blocks: fine light grain
+   over the fill (public/case-study/grain.svg, 128px seamless tile). */
+@utility grain {
+  background-image: url("/case-study/grain.svg");
+  background-size: 128px 128px;
 }
 
 /* Newsreader optical size used by the Figma hero headline. */

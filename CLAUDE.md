@@ -41,6 +41,11 @@
 | `section-active` | `#5354b7` | active and hovered sidebar section |
 | `section-idle` | `rgba(88,88,88,0.84)` | other sidebar sections (Figma 0.64, darkened for AA) |
 | `scrim` | `rgba(0,0,0,0.5)` | zoom viewer backdrop (with a background blur) |
+| `case-ink` | `#242424` | case study hero title |
+| `impact` / `impact-border` / `impact-label` | `#494ab3` / `rgba(141,148,199,0.3)` / `#c7cbec` | Impact stat callouts (fill, 1px border, label) |
+| `next-bg` / `next-text` / `next-ring` / `next-ink` | `#484aa6` / `#d4d6f8` / `rgba(153,144,121,0.32)` / `#4a4cb0` | "Next up" block (fill, small text, 1px ring, READ NEXT text) |
+
+The purple case study blocks (`impact`, `next-bg`) also get Figma's noise via the `grain` utility (`public/case-study/grain.svg`).
 
 The footer background is an image, not a color.
 
@@ -65,6 +70,16 @@ The footer background is an image, not a color.
 | `text-tag` | 12 / 13 | tags (`text-tag` resolves to the tag *color*; set the size with `text-(length:--text-tag)`) |
 | `text-sidebar` | 16 / 24 | case study sidebar sections |
 | `text-chip-label` | 14 / 20 | HOME and BACK TO TOP (Geist Mono medium, uppercase) |
+| `text-case-title` / `text-case-title-sm` | 40 / 44, 30 / 34 below `md` | case study hero title (Source Serif 4) |
+| `text-detail` | 15 / 23 | hero ROLE / TIMELINE / TEAM / SKILLS labels and values, IMPACT label |
+| `text-stat` | 30 / 31 | Impact numbers (Source Serif 4) |
+| `text-stat-label` | 13 / 20 / 0.52px | Impact labels (Geist Mono medium, uppercase) |
+| `text-next-label` | 14 / 21 / 0.84px | "NEXT UP" |
+| `text-next-title` | 26 / 29 | next case study title |
+| `text-next-desc` | 14 / 19 | next case study description |
+| `text-next-button` | 13 / 13 / 0.65px | "READ NEXT →" |
+
+Source Serif 4 is loaded with its `opsz` axis, so optical size follows the font size (closest match to Figma's Source Serif Pro).
 
 ### Spacing and layout
 | Token | Value | Use |
@@ -84,11 +99,18 @@ The footer background is an image, not a color.
 | `sidebar-pad` | 40px | sidebar padding |
 | `sidebar-list-w` | 219px | sidebar section list |
 | `section-bar` | 56px | sticky section bar below `lg` |
-| `case-content-max` | 720px | case study text column (**provisional** until the content frame is in Figma) |
+| `case-content-max` | 768px | case study column |
+| `case-content-x` | 180px | sidebar to column from `xl` (column at x=486 at 1440); centered beside the sidebar below `xl` |
+| `case-top` | 42px | nav to the hero tags, from `lg` (aligned with the sidebar HOME chip; Figma has 64) |
+| `case-gap` | 64px | between hero, Impact and sections |
+| `case-title-gap` / `case-media-gap` | 14px / 36px | tags to title, title to hero image |
+| `details-top` / `details-gap` / `detail-label-gap` | 55px / 48px / 8px | hero details row: top, column gap, label to values |
+| `impact-label-gap` | 21px | IMPACT label to the callouts |
+| `next-top` / `case-bottom` | 91px / 162px | last section to "Next up", "Next up" to the footer |
 | `lightbox-pad` / `lightbox-pad-sm` | 40px / 16px | space around zoomed media (below `sm`: 16px) |
 | `cursor-halo` | 40px | soft halo behind the cursor dot over links and buttons (`halo-accent` / `halo-paper` utilities) |
 
-Tags have a 6px radius (`rounded-tag`) and a 1px `tag` border. Thumbnails have square corners. Sidebar chips have a 4px radius (`rounded-chip`), sidebar section links 8px (`rounded-section`).
+Tags have a 6px radius (`rounded-tag`) and a 1px `tag` border. Thumbnails have square corners. Sidebar chips have a 4px radius (`rounded-chip`), sidebar section links 8px (`rounded-section`). Case study hero media and the "Next up" block have 16px (`rounded-media`), Impact callouts 8px (`rounded-stat`).
 
 ## Responsive
 - Desktop (1440) is the primary design. The site must also look intentional on **phones (~390px)** and **tablets**.
@@ -126,8 +148,10 @@ Tags have a 6px radius (`rounded-tag`) and a 1px `tag` border. Thumbnails have s
   ```
 - The home grid and `/work/[slug]` pages are generated from these folders. **Adding a case study must not require any code changes.**
 - Sort by `order`. Any field missing from `meta` should fail the build with a clear error message.
+- A full case study adds `meta.hero` (all fields required when present): `title` (Title Case, shown in the hero; `meta.title` stays the card title), `tags`, `image` (`"./..."`), `imageAlt`, and `role`, `timeline`, `team`, `skills` as arrays of lines. Without `hero` and sections the page renders as a plain placeholder.
+- `/work/[slug]` renders the hero from `meta.hero`, then the MDX body (`<Impact stats={[{ value, label }]} />` first, then the sections), then the shared "Next up" block, which links to the next case study by `order` and wraps from the last to the first.
 - Wrap each part of the body in `<Section id="kebab-case-id" title="Title">`. The sidebar is generated from these tags (`getSections` in `src/lib/sections.ts`); a missing, duplicate or non-string id/title fails the build.
-- Components available in MDX without an import: `Section`, `CaseImage` (`zoomable`, optional `full`), `CaseVideo` (`zoomable`, optional `fullSrc`), `VideoPair` (`left`/`right` clips with posters) and `CursorCaption` (`caption`). Import images from the case study folder and pass them as `src`.
+- Components available in MDX without an import: `Section`, `Impact`, `CaseImage` (`zoomable`, optional `full`), `CaseVideo` (`zoomable`, optional `fullSrc`), `VideoPair` (`left`/`right` clips with posters) and `CursorCaption` (`caption`). Import images from the case study folder and pass them as `src`.
 
 ## Workflow
 - Work in small steps: one section at a time (Nav → Hero → Projects grid → Footer → case study pages).

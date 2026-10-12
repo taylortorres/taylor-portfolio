@@ -23,6 +23,7 @@ const newsreader = Newsreader({
 const sourceSerif = Source_Serif_4({
   variable: "--font-source-serif",
   subsets: ["latin"],
+  axes: ["opsz"], // optical size follows the font size, like Figma's Source Serif Pro display cuts
 });
 
 export const metadata: Metadata = {

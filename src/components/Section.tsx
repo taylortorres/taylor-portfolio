@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 type Props = {
   id: string;
   title: string;
-  children: ReactNode;
+  children?: ReactNode;
 };
 
 // One part of a case study. Its id and title also become the sidebar link

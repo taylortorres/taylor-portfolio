@@ -9,7 +9,9 @@ type Props = {
 };
 
 // Case study page body: Figma's 306px sticky sidebar beside the content from
-// lg, a sticky section bar above it below lg. `#top` is where focus goes after
+// lg, a sticky section bar above it below lg. The 768px column sits 180px
+// right of the sidebar from xl (x=486 at 1440, as in Figma) and is centered
+// in the space beside the sidebar below that. `#top` is where focus goes after
 // BACK TO TOP. Below lg, BACK TO TOP floats in the bottom-right corner.
 export default function CaseStudyLayout({ sections, children }: Props) {
   return (
@@ -18,9 +20,9 @@ export default function CaseStudyLayout({ sections, children }: Props) {
       <article
         id="top"
         tabIndex={-1}
-        className="mx-auto w-full max-w-case-content-max px-4 pt-6 pb-section-gap focus:outline-none sm:px-8 lg:mx-0 lg:px-sidebar-pad lg:pt-sidebar-pad"
+        className="min-w-0 px-4 pb-case-bottom focus:outline-none sm:px-8 lg:px-sidebar-pad xl:pl-case-content-x"
       >
-        {children}
+        <div className="mx-auto max-w-case-content-max xl:mx-0">{children}</div>
       </article>
       <BackToTop floating />
     </div>

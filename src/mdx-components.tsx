@@ -2,6 +2,7 @@ import type { MDXComponents } from "mdx/types";
 import CaseImage from "@/components/CaseImage";
 import CaseVideo from "@/components/CaseVideo";
 import CursorCaption from "@/components/CursorCaption";
+import Impact from "@/components/Impact";
 import Section from "@/components/Section";
 import VideoPair from "@/components/VideoPair";
 
@@ -11,6 +12,7 @@ const components: MDXComponents = {
   CaseImage,
   CaseVideo,
   CursorCaption,
+  Impact,
   VideoPair,
 };
 
