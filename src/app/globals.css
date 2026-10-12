@@ -54,6 +54,8 @@
   --photo-shadow: rgba(147, 147, 147, 0.25); /* under the intern photos */
   --wide-demo-bg: #e1e7e9; /* building hub demo panel: the recording's own background, so no seam shows */
   --callout: #2e8550; /* "How might we" block (Figma #3b9d5c darkened so the 14px label meets WCAG AA) */
+  /* Treeats Challenge and Solution (Figma 2691:70778, 2691:70802, 2691:70836, 2691:70880) */
+  --principle: #5758b9; /* CLARITY / ENGAGEMENT / INCENTIVE cards (Figma #5455b7 on the first, #5758b9 on the others: unified) */
 }
 
 @theme inline {
@@ -91,6 +93,7 @@
   --color-figure-ink: var(--figure-ink);
   --color-figure-arrow: var(--figure-arrow);
   --color-callout: var(--callout);
+  --color-principle: var(--principle);
   --color-plan-bg: var(--plan-bg);
   --color-status-bg: var(--status-bg);
   --color-status-border: var(--status-border);
@@ -238,6 +241,17 @@
   --text-callout-label--line-height: 18px;
   --text-callout-question: 24px; /* callout question, Source Serif 4 */
   --text-callout-question--line-height: 26px;
+  --text-compare-item: 14px; /* Treeats BEFORE / AFTER bullet points (Geist; Figma Inter 14 / 22.5) */
+  --text-compare-item--line-height: 23px;
+  --text-principle-title: 20px; /* CLARITY / ENGAGEMENT / INCENTIVE (Geist Mono medium; Figma IBM Plex Mono) */
+  --text-principle-title--line-height: 24px;
+  --text-principle-body: 18px; /* principle card text (Geist medium; Figma Figtree 18 / 21.6) */
+  --text-principle-body--line-height: 22px;
+  --text-feature-title: 25px; /* Treeats feature title beside a phone (Source Serif 4) */
+  --text-feature-title--line-height: 28px;
+  --text-feature-title--letter-spacing: -0.64px;
+  --text-feature: 17px; /* its description (Geist; Figma Inter 16.7–17.4, unified) */
+  --text-feature--line-height: 22px;
 
   /* Spacing → p-*, gap-*, h-*, max-w-* */
   --spacing-nav-h: 64px;
@@ -329,6 +343,24 @@
   --spacing-demo-note: 220px; /* sentence under a demo phone (Figma boxes 172 and 218, balanced) */
   --spacing-lightbox-pad: 40px; /* zoom viewer space around the media */
   --spacing-lightbox-pad-sm: 16px; /* same, below sm */
+  --spacing-post-panel-h: 191px; /* Treeats Challenge: gray panel behind the Fizz post */
+  --spacing-post-w: 339px; /* the post (Figma 338.75 × 132.5), centered in the panel */
+  --spacing-sigh-x: 103px; /* "sigh" doodle: its left edge this far left of the post */
+  --spacing-sigh-y: 46px; /* and this far below the post's top (Figma y 76 in the panel, post at 30) */
+  --spacing-solution-gap: 39px; /* Treeats Solution: between the BEFORE and AFTER columns */
+  --spacing-solution-head: 16px; /* panels to the BEFORE / AFTER labels */
+  --spacing-principles-gap: 39px; /* "Based on my research..." to the principle cards */
+  --spacing-principle-gap: 17px; /* between the three cards */
+  --spacing-principle-h: 245px; /* card height (from md) */
+  --spacing-feature-phone: 255px; /* phone recording beside a feature (Figma 255–256 × 551–555) */
+  --spacing-feature-widget: 267px; /* home screen widget beside the last feature */
+  --spacing-feature-text: 324px; /* feature title and description column (Figma title boxes) */
+  --spacing-feature-gap: 84px; /* phone to text (Figma 80 / 84 / 73: unified) */
+  --spacing-feature-pad: 60px; /* each feature row's padding, and the gap between rows */
+  --spacing-feature-first: 40px; /* first row's top and bottom padding */
+  --spacing-feature-widget-top: 100px; /* widget row's top and bottom padding */
+  --spacing-feature-widget-bottom: 120px;
+  --spacing-feature-text-gap: 20px; /* feature title to description (Figma 20, 27 on the last two: unified) */
 
   /* Radius */
   --radius-tag: 6px;
@@ -344,9 +376,12 @@
   --radius-photo: 12px; /* intern photos */
   --radius-effort: 4px; /* effort bars (Figma 3.6) */
   --radius-phone: 18px; /* phone frame around a demo video */
+  --radius-feature: 15px; /* Treeats feature phone recordings */
 
   /* Shadows */
   --shadow-photo: 0 4px 8px var(--photo-shadow); /* intern photos */
+  --shadow-post: 0 6px 13px rgb(0 0 0 / 0.06), 0 18px 23px rgb(0 0 0 / 0.09), 0 9px 32px rgb(0 0 0 / 0.05), 0 94px 37px rgb(0 0 0 / 0.01); /* Treeats Fizz post (Figma 12.75 / 23.25 / 31.5 / 37.1 blurs) */
+  --shadow-feature: 0 5px 40px rgb(0 0 0 / 0.25); /* Treeats feature phones */
 
   /* Signature handwriting reveal. Each stroke sets its own delay and
      duration (see Signature.tsx), then holds the final state. */

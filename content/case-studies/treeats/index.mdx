@@ -20,6 +20,15 @@ export const meta = {
   },
 }
 
+import fizzPost from "./challenge-fizz-post.jpg"
+import rdeSite from "./solution-rde-site.png"
+import rdeSiteUpright from "./solution-rde-site-upright.png"
+import stanfood from "./solution-stanfood.png"
+import stanfoodUpright from "./solution-stanfood-upright.png"
+import treeatsCommunity from "./solution-treeats-community.png"
+import leaderboard from "./feature-leaderboard.png"
+import widget from "./treeats-widget.png"
+
 <Impact
   stats={[
     { value: "78%", label: "Found dining unreliable" },
@@ -28,11 +37,101 @@ export const meta = {
   ]}
 />
 
-<Section id="overview" title="Overview" />
+<Section id="overview" title="Overview" top />
 
-<Section id="challenge" title="Challenge" />
+<Section id="challenge" title="Challenge" label="The Challenge" headline="Choosing where to eat on campus feels like a gamble">
 
-<Section id="solution" title="Solution" />
+It's 6:30 PM, and you're a college student juggling classes, clubs, and a looming deadline. But when it comes to dinner... where do you even start? Choosing where to eat on campus feels like a gamble.
+
+<PostPanel
+  src={fizzPost}
+  alt="A Fizz post from an anonymous Stanford student: “One day, I wanna live in a world where I can go to any dining hall and not sigh,” with 58 upvotes"
+  sigh
+/>
+
+I read through Fizz, the app 95% of Stanford students use, and looked at the two existing dining sites. The same questions kept coming up: what's being served, when the specials are, and what's in the food. The official site was outdated, and the student-run one had no real-time busyness, so the answers weren't there.
+
+<Callout label="How might we...">design a dining experience that saves time, fosters community, and *leaves students feeling satisfied with their choices*?</Callout>
+
+</Section>
+
+<Section id="solution" title="Solution" label="The Solution" headline="Treeats turns students into each other’s dining guide">
+
+Treeats is a campus dining app where students share real-time busyness, browse menus, and earn Acorn Points for keeping each other informed.
+
+<SolutionCompare
+  before={{
+    title: "Official R&DE site + Stanfood",
+    screens: [
+      { src: rdeSite, full: rdeSiteUpright, alt: "The official Stanford R&DE dining hall menu site: a dense text list of dishes and ingredients with small allergen icons" },
+      { src: stanfood, full: stanfoodUpright, alt: "Stanfood, the student-run dining menu site, in dark mode: dishes with placeholder images, star ratings and allergen dots" },
+    ],
+    points: [
+      "Outdated or inaccurate menus",
+      "No real-time busyness",
+      "Few ways to contribute",
+      "Hard to scan: missing photos, buried specials",
+      <strong>Web-first, not practical on the go</strong>,
+    ],
+  }}
+  after={{
+    title: "Treeats",
+    screen: { src: treeatsCommunity, alt: "Treeats’ Community tab: an Acorn Points banner above a Treeats Official poll asking for the favorite sweet treat special of the week" },
+    points: [
+      "Menus, ratings, and community in one place",
+      "Real-time busyness levels reported by students",
+      "Easy ways to contribute and earn real dining dollars",
+      "A clear, accessible UI with specials up front",
+      <><strong>Mobile-first</strong>, with a dynamic home screen widget</>,
+    ],
+  }}
+/>
+
+<PrincipleCards
+  intro="Based on my research and testing, I built Treeats around three core ideas:"
+  cards={[
+    { icon: { src: "/case-study/treeats/icon-clarity.svg", width: 30, height: 32 }, title: "Clarity", text: "Provide real-time updates on dining hall conditions, menu options, and specials." },
+    { icon: { src: "/case-study/treeats/icon-engagement.svg", width: 33, height: 29 }, title: "Engagement", text: "Create a space for students to engage at their own pace, from browsing menus to posting reviews." },
+    { icon: { src: "/case-study/treeats/icon-incentive.svg", width: 31, height: 31 }, title: "Incentive", text: "Reward engagement with gamification, points, and real-world perks." },
+  ]}
+/>
+
+<FeatureRows
+  features={[
+    {
+      title: "View and Update Busyness Levels in Real Time",
+      text: "Check dining hall busyness in real-time and update it with quick, intuitive sliders while you’re there.",
+      media: { video: "/videos/treeats-busyness.mp4", poster: "/videos/posters/treeats-busyness.jpg", width: 720, height: 1558, alt: "Treeats home screen: sorting dining halls by busyness, then updating Wilbur Dining’s busyness on a slider for +10 Acorn Points" },
+    },
+    {
+      title: "Customize Dining Hall Menus to Fit Your Preferences",
+      text: "Filter menus by dietary needs, meal times, and distance to discover the perfect dining option for any day or meal.",
+      media: { video: "/videos/treeats-menus.mp4", poster: "/videos/posters/treeats-menus.jpg", width: 720, height: 1558, alt: "Explore Dining Halls: picking Casper, filtering by brunch and vegan, and scrolling the specials" },
+    },
+    {
+      title: "Rate and Review Dishes and Earn Personalized Badges",
+      text: "Leave feedback on your dining experience and unlock unique badges that showcase your dining habits.",
+      media: { video: "/videos/treeats-reviews.mp4", poster: "/videos/posters/treeats-reviews.jpg", width: 720, height: 1558, alt: "Rating the Banana Oat Pancakes five stars with a written review, then unlocking the Sweet Treat Fanatic badge" },
+    },
+    {
+      title: "Engage with the Community",
+      text: "Participate in polls to share your opinions on dining hall menus, send feedback to staff, and post shoutouts to celebrate your favorite moments.",
+      media: { video: "/videos/treeats-community.mp4", poster: "/videos/posters/treeats-community.jpg", width: 720, height: 1558, alt: "Community tab: voting in the sweet treat poll, then posting a shoutout with a photo for +15 Acorn Points" },
+    },
+    {
+      title: "Climb the Leaderboard and Earn Dining Dollars",
+      text: "Track your acorn points and see how you rank among your peers on the leaderboard. Top contributors at the end of the quarter are rewarded with dining dollars.",
+      media: { image: leaderboard, alt: "Treeats profile: a 25-day streak, 275 Acorn Points, leaderboard progress at 85% and the badges earned so far" },
+    },
+    {
+      title: "Access Daily Specials on Your Home Screen",
+      text: "In a rush? Quickly check today’s specials and find nearby dining halls with the least traffic using the app’s widget—no scrolling required.",
+      media: { image: widget, widget: true, alt: "Today’s Specials home screen widget: Taro Bao Buns at Wilbur (busy, 1.0 mi) and Açaí Bowl at FloMo (calm, 3.1 mi), with the acorn mascot" },
+    },
+  ]}
+/>
+
+</Section>
 
 <Section id="research" title="Research" />
 

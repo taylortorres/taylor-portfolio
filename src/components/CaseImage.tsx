@@ -8,7 +8,8 @@ type Props = {
   sizes?: string;
   /** Opens in the zoom viewer when clicked. */
   zoomable?: boolean;
-  /** Bigger version for the viewer; defaults to `src` at full resolution. */
+  /** Different image for the viewer (e.g. an upright copy of a tilted
+   * screenshot); defaults to `src` at full resolution. */
   full?: StaticImageData;
   /** Above the fold: load early. */
   preload?: boolean;
@@ -20,7 +21,9 @@ const INLINE_SIZES = "(min-width: 1280px) 768px, (min-width: 1024px) calc(100vw 
 
 // Case study image. With `zoomable`, the viewer shows the inline copy (already
 // loaded) at once and the full-resolution image over it, which is only
-// requested when the viewer opens.
+// requested when the viewer opens. A different `full` image skips the inline
+// copy, so it can't show around or under it (a tilted screenshot behind its
+// upright version).
 export default function CaseImage({
   src,
   alt,
@@ -40,7 +43,7 @@ export default function CaseImage({
       height={full.height}
       full={
         <>
-          <Image src={src} alt="" sizes={sizes} fill className={`object-contain ${className}`} />
+          {full === src && <Image src={src} alt="" sizes={sizes} fill className={`object-contain ${className}`} />}
           <Image
             src={full}
             alt={alt}

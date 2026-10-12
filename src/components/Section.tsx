@@ -8,6 +8,8 @@ type Props = {
   label?: string;
   /** The big serif line under the label, e.g. "Learners expected to tap, not drag". `*word*` is italic. */
   headline?: string;
+  /** Sidebar item for the top of the page (hero and Impact): renders nothing here. Must be the first section. */
+  top?: boolean;
   children?: ReactNode;
 };
 
@@ -15,7 +17,10 @@ type Props = {
 // serif headline, then the MDX body. Its id and title also become the sidebar
 // link (read from the MDX source by getSections). The label takes focus when
 // the sidebar jumps here, so keyboard and screen reader users land in place.
-export default function Section({ id, title, label, headline, children }: Props) {
+// With `top` (Treeats' Overview) the sidebar keeps the item but the page shows
+// no label: clicking it scrolls to the top (SectionNav).
+export default function Section({ id, title, label, headline, top = false, children }: Props) {
+  if (top) return null;
   return (
     <section
       id={id}

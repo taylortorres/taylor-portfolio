@@ -19,7 +19,10 @@ export default function CaseStudyHero({ study }: { study: CaseStudy & { hero: He
   return (
     <header className="pt-8 lg:pt-case-top">
       <TagList tags={hero.tags} />
-      <h1 className="mt-case-title-gap font-serif text-case-title-sm text-case-ink md:text-case-title">{hero.title}</h1>
+      {/* focus:outline-none: the sidebar's top item (Treeats' Overview) moves focus here. */}
+      <h1 className="mt-case-title-gap font-serif text-case-title-sm text-case-ink focus:outline-none md:text-case-title">
+        {hero.title}
+      </h1>
       <div className="mt-case-media-gap">
         <CaseImage
           src={hero.image}

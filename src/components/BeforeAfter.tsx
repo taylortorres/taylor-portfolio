@@ -1,5 +1,6 @@
 import type { StaticImageData } from "next/image";
 import CaseImage from "./CaseImage";
+import CompareArrow from "./CompareArrow";
 
 type Screen = { src: StaticImageData; alt: string };
 
@@ -31,15 +32,7 @@ export default function BeforeAfter({ before, after }: Props) {
   return (
     <div className="flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:gap-0">
       <Panel label="Before" screen={before} />
-      <svg
-        aria-hidden="true"
-        viewBox="0 0 15.3 9.57"
-        className="w-3.75 shrink-0 self-center fill-none stroke-figure-arrow stroke-[1.3] max-sm:rotate-90 sm:mx-3"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <path d="M.65 4.79h14M10.51.65l4.14 4.14-4.14 4.13" />
-      </svg>
+      <CompareArrow className="self-center max-sm:rotate-90 sm:mx-3" />
       <Panel label="After" screen={after} />
     </div>
   );

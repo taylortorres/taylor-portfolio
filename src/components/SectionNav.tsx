@@ -69,11 +69,23 @@ function useActiveSection(sections: SectionLink[]) {
 
   function jumpTo(id: string) {
     const target = document.getElementById(id);
-    if (!target) return;
+    // A first section without an element (<Section top />) stands for the hero:
+    // scroll to the top and focus the page title.
+    const top = !target && id === sections[0].id;
+    if (!target && !top) return;
     const instant = window.matchMedia(REDUCED_MOTION).matches;
+    const behavior = instant ? "instant" : "smooth";
     lockUntilIdle.current = !instant;
     setActive(id);
-    target.scrollIntoView({ behavior: instant ? "instant" : "smooth", block: "start" });
+    if (top) {
+      window.scrollTo({ top: 0, behavior });
+      const title = document.querySelector<HTMLElement>("main h1");
+      title?.setAttribute("tabindex", "-1");
+      title?.focus({ preventScroll: true });
+      history.replaceState(history.state, "", location.pathname + location.search);
+      return;
+    }
+    target?.scrollIntoView({ behavior, block: "start" });
     document.getElementById(`${id}-title`)?.focus({ preventScroll: true });
     history.replaceState(history.state, "", `#${id}`);
   }
