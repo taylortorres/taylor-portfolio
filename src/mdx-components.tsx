@@ -10,6 +10,7 @@ import CursorCaption from "@/components/CursorCaption";
 import Decision from "@/components/Decision";
 import DemoVideo from "@/components/DemoVideo";
 import EvolutionStep from "@/components/EvolutionStep";
+import ExternalLink from "@/components/ExternalLink";
 import FeatureRows from "@/components/FeatureRows";
 import Figure from "@/components/Figure";
 import FramedPanels from "@/components/FramedPanels";
@@ -29,6 +30,7 @@ import SectionPart from "@/components/SectionPart";
 import SiteReviews from "@/components/SiteReviews";
 import SolutionCompare from "@/components/SolutionCompare";
 import SyncedVideos from "@/components/SyncedVideos";
+import YouTubeEmbed from "@/components/YouTubeEmbed";
 
 // Available in every MDX file without an import.
 const components: MDXComponents = {
@@ -45,6 +47,7 @@ const components: MDXComponents = {
   Decision,
   DemoVideo,
   EvolutionStep,
+  ExternalLink,
   FeatureRows,
   Figure,
   FramedPanels,
@@ -62,6 +65,7 @@ const components: MDXComponents = {
   SiteReviews,
   SolutionCompare,
   SyncedVideos,
+  YouTubeEmbed,
 };
 
 export function useMDXComponents(): MDXComponents {

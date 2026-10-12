@@ -60,6 +60,7 @@
   /* Treeats Ideation and Design Evolution (Figma 2691:71067, 2691:71103, 2691:71156) */
   --choice-note: #5f6873; /* gray caption on the green AFTER panel (Figma #7e8286 darkened for AA: 4.95:1 on choice-bg) */
   --fail-ink: #c33e35; /* "Failed" under the accessibility BEFORE screen (Figma value, 4.9:1 on figure-bg) */
+  --link: #5658ac; /* inline links in case study text (Treeats "the original promo vid", Figma value, 6.6:1) */
   --caution-ink: #946800; /* "COULD BE IMPROVED" (Figma #e9ab10 darkened to meet WCAG AA, 4.95:1; "WORKS GREAT!" uses choice-ink) */
 }
 
@@ -100,6 +101,7 @@
   --color-callout: var(--callout);
   --color-principle: var(--principle);
   --color-caution-ink: var(--caution-ink);
+  --color-link: var(--link);
   --color-choice-note: var(--choice-note);
   --color-fail-ink: var(--fail-ink);
   --color-plan-bg: var(--plan-bg);
@@ -386,6 +388,11 @@
   --spacing-takeaway-icon: 37px; /* icon row above the title (Figma icons 33–40.5 with 8–12 below: unified) */
   --spacing-step-head: 15px; /* Design Evolution step title to its panels (Figma 16 below a 26.5px title box) */
   --spacing-step-notes: 20px; /* panels to FEEDBACK / ✓ CHANGE */
+  --spacing-video-panel-y: 27px; /* Treeats Reflections: video panel's top and bottom padding (Figma 768 × 453) */
+  --spacing-video-w: 85.5%; /* the video's width in the panel (Figma 656.64 of 768) */
+  --spacing-play: 68px; /* play button on the video poster */
+  --spacing-video-top: 29px; /* paragraph to the video panel */
+  --spacing-video-bottom: 41px; /* video panel to the next paragraph */
 
   /* Radius */
   --radius-tag: 6px;
