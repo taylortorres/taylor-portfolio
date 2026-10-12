@@ -26,6 +26,11 @@ import numberedTimeline from "./numbered-timeline.png"
 import connectedTable from "./connected-table.png"
 import numberedTapTokens from "./numbered-tap-tokens.png"
 import tapArrows from "./tap-arrows.png"
+import critPhone from "./crit-shuffle-wiggle.png"
+import critSticky1 from "./crit-sticky-1.png"
+import critSticky2 from "./crit-sticky-2.png"
+import critSticky3 from "./crit-sticky-3.png"
+import dragHandleOption from "./converging-drag-handle.png"
 
 <Impact
   stats={[
@@ -111,11 +116,96 @@ Each layout changed how the exercise looked, but none of them showed learners wh
 
 </Section>
 
-<Section id="design-crit" title="Design Crit" />
+<Section id="design-crit" title="Design Crit" headline="Motion was promising, but it didn’t feel quite right yet">
 
-<Section id="design-decisions" title="Design Decisions" />
+Upon taking this V1 prototype to crit with both the shuffle demo and wiggle, both PMs and designers agreed that motion was the right direction. The **execution just needed rethinking**.
 
-<Section id="converging" title="Converging" />
+<CritBoard
+  label="Shuffle & wiggle demo, V1"
+  phone={{ src: critPhone, alt: "The V1 prototype: three event cards with drag handles under the story dialogue" }}
+  stickies={[
+    { src: critSticky1, alt: "Sticky note: 3 shuffles is a lot and the animation feels aggressive. Can we simplify? Sincerely, a designer. Plus one.", left: 2.857, top: 21.801, width: 32.381, tilt: -2 },
+    { src: critSticky2, alt: "Sticky note: A shuffle almost reads like picking a card from a deck, which reminds me of tap. So what reads as drag when it’s in motion? Love, your PM", left: 60.714, top: 29.858, width: 34.286, tilt: 2 },
+    { src: critSticky3, alt: "Sticky note: Ideally this shuffle motion would appear in context with the exercise instructions. Sincerely, another designer", left: 48.81, top: 77.962, width: 32.381, tilt: -1.5 },
+  ]}
+  cards={[
+    { title: "Too much motion", text: "Three shuffles felt overwhelming and slowed the exercise down. Learners needed a simpler cue.", tone: "teal" },
+    { title: "Wrong signal", text: "A shuffle could indicate a “pick” interaction, pushing learners toward tapping, which was the exact habit we were trying to break.", tone: "purple" },
+  ]}
+/>
+
+<Insight label="Key insight">Motion turned out to be more nuanced than I expected. I’d been focused on making the tokens move, when the real question was ***what that movement told learners to do***.</Insight>
+
+The team encouraged me to keep pushing and to **jam w/a motion designer ٩(^ᴗ^ )و ´-**
+
+</Section>
+
+<Section id="design-decisions" title="Design Decisions" headline="Sweating the small details">
+
+I set up a jam session with a motion designer from our design studio to work through the feedback. We talked through **what makes movement intuitively register as dragging**, like <b>lift</b>, <b>overlap</b>, and a <b>sense of weight</b>.
+
+From there, **I refined two directions, a shuffle demo and a tap nudge, to bring to a final stakeholder review,** and I learned that even the smallest choices come with substantial tradeoffs.
+
+<p><b>Here are a few such decisions I thought through along the way.</b></p>
+
+<Decision
+  eyebrow="Shuffle demo"
+  question="How should tokens appear?"
+  options={[
+    { label: "Altogether", chosen: true, src: "/videos/decision-altogether.mp4", poster: "/videos/posters/decision-altogether.jpg", alt: "Altogether: all three event cards appear at once", width: 758, height: 1620 },
+    { label: "Individually", src: "/videos/decision-individually.mp4", poster: "/videos/posters/decision-individually.jpg", alt: "Individually: the event cards appear one after another", width: 758, height: 1620 },
+  ]}
+  verdict={{ label: "Altogether", note: "Tokens appear all at once, so learners don’t have to sit through an intro animation every time this exercise appears." }}
+/>
+
+<Decision
+  eyebrow="Shuffle demo"
+  question="When should text populate?"
+  options={[
+    { label: "Before shuffle", src: "/videos/decision-before-shuffle.mp4", poster: "/videos/posters/decision-before-shuffle.jpg", alt: "Before shuffle: the cards fill with text, then shuffle", width: 758, height: 1620 },
+    { label: "Mid shuffle", chosen: true, src: "/videos/decision-mid-shuffle.mp4", poster: "/videos/posters/decision-mid-shuffle.jpg", alt: "Mid shuffle: the text fills in while the cards are shuffling", width: 686, height: 1488 },
+    { label: "After shuffle", src: "/videos/decision-after-shuffle.mp4", poster: "/videos/posters/decision-after-shuffle.jpg", alt: "After shuffle: empty cards shuffle, then the text fills in", width: 758, height: 1620 },
+  ]}
+  verdict={{ label: "Mid shuffle", note: "Filling in text mid-shuffle keeps tokens from looking broken, without making the shuffle seem like a hint." }}
+/>
+
+<Decision
+  eyebrow="Tap nudge"
+  question="What if learners keep tapping? How should the token react?"
+  options={[
+    { label: "Mock pull", chosen: true, src: "/videos/decision-mock-pull.mp4", poster: "/videos/posters/decision-mock-pull.jpg", alt: "Mock pull: a tapped card lifts up slightly and settles back", width: 758, height: 1620 },
+    { label: "Mock swap", src: "/videos/decision-mock-swap.mp4", poster: "/videos/posters/decision-mock-swap.jpg", alt: "Mock swap: a tapped card swaps places with its neighbor", width: 758, height: 1620 },
+  ]}
+  verdict={{ label: "Mock pull", note: "A subtle, bouncy pull shows the token can move, without feeling as aggressive as a full swap." }}
+/>
+
+<Decision
+  eyebrow="Tap nudge"
+  question="How much motion does the pull need?"
+  options={[
+    { label: "Straight up", chosen: true, src: "/videos/decision-mock-pull.mp4", poster: "/videos/posters/decision-mock-pull.jpg", alt: "Straight up: a tapped card pulls straight up and settles back", width: 758, height: 1620 },
+    { label: "Shake, then up", src: "/videos/decision-shake-then-up.mp4", poster: "/videos/posters/decision-shake-then-up.jpg", alt: "Shake, then up: a tapped card shakes, then pulls up", width: 758, height: 1620 },
+  ]}
+  verdict={{ label: "Straight up", note: "One upward pull was enough to show the token can move, so we dropped the shake." }}
+/>
+
+</Section>
+
+<Section id="converging" title="Converging" headline="No consensus, so I went back to the root problem">
+
+I brought three directions to PM, engineering, and design studio leads, but...**everyone had a different favorite**. Engineering leaned toward the tap nudge, studio preferred the shuffle, and PM wanted to take all three to review. To break the tie, I went back to the problem itself.
+
+<MotionOptions
+  options={[
+    { title: "1) Drag handle", description: "A six-dot grip that signals drag with no motion.", media: { image: dragHandleOption, alt: "Drag handle: three event cards, each with a six-dot grip on the right" } },
+    { title: "2) Tap nudge", pick: "Eng’s pick", description: "Bounces up when learners tap, pointing them to drag.", media: { video: "/videos/converging-tap-nudge.mp4", poster: "/videos/posters/converging-tap-nudge.jpg", alt: "Tap nudge: a tapped event card bounces up", width: 730, height: 594, left: 2.03, top: 8.3, size: 94.03, rounded: true } },
+    { title: "3) Shuffle", pick: "Studio’s pick", description: "Shows a drag demo before learners even try.", media: { video: "/videos/converging-shuffle.mp4", poster: "/videos/posters/converging-shuffle.jpg", alt: "Shuffle: the event cards shuffle into place as the exercise loads", width: 692, height: 642, left: 5.14, top: 8.86, size: 88.31 } },
+  ]}
+/>
+
+<Insight label="Reframing the problem">Learners already knew how to drag. What they needed wasn’t a lesson, but a *clear visual cue*.</Insight>
+
+</Section>
 
 <Section id="the-plan" title="The Plan" />
 

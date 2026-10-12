@@ -31,9 +31,11 @@ Phones and tablets (below 1024px) get a sticky bar instead of the sidebar. Tap t
 <Section id="pivoting-to-motion" title="Pivoting to Motion">
 **Synced video pair:** Story Beats (10.3s) and DuoRooms (13.0s). Both start together once both have loaded. Story Beats ends first and holds its last frame. When DuoRooms ends, both rewind and play again together. Scroll this off screen and they pause, then resume when it comes back. With reduced motion you see the posters. The button in the corner pauses both.
 
-<VideoPair
-  left={{ src: "/videos/story-beats.mp4", poster: "/videos/posters/story-beats.jpg", label: "Story Beats drag interaction", width: 1600, height: 1882 }}
-  right={{ src: "/videos/duorooms.mp4", poster: "/videos/posters/duorooms.jpg", label: "DuoRooms room tour", width: 1234, height: 1286 }}
+<SyncedVideos
+  clips={[
+    { src: "/videos/story-beats.mp4", poster: "/videos/posters/story-beats.jpg", label: "Story Beats drag interaction", width: 1600, height: 1882 },
+    { src: "/videos/duorooms.mp4", poster: "/videos/posters/duorooms.jpg", label: "DuoRooms room tour", width: 1234, height: 1286 },
+  ]}
 />
 </Section>
 

@@ -48,6 +48,9 @@
 | `chart-card-border` / `chart-grid` | `#e5e5e5` / `#e6e6e6` | white chart card border, dashed guide lines (at 40% opacity) |
 | `chart-up` / `chart-base` | `#dc1a1a` / `#0467d1` | ATSB quit chart: red line, +21% and red notes (Figma notes at 0.8 opacity); baseline (Figma 0.6 opacity). Made solid for AA. "MORE QUITS THAN BASELINE" uses `muted`. |
 | `figure-ink` / `figure-arrow` | `#6b7480` / `#98a3ae` | text on the gray panel: TL;DR, BEFORE / AFTER, demo labels, phone captions and notes (Figma #878f98, #98a3ae, #78899b darkened for AA); decorative arrow between panels |
+| `choice-bg` / `choice-border` / `choice-ink` | `#e2f7cb` / `#77dd05` / `#43770d` | the chosen option in a design decision: green panel, its label, "✓ ..." and the bar beside the note (Figma ink #64ad14 darkened for AA) |
+| `crit-teal` / `crit-teal-text` / `crit-purple` | `#127a8a` / `#eff8f9` / `#7e69b9` | Design Crit takeaway cards, with `grain` (Figma teal #168b9d darkened so its 13px text meets AA) |
+| `pick-border` | `rgba(157,169,182,0.2)` | "ENG'S PICK" pill outline |
 | `callout` | `#2e8550` | "How might we" block (Figma #3b9d5c darkened so the 14px label meets AA) |
 
 The purple case study blocks (`impact`, `next-bg`) also get Figma's noise via the `grain` utility (`public/case-study/grain.svg`).
@@ -88,6 +91,11 @@ The footer background is an image, not a color.
 | `text-chart-label` / `text-chart-note` | 11 / 12, 14 / 16 / −0.64px | chart axis, legend and title (Geist Mono); chart annotations (Geist semibold) |
 | `text-panel-label` / `text-panel-note` | 11 / 15, 11 / 14 | BEFORE / AFTER, demo labels and phone captions (Geist Mono); sentence under a demo phone (Geist) |
 | `text-pair-title` | 20 / 28 / −0.64px | title beside a pair of phones (Source Serif 4) |
+| `text-crit-card-title` / `text-crit-card` | 22 / 31, 13 / 20 | Design Crit card title (Source Serif 4) and text (Geist medium; Figma Inter) |
+| `text-insight-label` / `text-insight` | 16 / 15, 21 / 32 / −0.424px | KEY INSIGHT (Geist Mono semibold) and its quote (Source Serif 4) |
+| `text-decision-eyebrow` / `text-decision-question` | 12 / 15, 24 / 24 / −0.64px | SHUFFLE DEMO over a decision, its question (Source Serif 4) |
+| `text-choice-label` / `text-verdict` / `text-verdict-note` | 12 / 15, 14 / 15, 15 / 23 | label on a video panel, "✓ ALTOGETHER", its reason (Geist medium) |
+| `text-option-title` / `text-option-pick` / `text-option-desc` / `text-scale-label` | 15 / 23, 12 / 13, 12 / 18, 14 / 15 | Converging option title, pick pill, description, LEAST / MOST MOTION |
 | `text-callout-label` / `text-callout-question` | 14 / 18, 24 / 26 | "HOW MIGHT WE..." (Geist Mono), its question (Source Serif 4, italic for emphasis) |
 
 Source Serif 4 is loaded with its `opsz` axis, so optical size follows the font size (closest match to Figma's Source Serif Pro).
@@ -124,11 +132,16 @@ Source Serif 4 is loaded with its `opsz` axis, so optical size follows the font 
 | `chart-card-max` | 687px | white chart card inside the gray panel |
 | `compare-h` / `compare-screen` / `compare-inset` | 250px / 206px / 64px | BEFORE / AFTER panel height, its screen width, least space beside the screen in narrow panels |
 | `pair-panel` / `pair-title` | 442px / 289px | gray panel with two phones, the title beside it (from `xl`) |
+| `crit-board` / `crit-cards` / `crit-gap` / `crit-card-gap` | 420px / 299px / 49px / 25px | Design Crit board (420 × 422), cards beside it, gap between them, gap between cards (also KEY INSIGHT to the line after it) |
+| `insight-gap` | 11px | KEY INSIGHT label to its quote |
+| `decision-gap` / `decision-head` / `verdict-gap` | 105px / 18px / 28px | between design decisions, question to its panels, panels to the verdict |
+| `choice-h` / `choice-phone` / `choice-pair-gap` / `choice-trio-gap` | 438px / 165px / 40px / 18px | decision video panel, the phone in it, gaps for two and three panels |
+| `option-gap` | 35px | between the three Converging options |
 | `demo-phone` / `demo-note` | 161px / 220px | phone frame in a motion demo, max width of its note |
 | `lightbox-pad` / `lightbox-pad-sm` | 40px / 16px | space around zoomed media (below `sm`: 16px) |
 | `cursor-halo` | 40px | soft halo behind the cursor dot over links and buttons (`halo-accent` / `halo-paper` utilities) |
 
-Tags have a 6px radius (`rounded-tag`) and a 1px `tag` border. Thumbnails have square corners. Sidebar chips have a 4px radius (`rounded-chip`), sidebar section links 8px (`rounded-section`). Case study hero media and the "Next up" block have 16px (`rounded-media`), Impact callouts and figure panels 8px (`rounded-stat`), chart cards 10px (`rounded-chart`), the "How might we" block 12px (`rounded-callout`), demo phone frames 18px (`rounded-phone`).
+Tags have a 6px radius (`rounded-tag`) and a 1px `tag` border. Thumbnails have square corners. Sidebar chips have a 4px radius (`rounded-chip`), sidebar section links 8px (`rounded-section`). Case study hero media and the "Next up" block have 16px (`rounded-media`), Impact callouts and figure panels 8px (`rounded-stat`), chart cards 10px (`rounded-chart`), the "How might we" block 12px (`rounded-callout`), demo phone frames 18px (`rounded-phone`), decision recordings 12px (`rounded-screen`), Converging option frames 6px (`rounded-option-frame`) and the tap nudge clip 13px (`rounded-option-video`).
 
 ## Responsive
 - Desktop (1440) is the primary design. The site must also look intentional on **phones (~390px)** and **tablets**.
@@ -169,7 +182,12 @@ Tags have a 6px radius (`rounded-tag`) and a 1px `tag` border. Thumbnails have s
 - A full case study adds `meta.hero` (all fields required when present): `title` (Title Case, shown in the hero; `meta.title` stays the card title), `tags`, `image` (`"./..."`), `imageAlt`, and `role`, `timeline`, `team`, `skills` as arrays of lines. Without `hero` and sections the page renders as a plain placeholder.
 - `/work/[slug]` renders the hero from `meta.hero`, then the MDX body (`<Impact stats={[{ value, label }]} />` first, then the sections), then the shared "Next up" block, which links to the next case study by `order` and wraps from the last to the first.
 - Wrap each part of the body in `<Section id="kebab-case-id" title="Title" headline="Big serif line">` (headline optional, `*word*` for italic). The title renders as the mono label (OVERVIEW); a Markdown `###` inside is a sub-headline in the same serif style, 22px above its text; write the body as Markdown inside, with blank lines after the opening tag and before the closing one. The sidebar is generated from these tags (`getSections` in `src/lib/sections.ts`); a missing, duplicate or non-string id/title fails the build.
-- Components available in MDX without an import: `Section`, `Impact`, `CaseImage` (`zoomable`, optional `full`), `CaseVideo` (`zoomable`, optional `fullSrc`), `VideoPair` (`left`/`right` clips with posters), `CursorCaption` (`caption`), `Figure` (`label` above the media), `Callout` (`label`; children are the question, `*word*` for italic), `BeforeAfter` (`before` / `after` screens, zoomable), `PhonePair` (`title` plus `left` / `right` zoomable phone stills with captions), `MotionDemos` (`demos`: label, note and a looping video in a phone frame each) and `QuitRateChart` (ATSB only).
+- Components available in MDX without an import: `Section`, `Impact`, `CaseImage` (`zoomable`, optional `full`), `CaseVideo` (`zoomable`, optional `fullSrc`), `SyncedVideos` (`clips`: two or more videos with posters that play in sync), `CursorCaption` (`caption`), `Figure` (`label` above the media), `Callout` (`label`; children are the question, `*word*` for italic), `BeforeAfter` (`before` / `after` screens, zoomable), `PhonePair` (`title` plus `left` / `right` zoomable phone stills with captions), `MotionDemos` (`demos`: label, note and a looping video in a phone frame each), `CritBoard` (board with a zoomable phone, stickies placed in % of the board, and takeaway `cards`), `Insight` (`label` plus a serif quote; `*word*` italic, `***words***` semibold italic), `Decision` (`eyebrow`, `question`, two or three synced zoomable video `options` with one `chosen`, and a `verdict`), `MotionOptions` (three options on a least-to-most-motion scale, each a still or a cropped clip) and `QuitRateChart` (ATSB only).
+- Synced videos (`SyncedVideos`, `Decision`, via `useSyncedVideos`) work for two or more clips: they start together once all have loaded, play once, hold the shorter ones on their last frame until the longest ends, then restart together. They load about 400px before the screen, play only while on it, pause while one is open in the zoom viewer, and have a pause button (WCAG 2.2.2). Every side-by-side row in Design Decisions is one group, including the three-video row.
+- Scroll reveals (`useRevealOnce`) run once. Reduced motion, or already on screen at load, shows the final state.
+  - Crit stickies: at 50% in view they fade in 90ms apart, drifting up 12px and settling from a slight tilt to Figma's 0°.
+  - Quit-rate chart: at 60% in view the red line (path from `design-assets/story_beats/quit rate line.svg`) draws left to right over 1.6s (ease-in-out). The dash is measured in screen px, because the plot stretches and the stroke doesn't scale. "quits spike at launch" fades in as the line reaches the spike, and "gap narrows as learners adapt" at 85%. Grid, blue baseline and the +21% header stay still.
+- Video encoding: H.264 CRF 26, 30fps, no audio, faststart. Trim to the clip's last real frame (some raw files pad up to 0.6s), and use posters at most 480px wide. Cropped clips (Converging) keep the card window's exact proportions and pad with white instead of cutting off the widest frame. Check frames across the whole clip, not just the first. Check what a clip shows, not its file name: `before.mp4` / `after shuffle.mp4` were named the opposite of their panels.
 - Videos (`CaseVideo`, `MotionDemos`) use `preload="none"`: nothing downloads until the video scrolls into view, it plays only while on screen and pauses when scrolled off. Import images from the case study folder and pass them as `src`.
 
 ## Assets

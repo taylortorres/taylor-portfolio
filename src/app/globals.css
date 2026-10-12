@@ -38,6 +38,14 @@
   --chart-base: #0467d1; /* "baseline" line and legend (Figma 0.6 opacity, solid to meet 3:1) */
   --figure-ink: #6b7480; /* text on the gray panel: TL;DR, BEFORE/AFTER, phone captions (Figma #878f98, #98a3ae, #78899b darkened to meet WCAG AA) */
   --figure-arrow: #98a3ae; /* decorative arrow between panels */
+  /* Design Crit, Design Decisions, Converging (Figma 2682:69447, 2682:69494, 2682:69589) */
+  --choice-bg: #e2f7cb; /* the option we picked: green panel */
+  --choice-border: #77dd05;
+  --choice-ink: #43770d; /* its label, "✓ ..." and the bar beside the note (Figma #64ad14 darkened to meet WCAG AA) */
+  --crit-teal: #127a8a; /* "Too much motion" card (Figma #168b9d darkened so its 13px text meets WCAG AA) */
+  --crit-teal-text: #eff8f9;
+  --crit-purple: #7e69b9; /* "Wrong signal" card */
+  --pick-border: rgba(157, 169, 182, 0.2); /* "ENG'S PICK" pill outline */
   --callout: #2e8550; /* "How might we" block (Figma #3b9d5c darkened so the 14px label meets WCAG AA) */
 }
 
@@ -76,6 +84,13 @@
   --color-figure-ink: var(--figure-ink);
   --color-figure-arrow: var(--figure-arrow);
   --color-callout: var(--callout);
+  --color-choice-bg: var(--choice-bg);
+  --color-choice-border: var(--choice-border);
+  --color-choice-ink: var(--choice-ink);
+  --color-crit-teal: var(--crit-teal);
+  --color-crit-teal-text: var(--crit-teal-text);
+  --color-crit-purple: var(--crit-purple);
+  --color-pick-border: var(--pick-border);
 
   /* Fonts (variables set by next/font in layout.tsx) */
   --font-display: var(--font-newsreader);
@@ -166,6 +181,34 @@
   --text-pair-title: 20px; /* title beside a pair of phones (Source Serif 4) */
   --text-pair-title--line-height: 28px;
   --text-pair-title--letter-spacing: -0.64px;
+  --text-crit-card-title: 22px; /* "Too much motion" (Source Serif 4; Figma 22 in a 31px box) */
+  --text-crit-card-title--line-height: 31px;
+  --text-crit-card: 13px; /* its text (Geist medium; Figma Inter 13/19.5) */
+  --text-crit-card--line-height: 20px;
+  --text-insight-label: 16px; /* KEY INSIGHT (Geist Mono semibold; Figma 16 in a 15px box) */
+  --text-insight-label--line-height: 15px;
+  --text-insight: 21px; /* the quote (Source Serif 4; Figma 20.5/31.8) */
+  --text-insight--line-height: 32px;
+  --text-insight--letter-spacing: -0.424px;
+  --text-decision-eyebrow: 12px; /* SHUFFLE DEMO above a question (Geist Mono medium; 15px box) */
+  --text-decision-eyebrow--line-height: 15px;
+  --text-decision-question: 24px; /* "How should tokens appear?" (Source Serif 4) */
+  --text-decision-question--line-height: 24px;
+  --text-decision-question--letter-spacing: -0.64px;
+  --text-choice-label: 12px; /* ALTOGETHER on a video panel (Geist Mono semibold; 15px box) */
+  --text-choice-label--line-height: 15px;
+  --text-verdict: 14px; /* "✓ ALTOGETHER" (Geist Mono semibold; 15px box) */
+  --text-verdict--line-height: 15px;
+  --text-verdict-note: 15px; /* the reason under it (Geist medium; Figma 15/22.5) */
+  --text-verdict-note--line-height: 23px;
+  --text-option-title: 15px; /* "1) DRAG HANDLE" (Geist Mono semibold) */
+  --text-option-title--line-height: 23px;
+  --text-option-pick: 12px; /* "ENG'S PICK" pill (Geist Mono semibold; Figma 12/12.6) */
+  --text-option-pick--line-height: 13px;
+  --text-option-desc: 12px; /* option description (Geist medium) */
+  --text-option-desc--line-height: 18px;
+  --text-scale-label: 14px; /* LEAST MOTION / MOST MOTION (Geist Mono semibold; 15px box) */
+  --text-scale-label--line-height: 15px;
   --text-callout-label: 14px; /* "HOW MIGHT WE..." */
   --text-callout-label--line-height: 18px;
   --text-callout-question: 24px; /* callout question, Source Serif 4 */
@@ -234,6 +277,19 @@
   --spacing-pair-panel: 442px; /* gray panel holding two phones */
   --spacing-pair-title: 289px; /* title beside it */
   --spacing-demo-phone: 161px; /* phone frame in a motion demo panel */
+  --spacing-crit-board: 420px; /* gray board with the phone and stickies (420 × 422) */
+  --spacing-crit-cards: 299px; /* takeaway cards beside it */
+  --spacing-crit-gap: 49px; /* between them */
+  --spacing-crit-card-gap: 25px; /* between the two cards, KEY INSIGHT to the line after it */
+  --spacing-insight-gap: 11px; /* KEY INSIGHT label to the quote */
+  --spacing-decision-gap: 105px; /* between two design decisions */
+  --spacing-decision-head: 18px; /* question to its video panels */
+  --spacing-verdict-gap: 28px; /* video panels to "✓ ALTOGETHER" */
+  --spacing-choice-h: 438px; /* video panel height */
+  --spacing-choice-phone: 165px; /* phone inside it */
+  --spacing-choice-pair-gap: 40px; /* two panels side by side */
+  --spacing-choice-trio-gap: 18px; /* three panels side by side */
+  --spacing-option-gap: 35px; /* between the three Converging options */
   --spacing-demo-note: 220px; /* sentence under a demo phone (Figma boxes 172 and 218, balanced) */
   --spacing-lightbox-pad: 40px; /* zoom viewer space around the media */
   --spacing-lightbox-pad-sm: 16px; /* same, below sm */
@@ -246,6 +302,9 @@
   --radius-stat: 8px; /* impact stat callouts, figure panels */
   --radius-chart: 10px; /* white chart card */
   --radius-callout: 12px; /* "How might we" block */
+  --radius-screen: 12px; /* phone recording inside a decision panel */
+  --radius-option-frame: 6px; /* white frame inside a Converging option */
+  --radius-option-video: 13px; /* the tap nudge clip inside it */
   --radius-phone: 18px; /* phone frame around a demo video */
 
   /* Signature handwriting reveal. Each stroke sets its own delay and
