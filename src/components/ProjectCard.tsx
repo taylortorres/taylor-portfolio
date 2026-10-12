@@ -1,5 +1,5 @@
 import Image from "next/image";
-import type { CaseStudy } from "@/lib/case-studies";
+import { studyHref, type CaseStudy } from "@/lib/case-studies";
 import ProjectCardLink from "./ProjectCardLink";
 import TagList from "./TagList";
 
@@ -42,10 +42,12 @@ function Eyebrow({ text }: { text: string }) {
 }
 
 export default function ProjectCard({ study, preload = false }: Props) {
-  const { slug, title, eyebrow, description, highlights, tags, thumbnail, video } = study;
+  const { title, eyebrow, description, highlights, tags, thumbnail, video, cursorLabel, externalUrl, externalTag } = study;
   return (
     <ProjectCardLink
-      href={`/work/${slug}`}
+      href={studyHref(study)}
+      cursorLabel={cursorLabel}
+      external={externalUrl ? { label: `${title}: ${cursorLabel} (opens in a new tab)` } : undefined}
       video={video}
       poster={
         <Image
@@ -69,7 +71,7 @@ export default function ProjectCard({ study, preload = false }: Props) {
             <Description text={description} highlights={highlights} />
           </p>
         </div>
-        <TagList tags={tags} />
+        <TagList tags={tags} linkTag={externalTag} />
       </div>
     </ProjectCardLink>
   );

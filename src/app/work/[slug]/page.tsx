@@ -11,6 +11,8 @@ import { getCaseStudies, getCaseStudySections } from "@/lib/case-studies";
 // One page per folder in content/case-studies. With a meta.hero and <Section>
 // tags it gets the full layout (sidebar, hero, sections); placeholders without
 // them get a plain title and body. Every page ends with the "next up" block.
+// Projects with meta.externalUrl (e.g. DuoRooms' slides) get no page: the card
+// links out instead, and /work/<slug> is a 404.
 
 // Placeholder bodies are plain Markdown ("## Coming soon" and a line of text).
 const PLACEHOLDER_BODY =
@@ -18,12 +20,12 @@ const PLACEHOLDER_BODY =
 
 export async function generateStaticParams() {
   const studies = await getCaseStudies();
-  return studies.map(({ slug }) => ({ slug }));
+  return studies.filter((s) => !s.externalUrl).map(({ slug }) => ({ slug }));
 }
 
 async function getStudy(slug: string) {
   const studies = await getCaseStudies();
-  return studies.find((s) => s.slug === slug);
+  return studies.find((s) => s.slug === slug && !s.externalUrl);
 }
 
 export async function generateMetadata({ params }: PageProps<"/work/[slug]">): Promise<Metadata> {

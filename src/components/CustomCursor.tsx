@@ -5,8 +5,10 @@ import { useEffect, useRef } from "react";
 
 // Decorative cursor for mouse users, replacing the native one site-wide: a
 // purple dot that trails the pointer. Over links and buttons it grows slightly,
-// turns flat (no grain) and a soft halo fades in behind it. It morphs into a "view case study" pill over
-// project cards, or into a text pill over captioned media (data-cursor-label,
+// turns flat (no grain) and a soft halo fades in behind it. It morphs into the
+// grainy panda pill over project cards (live text from data-cursor-pill, e.g.
+// "view slides", plus ↗ when the card links out: data-cursor-external), or
+// into a text pill over captioned media (data-cursor-label,
 // see CursorCaption; uppercase unless the zone sets data-cursor-case="keep").
 // The text pill shifts sideways to stay at least 8px inside the window. Its color follows the nearest data-cursor zone under the
 // pointer: "light" (purple or dark surfaces) shows a plain white circle and
@@ -17,7 +19,8 @@ import { useEffect, useRef } from "react";
 // follows without lag and swaps instantly. Touch devices never mount it.
 //
 // Dot ↔ pill is a crossfade of two layers (opacity plus a 0.9 → 1 scale,
-// 120ms), never a resize. Leaving a pill, its text fades out first (70ms),
+// 120ms), never a resize: a pill is as wide as its label from the start.
+// Leaving a pill, its text fades out first (70ms),
 // then the pill fades into the dot. The pill has no lag: the position snaps
 // to the pointer on enter and leave and follows it 1:1 in between, so it
 // never trails outside the zone.
@@ -53,6 +56,8 @@ export default function CustomCursor() {
   const ref = useRef<HTMLDivElement>(null);
   const labelRef = useRef<HTMLSpanElement>(null); // caption text
   const pillRef = useRef<HTMLSpanElement>(null); // caption pill around it
+  const cardTextRef = useRef<HTMLSpanElement>(null); // project card pill text
+  const cardPillRef = useRef<HTMLSpanElement>(null); // project card pill
 
   useEffect(() => {
     const el = ref.current;
@@ -73,6 +78,7 @@ export default function CustomCursor() {
     let seen = false;
     let toneTimer = 0;
     let leaveTimer = 0;
+    let lastCard: Element | null = null; // project card whose label the pill shows
 
     const setMode = (mode: Mode) => {
       const was = el.dataset.mode;
@@ -106,12 +112,13 @@ export default function CustomCursor() {
     // (layout width, unaffected by its scale).
     const place = () => {
       el.style.transform = `translate3d(${current.x}px, ${current.y}px, 0)`;
-      const pill = pillRef.current;
-      if (!pill) return;
-      const half = pill.offsetWidth / 2;
-      const right = document.documentElement.clientWidth - EDGE - half;
-      const shift = Math.max(EDGE + half - current.x, Math.min(0, right - current.x));
-      pill.style.marginLeft = shift ? `${shift}px` : "";
+      for (const pill of [pillRef.current, cardPillRef.current]) {
+        if (!pill) continue;
+        const half = pill.offsetWidth / 2;
+        const right = document.documentElement.clientWidth - EDGE - half;
+        const shift = Math.max(EDGE + half - current.x, Math.min(0, right - current.x));
+        pill.style.marginLeft = shift ? `${shift}px` : "";
+      }
     };
     const render = () => {
       const k = reduced.matches || isPill(el.dataset.mode) ? 1 : LAG;
@@ -133,6 +140,16 @@ export default function CustomCursor() {
       }
       const node = e.target instanceof Element ? e.target : null;
       const captioned = node?.closest("[data-cursor-label]");
+      const card = node?.closest("[data-cursor='case-study']") ?? null;
+      if (!card && !isPill(el.dataset.mode)) lastCard = null;
+      // A new card (entered, or scrolled under the pointer): show its label. Leaving
+      // keeps the old text so it fades out unchanged.
+      if (card && card !== lastCard && cardTextRef.current) {
+        lastCard = card;
+        const label = card.getAttribute("data-cursor-pill") ?? "view case study";
+        cardTextRef.current.textContent = card.hasAttribute("data-cursor-external") ? `${label} ↗` : label;
+        place();
+      }
       // Keep the old text while the pill fades out; swap it only on entry.
       if (captioned && labelRef.current) {
         labelRef.current.textContent = captioned.getAttribute("data-cursor-label");
@@ -164,16 +181,18 @@ export default function CustomCursor() {
   }, []);
 
   const morph = "absolute top-0 left-0 max-w-none motion-safe:transition-[opacity,scale] motion-safe:duration-150 motion-safe:ease-out";
-  // Pills crossfade in 120ms. Leaving, the caption pill waits for its text to fade (70ms)
-  // first; "view case study" has its text baked in, so it fades straight away.
+  // Pills crossfade in 120ms; leaving, they wait for their text to fade (70ms) first.
   const pill =
-    "absolute top-0 left-0 max-w-none -translate-1/2 scale-90 opacity-0 motion-safe:transition-[opacity,scale] motion-safe:duration-120 motion-safe:ease-out";
+    "absolute top-0 left-0 max-w-none -translate-1/2 scale-90 opacity-0 motion-safe:transition-[opacity,scale] motion-safe:duration-120 motion-safe:ease-out group-data-[leaving]:delay-70";
+  // Pill text: fades in with the pill, out on its own first.
+  const pillText =
+    "font-mono text-eyebrow whitespace-nowrap text-paper uppercase opacity-0 motion-safe:transition-opacity motion-safe:duration-70";
   // Tone layers crossfade quickly between the purple dot and the white circle.
   const tone = "absolute top-0 left-0 motion-safe:transition-opacity motion-safe:duration-150";
   // The dot: 1.15× over links (150ms); fades out (with a slight shrink) as a pill fades in (120ms),
   // and back in after a pill's text has faded.
   const dotBase =
-    "-translate-1/2 scale-100 opacity-0 group-data-[mode=link]:scale-115 group-data-[mode=pill]:scale-90 group-data-[mode=caption]:scale-90 group-data-[mode=pill]:duration-120 group-data-[mode=caption]:duration-120 group-data-[leaving=caption]:delay-70";
+    "-translate-1/2 scale-100 opacity-0 group-data-[mode=link]:scale-115 group-data-[mode=pill]:scale-90 group-data-[mode=caption]:scale-90 group-data-[mode=pill]:duration-120 group-data-[mode=caption]:duration-120 group-data-[leaving]:delay-70";
   // Soft halo behind the dot over links; scales (0.8 → 1) and fades together.
   const halo =
     "absolute top-0 left-0 size-cursor-halo -translate-1/2 scale-80 rounded-full opacity-0 group-data-[mode=link]:scale-100 group-data-[mode=link]:opacity-100 motion-safe:transition-[opacity,scale] motion-safe:duration-[180ms] motion-safe:ease-out";
@@ -205,22 +224,26 @@ export default function CustomCursor() {
           className={`${morph} ${dotBase} block size-4 rounded-full bg-paper group-data-[mode=dot]:opacity-100 group-data-[mode=link]:opacity-100`}
         />
       </span>
-      <Image
-        src="/cursor/view-case-study.svg"
-        alt=""
-        width={173}
-        height={32}
-        className={`${pill} group-data-[mode=pill]:scale-100 group-data-[mode=pill]:opacity-100`}
-      />
+      {/* Project card pill (Figma "view case study"): grainy purple, the panda, live text. */}
+      <span
+        ref={cardPillRef}
+        className={`${pill} flex h-8 items-center rounded-full bg-accent bg-[url(/cursor/pill-grain.svg)] bg-repeat-x pr-2.5 pl-2 group-data-[mode=pill]:scale-100 group-data-[mode=pill]:opacity-100`}
+      >
+        <Image src="/cursor/panda.svg" alt="" width={33} height={22} className="shrink-0" />
+        <span
+          ref={cardTextRef}
+          className={`${pillText} ml-1 font-medium group-data-[mode=pill]:opacity-100 group-data-[mode=pill]:duration-120`}
+        />
+      </span>
       {/* Caption pill: same crossfade and height as "view case study", text from the zone.
           The text sits in its own layer so it can fade out before the pill does. */}
       <span
         ref={pillRef}
-        className={`${pill} flex h-8 items-center group-data-[leaving=caption]:delay-70 rounded-full bg-accent px-3.5 group-data-[mode=caption]:scale-100 group-data-[mode=caption]:opacity-100`}
+        className={`${pill} flex h-8 items-center rounded-full bg-accent px-3.5 group-data-[mode=caption]:scale-100 group-data-[mode=caption]:opacity-100`}
       >
         <span
           ref={labelRef}
-          className="font-mono text-eyebrow whitespace-nowrap text-paper uppercase opacity-0 motion-safe:transition-opacity motion-safe:duration-70 group-data-[mode=caption]:opacity-100 group-data-[mode=caption]:duration-120"
+          className={`${pillText} group-data-[mode=caption]:opacity-100 group-data-[mode=caption]:duration-120`}
         />
       </span>
     </div>

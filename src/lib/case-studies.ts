@@ -8,10 +8,16 @@ import { getSections, type SectionLink } from "./sections";
 // `meta` object. Adding a folder adds a card and a /work/<slug> page; no code
 // changes needed. A missing or malformed field fails the build.
 //
+// `meta.cursorLabel` (text in the cursor pill over the card, default "view
+// case study") and `meta.externalUrl` (the card and "Next up" open this in a
+// new tab instead of /work/<slug>, and no page is built) are optional, as is
+// `meta.externalTag` (a visible "Slides ↗" style tag on that card).
+//
 // `meta.hero` is optional (placeholder case studies don't have one yet); when
 // present, every field in it is required.
 
 const DIR = path.join(process.cwd(), "content", "case-studies");
+export const DEFAULT_CURSOR_LABEL = "view case study";
 
 export type CaseStudyHero = {
   /** Page title as set in the hero (Title Case in Figma); `meta.title` stays the card title. */
@@ -35,6 +41,12 @@ export type CaseStudy = {
   thumbnail: StaticImageData;
   video?: string;
   order: number;
+  /** Cursor pill text over the card, e.g. "view slides". */
+  cursorLabel: string;
+  /** Opens here in a new tab instead of /work/<slug>; no page is built. */
+  externalUrl?: string;
+  /** Visible tag for an external link, e.g. "Slides" (shown as SLIDES ↗ on the card). */
+  externalTag?: string;
   hero?: CaseStudyHero;
   Content: MDXContent;
 };
@@ -74,6 +86,18 @@ function validate(slug: string, meta: RawMeta | undefined) {
   }
   if (meta.video && !fs.existsSync(path.join(process.cwd(), "public", meta.video as string))) {
     fail(slug, `meta.video "${meta.video}" was not found in public/.`);
+  }
+  if (meta.cursorLabel !== undefined && !isString(meta.cursorLabel)) {
+    fail(slug, 'meta.cursorLabel must be a non-empty string like "view slides", or left out (defaults to "view case study").');
+  }
+  if (meta.externalUrl !== undefined && !(isString(meta.externalUrl) && /^https:\/\//.test(meta.externalUrl))) {
+    fail(slug, 'meta.externalUrl must be a full https:// link, or left out.');
+  }
+  if (meta.externalTag !== undefined && !(isString(meta.externalTag) && meta.externalUrl !== undefined)) {
+    fail(slug, 'meta.externalTag must be a non-empty string like "Slides", and needs meta.externalUrl.');
+  }
+  if (meta.externalUrl !== undefined && meta.hero !== undefined) {
+    fail(slug, "meta.externalUrl and meta.hero can't both be set: an external project has no page.");
   }
   if (meta.hero !== undefined) validateHero(slug, meta.hero);
 }
@@ -132,6 +156,9 @@ async function load(slug: string): Promise<CaseStudy> {
     thumbnail,
     video: meta.video as string | undefined,
     order: meta.order as number,
+    cursorLabel: (meta.cursorLabel as string | undefined) ?? DEFAULT_CURSOR_LABEL,
+    externalUrl: meta.externalUrl as string | undefined,
+    externalTag: meta.externalTag as string | undefined,
     hero,
     Content: mod.default,
   };
@@ -144,6 +171,11 @@ export async function getCaseStudies(): Promise<CaseStudy[]> {
     .map((entry) => entry.name);
   const studies = await Promise.all(slugs.map(load));
   return studies.sort((a, b) => a.order - b.order);
+}
+
+/** Where a card or "Next up" block goes: the external link, or the case study page. */
+export function studyHref(study: Pick<CaseStudy, "slug" | "externalUrl">) {
+  return study.externalUrl ?? `/work/${study.slug}`;
 }
 
 /** Sidebar links for a case study, from its <Section> tags (may be empty). */
