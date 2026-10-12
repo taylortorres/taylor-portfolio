@@ -66,7 +66,7 @@ export default function QuitRateChart() {
         </p>
       </div>
 
-      <figcaption className="mt-7 text-center font-mono text-case-body font-medium text-chart-gray uppercase">
+      <figcaption className="mt-7 text-center font-mono text-case-body font-medium text-figure-ink uppercase">
         TL;DR: Learners are giving up :(
       </figcaption>
       <p className="sr-only">

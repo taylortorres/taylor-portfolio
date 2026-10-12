@@ -46,7 +46,8 @@
 | `next-bg` / `next-text` / `next-ring` / `next-ink` | `#484aa6` / `#d4d6f8` / `rgba(153,144,121,0.32)` / `#4a4cb0` | "Next up" block (fill, small text, 1px ring, READ NEXT text) |
 | `figure-bg` / `figure-border` | `#f9f9fa` / `#eaebed` | gray panel behind charts and diagrams |
 | `chart-card-border` / `chart-grid` | `#e5e5e5` / `#e6e6e6` | white chart card border, dashed guide lines (at 40% opacity) |
-| `chart-up` / `chart-base` / `chart-gray` | `#dc1a1a` / `#0467d1` / `#6b7480` | ATSB quit chart: red line, +21% and red notes (Figma notes at 0.8 opacity); baseline (Figma 0.6 opacity); TL;DR (Figma #878f98). All made solid or darker for AA. "MORE QUITS THAN BASELINE" uses `muted`. |
+| `chart-up` / `chart-base` | `#dc1a1a` / `#0467d1` | ATSB quit chart: red line, +21% and red notes (Figma notes at 0.8 opacity); baseline (Figma 0.6 opacity). Made solid for AA. "MORE QUITS THAN BASELINE" uses `muted`. |
+| `figure-ink` / `figure-arrow` | `#6b7480` / `#98a3ae` | text on the gray panel: TL;DR, BEFORE / AFTER, demo labels, phone captions and notes (Figma #878f98, #98a3ae, #78899b darkened for AA); decorative arrow between panels |
 | `callout` | `#2e8550` | "How might we" block (Figma #3b9d5c darkened so the 14px label meets AA) |
 
 The purple case study blocks (`impact`, `next-bg`) also get Figma's noise via the `grain` utility (`public/case-study/grain.svg`).
@@ -85,6 +86,8 @@ The footer background is an image, not a color.
 | `text-section-title` / `text-section-title-sm` | 32 / 38 / −0.64px, 26 / 31 / −0.52px below `md` | section headline (Source Serif 4) |
 | `text-case-body` | 16 / 23 | section body copy (Geist; bold is semibold) |
 | `text-chart-label` / `text-chart-note` | 11 / 12, 14 / 16 / −0.64px | chart axis, legend and title (Geist Mono); chart annotations (Geist semibold) |
+| `text-panel-label` / `text-panel-note` | 11 / 15, 11 / 14 | BEFORE / AFTER, demo labels and phone captions (Geist Mono); sentence under a demo phone (Geist) |
+| `text-pair-title` | 20 / 28 / −0.64px | title beside a pair of phones (Source Serif 4) |
 | `text-callout-label` / `text-callout-question` | 14 / 18, 24 / 26 | "HOW MIGHT WE..." (Geist Mono), its question (Source Serif 4, italic for emphasis) |
 
 Source Serif 4 is loaded with its `opsz` axis, so optical size follows the font size (closest match to Figma's Source Serif Pro).
@@ -119,10 +122,13 @@ Source Serif 4 is loaded with its `opsz` axis, so optical size follows the font 
 | `case-para` / `case-block` | 23px / 45px | between paragraphs, text to a figure (two figures in a row: `case-gap`) |
 | `figure-label-gap` | 13px | figure label (STORIES FLOW) to its media |
 | `chart-card-max` | 687px | white chart card inside the gray panel |
+| `compare-h` / `compare-screen` / `compare-inset` | 250px / 206px / 64px | BEFORE / AFTER panel height, its screen width, least space beside the screen in narrow panels |
+| `pair-panel` / `pair-title` | 442px / 289px | gray panel with two phones, the title beside it (from `xl`) |
+| `demo-phone` / `demo-note` | 161px / 220px | phone frame in a motion demo, max width of its note |
 | `lightbox-pad` / `lightbox-pad-sm` | 40px / 16px | space around zoomed media (below `sm`: 16px) |
 | `cursor-halo` | 40px | soft halo behind the cursor dot over links and buttons (`halo-accent` / `halo-paper` utilities) |
 
-Tags have a 6px radius (`rounded-tag`) and a 1px `tag` border. Thumbnails have square corners. Sidebar chips have a 4px radius (`rounded-chip`), sidebar section links 8px (`rounded-section`). Case study hero media and the "Next up" block have 16px (`rounded-media`), Impact callouts and figure panels 8px (`rounded-stat`), chart cards 10px (`rounded-chart`), the "How might we" block 12px (`rounded-callout`).
+Tags have a 6px radius (`rounded-tag`) and a 1px `tag` border. Thumbnails have square corners. Sidebar chips have a 4px radius (`rounded-chip`), sidebar section links 8px (`rounded-section`). Case study hero media and the "Next up" block have 16px (`rounded-media`), Impact callouts and figure panels 8px (`rounded-stat`), chart cards 10px (`rounded-chart`), the "How might we" block 12px (`rounded-callout`), demo phone frames 18px (`rounded-phone`).
 
 ## Responsive
 - Desktop (1440) is the primary design. The site must also look intentional on **phones (~390px)** and **tablets**.
@@ -162,8 +168,9 @@ Tags have a 6px radius (`rounded-tag`) and a 1px `tag` border. Thumbnails have s
 - Sort by `order`. Any field missing from `meta` should fail the build with a clear error message.
 - A full case study adds `meta.hero` (all fields required when present): `title` (Title Case, shown in the hero; `meta.title` stays the card title), `tags`, `image` (`"./..."`), `imageAlt`, and `role`, `timeline`, `team`, `skills` as arrays of lines. Without `hero` and sections the page renders as a plain placeholder.
 - `/work/[slug]` renders the hero from `meta.hero`, then the MDX body (`<Impact stats={[{ value, label }]} />` first, then the sections), then the shared "Next up" block, which links to the next case study by `order` and wraps from the last to the first.
-- Wrap each part of the body in `<Section id="kebab-case-id" title="Title" headline="Big serif line">` (headline optional). The title renders as the mono label (OVERVIEW); write the body as Markdown inside, with blank lines after the opening tag and before the closing one. The sidebar is generated from these tags (`getSections` in `src/lib/sections.ts`); a missing, duplicate or non-string id/title fails the build.
-- Components available in MDX without an import: `Section`, `Impact`, `CaseImage` (`zoomable`, optional `full`), `CaseVideo` (`zoomable`, optional `fullSrc`), `VideoPair` (`left`/`right` clips with posters), `CursorCaption` (`caption`), `Figure` (`label` above the media), `Callout` (`label`; children are the question, `*word*` for italic) and `QuitRateChart` (ATSB only). Import images from the case study folder and pass them as `src`.
+- Wrap each part of the body in `<Section id="kebab-case-id" title="Title" headline="Big serif line">` (headline optional, `*word*` for italic). The title renders as the mono label (OVERVIEW); a Markdown `###` inside is a sub-headline in the same serif style, 22px above its text; write the body as Markdown inside, with blank lines after the opening tag and before the closing one. The sidebar is generated from these tags (`getSections` in `src/lib/sections.ts`); a missing, duplicate or non-string id/title fails the build.
+- Components available in MDX without an import: `Section`, `Impact`, `CaseImage` (`zoomable`, optional `full`), `CaseVideo` (`zoomable`, optional `fullSrc`), `VideoPair` (`left`/`right` clips with posters), `CursorCaption` (`caption`), `Figure` (`label` above the media), `Callout` (`label`; children are the question, `*word*` for italic), `BeforeAfter` (`before` / `after` screens, zoomable), `PhonePair` (`title` plus `left` / `right` zoomable phone stills with captions), `MotionDemos` (`demos`: label, note and a looping video in a phone frame each) and `QuitRateChart` (ATSB only).
+- Videos (`CaseVideo`, `MotionDemos`) use `preload="none"`: nothing downloads until the video scrolls into view, it plays only while on screen and pauses when scrolled off. Import images from the case study folder and pass them as `src`.
 
 ## Assets
 | What | Where | Notes |

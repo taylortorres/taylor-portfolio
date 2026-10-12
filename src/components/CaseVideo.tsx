@@ -16,12 +16,25 @@ type Props = {
   zoomable?: boolean;
   /** Bigger version for the viewer; only loaded when it opens. */
   fullSrc?: string;
+  /** Extra classes for the inline video (e.g. rounded corners). */
+  className?: string;
 };
 
-// Case study video: muted loop that plays only while on screen. With reduced
-// motion it shows the poster. With `zoomable`, the viewer plays it large with
+// Case study video: muted loop that plays only while on screen. Nothing
+// downloads until then (preload="none"; play() starts the download), so a
+// page of videos costs only its posters up front. With reduced motion it
+// shows the poster. With `zoomable`, the viewer plays it large with
 // controls while the inline copy pauses.
-export default function CaseVideo({ src, label, width, height, poster, zoomable = false, fullSrc = src }: Props) {
+export default function CaseVideo({
+  src,
+  label,
+  width,
+  height,
+  poster,
+  zoomable = false,
+  fullSrc = src,
+  className = "",
+}: Props) {
   const ref = useRef<HTMLVideoElement>(null);
   const inView = useInView(ref);
   const reduced = useMediaQuery(REDUCED_MOTION);
@@ -45,8 +58,8 @@ export default function CaseVideo({ src, label, width, height, poster, zoomable 
       muted
       loop
       playsInline
-      preload={reduced ? "none" : "metadata"}
-      className="block h-auto w-full"
+      preload="none"
+      className={`block h-auto w-full ${className}`}
     />
   );
   if (!zoomable) return inline;

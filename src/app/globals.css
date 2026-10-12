@@ -36,7 +36,8 @@
   --chart-grid: #e6e6e6; /* dashed guide lines (drawn at 40% opacity) */
   --chart-up: #dc1a1a; /* "with ATSB" line, legend, +21% and the red notes (Figma notes at 0.8 opacity, solid for AA) */
   --chart-base: #0467d1; /* "baseline" line and legend (Figma 0.6 opacity, solid to meet 3:1) */
-  --chart-gray: #6b7480; /* TL;DR on the gray panel (Figma #878f98 darkened to meet WCAG AA) */
+  --figure-ink: #6b7480; /* text on the gray panel: TL;DR, BEFORE/AFTER, phone captions (Figma #878f98, #98a3ae, #78899b darkened to meet WCAG AA) */
+  --figure-arrow: #98a3ae; /* decorative arrow between panels */
   --callout: #2e8550; /* "How might we" block (Figma #3b9d5c darkened so the 14px label meets WCAG AA) */
 }
 
@@ -72,7 +73,8 @@
   --color-chart-grid: var(--chart-grid);
   --color-chart-up: var(--chart-up);
   --color-chart-base: var(--chart-base);
-  --color-chart-gray: var(--chart-gray);
+  --color-figure-ink: var(--figure-ink);
+  --color-figure-arrow: var(--figure-arrow);
   --color-callout: var(--callout);
 
   /* Fonts (variables set by next/font in layout.tsx) */
@@ -157,6 +159,13 @@
   --text-chart-note: 14px; /* annotations on a chart (Figma 14/15–16) */
   --text-chart-note--line-height: 16px;
   --text-chart-note--letter-spacing: -0.64px;
+  --text-panel-label: 11px; /* BEFORE / AFTER / SHUFFLE DEMO, V1 and phone captions (Geist Mono; Figma 11 in a 15px box) */
+  --text-panel-label--line-height: 15px;
+  --text-panel-note: 11px; /* sentence under a demo phone (Geist) */
+  --text-panel-note--line-height: 14px;
+  --text-pair-title: 20px; /* title beside a pair of phones (Source Serif 4) */
+  --text-pair-title--line-height: 28px;
+  --text-pair-title--letter-spacing: -0.64px;
   --text-callout-label: 14px; /* "HOW MIGHT WE..." */
   --text-callout-label--line-height: 18px;
   --text-callout-question: 24px; /* callout question, Source Serif 4 */
@@ -219,6 +228,13 @@
   --spacing-case-block: 45px; /* text to a figure inside a section */
   --spacing-figure-label-gap: 13px; /* figure label (STORIES FLOW) to the media */
   --spacing-chart-card-max: 687px; /* white chart card inside the gray panel */
+  --spacing-compare-h: 250px; /* BEFORE / AFTER panels */
+  --spacing-compare-screen: 206px; /* screen inside each BEFORE / AFTER panel */
+  --spacing-compare-inset: 64px; /* least space beside that screen, so it clears the BEFORE / AFTER label in narrow panels */
+  --spacing-pair-panel: 442px; /* gray panel holding two phones */
+  --spacing-pair-title: 289px; /* title beside it */
+  --spacing-demo-phone: 161px; /* phone frame in a motion demo panel */
+  --spacing-demo-note: 220px; /* sentence under a demo phone (Figma boxes 172 and 218, balanced) */
   --spacing-lightbox-pad: 40px; /* zoom viewer space around the media */
   --spacing-lightbox-pad-sm: 16px; /* same, below sm */
 
@@ -230,6 +246,7 @@
   --radius-stat: 8px; /* impact stat callouts, figure panels */
   --radius-chart: 10px; /* white chart card */
   --radius-callout: 12px; /* "How might we" block */
+  --radius-phone: 18px; /* phone frame around a demo video */
 
   /* Signature handwriting reveal. Each stroke sets its own delay and
      duration (see Signature.tsx), then holds the final state. */

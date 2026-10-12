@@ -3,16 +3,25 @@ import type { ReactNode } from "react";
 type Props = {
   id: string;
   title: string;
-  /** The big serif line under the label, e.g. "Learners expected to tap, not drag". */
+  /** The big serif line under the label, e.g. "Learners expected to tap, not drag". `*word*` is italic. */
   headline?: string;
   children?: ReactNode;
 };
 
 // Body rhythm (Figma 2682:69275 and siblings): 23px between paragraphs, 45px
-// between text and a figure, 64px between two figures. Bold is semibold.
+// between text and a figure, 64px between two figures (or a figure and a
+// sub-headline). A Markdown `###` is a sub-headline in the headline style,
+// 22px above its text. Bold is semibold.
 const BODY =
   "font-sans text-case-body text-muted [&_strong]:font-semibold " +
-  "[&>p+p]:mt-case-para [&>p+:not(p)]:mt-case-block [&>:not(p)+p]:mt-case-block [&>:not(p)+:not(p)]:mt-case-gap";
+  "[&>h3]:font-serif [&>h3]:text-section-title-sm [&>h3]:text-heading md:[&>h3]:text-section-title " +
+  "[&>p+p]:mt-case-para [&>h3+p]:mt-case-headline-gap [&>p+:not(p)]:mt-case-block " +
+  "[&>:not(p,h3)+p]:mt-case-block [&>:not(p)+:not(p)]:mt-case-gap";
+
+// "why not just *show* them?" → why not just <em>show</em> them?
+function emphasize(text: string) {
+  return text.split(/\*([^*]+)\*/).map((part, i) => (i % 2 ? <em key={i}>{part}</em> : part));
+}
 
 // One part of a case study: a mono label (the sidebar title), an optional
 // serif headline, then the MDX body. Its id and title also become the sidebar
@@ -29,7 +38,7 @@ export default function Section({ id, title, headline, children }: Props) {
         {title}
       </h2>
       {headline && (
-        <h3 className="mt-case-label-gap font-serif text-section-title-sm text-heading md:text-section-title">{headline}</h3>
+        <h3 className="mt-case-label-gap font-serif text-section-title-sm text-heading md:text-section-title">{emphasize(headline)}</h3>
       )}
       {children && <div className={`${headline ? "mt-case-headline-gap" : "mt-case-label-gap"} ${BODY}`}>{children}</div>}
     </section>

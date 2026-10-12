@@ -20,6 +20,12 @@ export const meta = {
 }
 
 import storiesFlow from "./stories-flow.png"
+import dragHandleBefore from "./drag-handle-before.png"
+import dragHandleAfter from "./drag-handle-after.png"
+import numberedTimeline from "./numbered-timeline.png"
+import connectedTable from "./connected-table.png"
+import numberedTapTokens from "./numbered-tap-tokens.png"
+import tapArrows from "./tap-arrows.png"
 
 <Impact
   stats={[
@@ -65,9 +71,45 @@ Quits spiked on initial exposure and dropped once learners adapted, demonstratin
 
 </Section>
 
-<Section id="early-explorations" title="Early Explorations" />
+<Section id="early-explorations" title="Early Explorations" headline="First, fixing an icon that sent the wrong signal">
 
-<Section id="pivoting-to-motion" title="Pivoting to Motion" />
+I swapped the hamburger icon, which learners could mistake for a tappable menu, for a **6-dot grip**, as it more conventionally signals a “grab” interaction. I also **moved it to the right side**, where most people’s thumbs rest.
+
+<BeforeAfter
+  before={{ src: dragHandleBefore, alt: "Before: Arrange the Beats with a hamburger icon on the left of each event card" }}
+  after={{ src: dragHandleAfter, alt: "After: the same cards with a 6-dot grip on the right" }}
+/>
+
+### Then, building on what learners already knew...
+
+I **explored widely in Figma**, then **turned the strongest ideas into quick prototypes in Claude Design** so I could test what resonated and iterate fast. Here’s a snapshot of a few of them.
+
+<PhonePair
+  title="Adapting Duolingo Math drag interactions for language exercises"
+  left={{ src: numberedTimeline, caption: "Numbered timeline", alt: "Numbered timeline prototype: events sit beside numbered slots 1 to 3 on a vertical line, with the dragged card highlighted in blue" }}
+  right={{ src: connectedTable, caption: "Connected table", alt: "Connected table prototype: the events form one connected list, and a dashed slot opens where the dragged card will drop" }}
+/>
+
+<PhonePair
+  title="Removing drag altogether and going back to tap"
+  left={{ src: numberedTapTokens, caption: "Numbered tap tokens", alt: "Numbered tap tokens prototype: learners tap number tokens 1, 2 and 3 to place each event in order" }}
+  right={{ src: tapArrows, caption: "Tap arrows", alt: "Tap arrows prototype: each event card has up and down arrow buttons to move it" }}
+/>
+
+</Section>
+
+<Section id="pivoting-to-motion" title="Pivoting to Motion" headline="But if we want learners to drag, why not just *show* them?">
+
+Each layout changed how the exercise looked, but none of them showed learners what to actually do. So I started **exploring motion that demonstrates the gesture before learners even touch the tokens**, and **brought my two strongest ideas to crit**.
+
+<MotionDemos
+  demos={[
+    { label: "Shuffle demo, V1", note: "Tokens swap places on load to show that the order can change.", src: "/videos/shuffle-demo-v1.mp4", poster: "/videos/posters/shuffle-demo-v1.jpg", alt: "Shuffle demo prototype: the three event cards swap places as the exercise loads", width: 758, height: 1620 },
+    { label: "Idle wiggle, v1", note: "Inspired by rearranging apps on an iPhone screen, the tokens jiggle as an idle nudge.", src: "/videos/idle-wiggle-v1.mp4", poster: "/videos/posters/idle-wiggle-v1.jpg", alt: "Idle wiggle prototype: the event cards jiggle in place, like apps being rearranged on an iPhone", width: 758, height: 1620 },
+  ]}
+/>
+
+</Section>
 
 <Section id="design-crit" title="Design Crit" />
 
