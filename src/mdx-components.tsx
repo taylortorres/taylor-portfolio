@@ -9,8 +9,10 @@ import CritBoard from "@/components/CritBoard";
 import CursorCaption from "@/components/CursorCaption";
 import Decision from "@/components/Decision";
 import DemoVideo from "@/components/DemoVideo";
+import EvolutionStep from "@/components/EvolutionStep";
 import FeatureRows from "@/components/FeatureRows";
 import Figure from "@/components/Figure";
+import FramedPanels from "@/components/FramedPanels";
 import Impact from "@/components/Impact";
 import Insight from "@/components/Insight";
 import Lessons from "@/components/Lessons";
@@ -42,8 +44,10 @@ const components: MDXComponents = {
   CursorCaption,
   Decision,
   DemoVideo,
+  EvolutionStep,
   FeatureRows,
   Figure,
+  FramedPanels,
   Impact,
   Insight,
   Lessons,

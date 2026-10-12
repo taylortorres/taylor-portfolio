@@ -42,6 +42,15 @@ import fizz12 from "./research-fizz-12.png"
 import fizz13 from "./research-fizz-13.png"
 import researchRde from "./research-rde-site.png"
 import researchStanfood from "./research-stanfood.png"
+import ideationSketches from "./ideation-sketches.png"
+import acornPoses from "./ideation-acorn-poses.png"
+import widgetSketches from "./ideation-widget-sketches.png"
+import busynessBefore from "./evolution-busyness-before.png"
+import busynessAfter from "./evolution-busyness-after.png"
+import accessibilityBefore from "./evolution-accessibility-before.png"
+import accessibilityAfter from "./evolution-accessibility-after.png"
+import badgesBefore from "./evolution-badges-before.png"
+import badgesAfter from "./evolution-badges-after.png"
 
 <Impact
   stats={[
@@ -221,8 +230,74 @@ That made me wonder: If students cared this much about dining info, ***why weren
 
 </Section>
 
-<Section id="ideation" title="Ideation" />
+<Section id="ideation" title="Ideation" headline="Putting it all together">
 
-<Section id="design-evolution" title="Design Evolution" />
+With the insights I gathered from user research and competitor analysis, I moved into the ideation phase to sketch out a lo-fi prototype focusing on the four main navigation pages and their associated tasks:
+
+<FramedPanels
+  panels={[
+    { src: ideationSketches, aspect: [768, 472], w: 87.5, alt: "Lo-fi pencil sketches of ten Treeats screens: home with today’s specials and busyness, explore dining halls with filters, community polls and posts, and the profile with points and badges, with arrows linking the flows" },
+  ]}
+/>
+
+### Gamifying engagement with campus spirit
+
+I incorporated gamification into the app by **creating an acorn mascot**, drawing inspiration from the **many squirrels on Stanford’s campus** (after all, acorns are their favorite treat!). This addition aimed to enhance the campus experience with a playful, cozy touch, motivating students to engage with the app and **earn Acorn Points and custom dining badges as rewards**.
+
+<FramedPanels
+  panels={[
+    { src: acornPoses, aspect: [365, 331], w: 91.3, caption: "3 different poses for the acorn mascot", alt: "Three pencil sketches of the acorn mascot in round glasses: cheerful and waving, arms up and excited, and starry-eyed" },
+    { src: widgetSketches, aspect: [365, 331], w: 88.95, caption: "iPhone widget iterations", alt: "Pencil sketches of a “congratulations on earning your first badge” screen for the Sweet Treat Fanatic badge, and three home screen widget layouts listing lunch and dinner specials by dining hall" },
+  ]}
+/>
+
+<SectionPart label="before creating higher fidelity prototypes," headline="I spoke with three more students, conducting concept validation testing, to gauge student interest and gather feedback on the app’s features." size="sm">
+
+<PrincipleCards
+  variant="takeaways"
+  intro="3 notable takeaways stood out:"
+  cards={[
+    { icon: { src: "/case-study/treeats/icon-language.svg", width: 41, height: 41 }, title: "Simplify language", text: "\"Moderate\" and \"Calm\" were vague, so I renamed the levels to \"Busy,\" \"Moderately Busy,\" and \"Not Busy.\"" },
+    { icon: { src: "/case-study/treeats/icon-anonymous.svg", width: 33, height: 33 }, title: "Keep users anonymous", text: "Anonymous mascots add some play to the app and let students share feedback without being identified." },
+    { icon: { src: "/case-study/treeats/icon-focus.svg", width: 37, height: 37 }, title: "Narrow down focus", text: "Narrowing the scope to students kept the app focused on their needs, with staff left for a later iteration." },
+  ]}
+/>
+
+</SectionPart>
+
+</Section>
+
+<Section id="design-evolution" title="Design Evolution" headline="Testing with students pushed me to rethink busyness, accessibility, and rewards">
+
+After testing the mid-fidelity prototypes with students, **I implemented three key changes based on their feedback**, transforming the design into its final high-fidelity version.
+
+<EvolutionStep
+  n={1}
+  title="Busyness had to show more than wait time"
+  before={{ src: busynessBefore, w: 82.54, y: 53.6, frame: "shadow", alt: "Before: a Wait Times tab reading “Live: Busier than usual,” with a bar graph of the day’s wait times from 8a to 8p and the current hour in red" }}
+  after={{ src: busynessAfter, w: 89.92, frame: "border-shadow", alt: "After: a Busyness tab where a sleepy acorn mascot sits beside “Live: Busy (Long wait, no seating)” and a Help Update Status button" }}
+  feedback={["Wait time alone missed seating in buffet-style halls", "The bar graph was hard to read without numbers"]}
+  change={["Merged wait time and seating into one status", "Swapped the bar graph for a live mood-changing mascot that indicates status", "Made “Help Update Status” more prominent"]}
+/>
+
+<EvolutionStep
+  n={2}
+  title="Ensuring accessibility standards are met"
+  before={{ src: accessibilityBefore, w: 62, y: 54.1, frame: "shadow", caption: <><strong>Failed</strong> all WCAG accessibility standards</>, alt: "Before: a contrast check of white “Handgloves” text on the light green #4BAA8A, a 2.83:1 ratio that fails for normal text, large text and graphics" }}
+  after={{ src: accessibilityAfter, w: 62, y: 54.1, frame: "shadow", caption: <><strong>Passed</strong> all WCAG accessibility standards</>, alt: "After: the same check on the darker green #00615F, a 7.3:1 ratio that passes AA and AAA for normal and large text, and AA for graphics" }}
+  feedback="Hard to read certain text and graphic-heavy screens."
+  change="Darkened the primary color, raising contrast from 2.83:1 to 7.3:1. It now passes all WCAG standards."
+/>
+
+<EvolutionStep
+  n={3}
+  title="Students wanted real rewards, not just badges"
+  before={{ src: badgesBefore, w: 85, frame: "border", alt: "Before: a My Badges row with Sweet Treat Fanatic, Cultural Feastmaster and Caffeinated Connoisseur badges" }}
+  after={{ src: badgesAfter, w: 77.4, frame: "border", alt: "After: a 25-day streak and 275 Acorn Points above a Leaderboard Progress bar at 85%, with “Keep nibbling! Just 15 more points to join the Top 10!”" }}
+  feedback="Many students reported wanting tangible rewards over levels and badges."
+  change="Added a quarterly leaderboard where the top 10 contributors earn dining dollars, with Acorn Points tracking progress."
+/>
+
+</Section>
 
 <Section id="reflections" title="Reflections" />

@@ -57,6 +57,9 @@
   /* Treeats Challenge and Solution (Figma 2691:70778, 2691:70802, 2691:70836, 2691:70880) */
   --principle: #5758b9; /* CLARITY / ENGAGEMENT / INCENTIVE cards (Figma #5455b7 on the first, #5758b9 on the others: unified) */
   /* Treeats Research (Figma 2691:70928, 2691:70967) */
+  /* Treeats Ideation and Design Evolution (Figma 2691:71067, 2691:71103, 2691:71156) */
+  --choice-note: #5f6873; /* gray caption on the green AFTER panel (Figma #7e8286 darkened for AA: 4.95:1 on choice-bg) */
+  --fail-ink: #c33e35; /* "Failed" under the accessibility BEFORE screen (Figma value, 4.9:1 on figure-bg) */
   --caution-ink: #946800; /* "COULD BE IMPROVED" (Figma #e9ab10 darkened to meet WCAG AA, 4.95:1; "WORKS GREAT!" uses choice-ink) */
 }
 
@@ -97,6 +100,8 @@
   --color-callout: var(--callout);
   --color-principle: var(--principle);
   --color-caution-ink: var(--caution-ink);
+  --color-choice-note: var(--choice-note);
+  --color-fail-ink: var(--fail-ink);
   --color-plan-bg: var(--plan-bg);
   --color-status-bg: var(--status-bg);
   --color-status-border: var(--status-border);
@@ -372,6 +377,15 @@
   --spacing-body-label-top: 32px; /* paragraph to an in-body mono label ("SO, I INTERVIEWED 6 STUDENTS") */
   --spacing-body-label-gap: 12px; /* that label to its list */
   --spacing-direction-top: 10px; /* extra space above the Design Direction cards (Figma 32 below the headline) */
+  --spacing-panel-pair-gap: 37px; /* Treeats Ideation: between the acorn poses and widget sketch panels */
+  --spacing-panel-caption-gap: 15px; /* framed image to its caption inside a panel (Figma 14 / 15) */
+  --spacing-headline-sm-gap: 32px; /* small SectionPart headline to its body (concept validation) */
+  --spacing-takeaways-top: 20px; /* "3 notable takeaways stood out:" to the cards */
+  --spacing-takeaways-gap: 15px; /* between the concept validation cards */
+  --spacing-takeaway-h: 290px; /* their height (from md) */
+  --spacing-takeaway-icon: 37px; /* icon row above the title (Figma icons 33–40.5 with 8–12 below: unified) */
+  --spacing-step-head: 15px; /* Design Evolution step title to its panels (Figma 16 below a 26.5px title box) */
+  --spacing-step-notes: 20px; /* panels to FEEDBACK / ✓ CHANGE */
 
   /* Radius */
   --radius-tag: 6px;
@@ -395,6 +409,7 @@
   --shadow-post: 0 6px 13px rgb(0 0 0 / 0.06), 0 18px 23px rgb(0 0 0 / 0.09), 0 9px 32px rgb(0 0 0 / 0.05), 0 94px 37px rgb(0 0 0 / 0.01); /* Treeats Fizz post (Figma 12.75 / 23.25 / 31.5 / 37.1 blurs) */
   --shadow-feature: 0 5px 40px rgb(0 0 0 / 0.25); /* Treeats feature phones */
   --shadow-site: 0 2px 9px rgb(0 0 0 / 0.08); /* Treeats Research site screenshots (Figma 0 2.2 8.4–8.7) */
+  --shadow-card: 0 4px 12px rgb(182 181 181 / 0.12); /* unframed Design Evolution cards: Wait Times, Handgloves (Figma 0 3.75 15 / 6.4 at 8–12%: unified) */
 
   /* Signature handwriting reveal. Each stroke sets its own delay and
      duration (see Signature.tsx), then holds the final state. */
