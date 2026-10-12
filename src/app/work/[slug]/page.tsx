@@ -4,7 +4,6 @@ import { notFound } from "next/navigation";
 import CaseStudyHero from "@/components/CaseStudyHero";
 import CaseStudyLayout from "@/components/CaseStudyLayout";
 import Footer from "@/components/Footer";
-import Nav from "@/components/Nav";
 import NextProject from "@/components/NextProject";
 import { getCaseStudies, getCaseStudySections } from "@/lib/case-studies";
 
@@ -33,14 +32,13 @@ export async function generateMetadata({ params }: PageProps<"/work/[slug]">): P
   return study ? { title: `${study.title} · Taylor Torres`, description: study.description } : {};
 }
 
-// Nav and footer are the instant shell; everything that reads `params` sits
+// The footer is the instant shell (the nav is in the root layout); everything that reads `params` sits
 // behind <Suspense> (Next requires it even with generateStaticParams). Each
 // known slug is fully prerendered, so the fallback only shows for a moment on
 // an unprefetched navigation.
 export default function CaseStudyPage({ params }: PageProps<"/work/[slug]">) {
   return (
     <>
-      <Nav />
       <main className="flex-1">
         <Suspense fallback={<div className="min-h-dvh" />}>
           <CaseStudyBody params={params} />

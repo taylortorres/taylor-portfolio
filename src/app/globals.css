@@ -422,9 +422,26 @@
      duration (see Signature.tsx), then holds the final state. */
   --animate-write-stroke: write-stroke 1s linear both;
 
+  /* Nav enter on a full page load (SiteHeader.tsx): slides down 20px and
+     fades in; the signature starts drawing as it lands. Transform and opacity
+     only, so nothing shifts. */
+  --animate-nav-enter: nav-enter 400ms cubic-bezier(0.22, 1, 0.36, 1) backwards;
+
   /* Page enter: blur-to-sharp and fade on every page load and navigation
      (template.tsx). Fills backwards only, so no filter is left behind. */
   --animate-page-enter: page-enter 450ms cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+
+/* How much of the sticky site header covers the top of the screen,
+   including its 1px border: 109px on phones (two rows), 65px from sm. SiteHeader sets it to 0 while the
+   phone header is hidden. Sticky bars and scroll margins use it. */
+:root {
+  --nav-offset: 109px;
+}
+@media (width >= 40rem) {
+  :root {
+    --nav-offset: calc(var(--spacing-nav-h) + 1px);
+  }
 }
 
 /* Zoom viewer (Zoomable.tsx): space around the media, used for padding and
@@ -435,6 +452,13 @@
 @media (width >= 40rem) {
   .lightbox {
     --lightbox-pad: --theme(--spacing-lightbox-pad inline);
+  }
+}
+
+@keyframes nav-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
   }
 }
 

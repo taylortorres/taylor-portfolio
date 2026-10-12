@@ -25,7 +25,7 @@ export default function Section({ id, title, label, headline, top = false, child
     <section
       id={id}
       aria-labelledby={`${id}-title`}
-      className="scroll-mt-[calc(var(--spacing-section-bar)+var(--spacing-stack))] lg:scroll-mt-sidebar-pad"
+      className="scroll-mt-[calc(var(--nav-offset)+var(--spacing-section-bar)+var(--spacing-stack))] lg:scroll-mt-[calc(var(--nav-offset)+var(--spacing-sidebar-pad))]"
     >
       {/* A display label can hold emoji or kaomoji: screen readers get the plain title. */}
       <h2

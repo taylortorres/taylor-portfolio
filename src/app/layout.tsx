@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Newsreader, Source_Serif_4 } from "next/font/google";
 import CustomCursor from "@/components/CustomCursor";
+import Nav from "@/components/Nav";
+import SiteHeader from "@/components/SiteHeader";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -37,9 +39,14 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${newsreader.variable} ${sourceSerif.variable} h-full antialiased`}
+      data-scroll-behavior="smooth"
+      className={`${geistSans.variable} ${geistMono.variable} ${newsreader.variable} ${sourceSerif.variable} h-full antialiased motion-safe:scroll-smooth`}
     >
       <body className="min-h-full flex flex-col">
+        {/* Outside the page template: mounts once per full load, stays put on navigation. */}
+        <SiteHeader>
+          <Nav />
+        </SiteHeader>
         {children}
         <CustomCursor />
       </body>

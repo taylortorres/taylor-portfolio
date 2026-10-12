@@ -27,7 +27,7 @@ export default async function ProjectGrid() {
   const columns = splitColumns(studies);
   let index = 0;
   return (
-    <section id="work" aria-labelledby="work-heading" className="pt-projects-top pb-projects-bottom">
+    <section id="work" aria-labelledby="work-heading" className="scroll-mt-(--nav-offset) pt-projects-top pb-projects-bottom">
       <h2 id="work-heading" className="sr-only">
         Work
       </h2>

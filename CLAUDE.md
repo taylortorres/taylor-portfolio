@@ -115,7 +115,7 @@ Source Serif 4 is loaded with its `opsz` axis, so optical size follows the font 
 ### Spacing and layout
 | Token | Value | Use |
 |---|---|---|
-| `nav-h` | 64px | nav height |
+| `nav-h` | 64px | nav height (from sm; two rows, 108px, on phones). The `--nav-offset` CSS variable (not a token) is how much of the sticky nav covers the screen, border included: 65px from sm, 109px on phones, 0 while the phone nav is hidden |
 | `hero-h` | 445px | hero height (desktop) |
 | `content-max` | 1275px | projects grid max width |
 | `gutter` | 14px | gap between columns and grid edge padding |
@@ -187,6 +187,8 @@ Tags have a 6px radius (`rounded-tag`) and a 1px `tag` border. Thumbnails have s
 - **Accessibility:** use semantic landmarks (`header`, `nav`, `main`, `footer`) and a correct heading order. Every link and button must be keyboard-reachable with a visible focus style. Text must meet WCAG AA contrast. Decorative art gets `alt=""` and `aria-hidden`. Content images get real alt text. Tap targets are at least 44px.
 - **Images:** always use `next/image` with explicit `width`/`height` or `fill` + `sizes`. Add `priority` only to above-the-fold images. In MDX, `img` is mapped to `next/image` via `src/mdx-components.tsx`.
 - **Motion:** every animation and transition must respect `prefers-reduced-motion`. Use Tailwind `motion-safe:`/`motion-reduce:` or a CSS media query. With reduced motion, show the static final state.
+- **Sticky nav:** `<Nav>` is rendered once in the root layout inside `SiteHeader` (sticky, z-40, solid paper with the 1px hairline), outside the page template, so it mounts once per full page load and stays put on in-site navigation. Pages don't render `<Nav>` themselves. On a full load it slides down 20px and fades in over 400ms (`animate-nav-enter`), and the signature starts drawing as it lands (`NAV_IN` in `Signature.tsx`); in-site navigation never replays either. Below sm the nav hides while scrolling down and comes back on any scroll up, near the top, on a page change, or when focus enters it; bigger single jumps (a #hash on load) don't toggle it. Anything positioned under the nav uses `--nav-offset`: the case study sidebar (sticky under it, height `100dvh - offset`), the phone section bar, the phone section menu's height, and section / `#work` scroll margins. Before a scripted jump to a target below, call `hideNavForJump(target)` (`src/lib/nav.ts`) so the phone nav hides first and the jump lands right under the section bar; in-page anchor clicks do this automatically. The zoom viewer and custom cursor are in the top layer, above the nav.
+- **Smooth scrolling:** in-page anchors and sidebar jumps scroll smoothly (`motion-safe:scroll-smooth` on `<html>`; instant with reduced motion). `data-scroll-behavior="smooth"` lets Next jump instantly to the top on page changes. No smooth-scroll library (Lenis): it would need hooks into the zoom viewer's scroll lock, scroll-driven videos, scroll-spy and the hiding nav, and can feel wrong on trackpads and phones.
 - **Components:** keep them small, typed and server components by default. Add `"use client"` only when a component needs interactivity.
 
 ## Case studies (MDX)

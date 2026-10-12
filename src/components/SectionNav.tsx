@@ -5,11 +5,14 @@ import { useEffect, useId, useRef, useState, type MouseEvent } from "react";
 import BackToTop from "./BackToTop";
 import ChipIcon from "./ChipIcon";
 import type { SectionLink } from "@/lib/sections";
+import { hideNavForJump } from "@/lib/nav";
 import { REDUCED_MOTION } from "@/lib/use-media-query";
 
 // Case study navigation. From lg: Figma's sticky left sidebar (node
 // 2682:68508) with HOME, the section links and BACK TO TOP. Below lg: a sticky
 // top bar with HOME and the current section, which opens the full list.
+// Both sit right under the sticky site header (--nav-offset; the sidebar from
+// lg, where the header is always 64px).
 // Scroll-spy: the section whose top has passed a line near the top of the
 // screen is current (the first one at the very top, the last one at the very
 // bottom). It gets the purple moon style and
@@ -85,6 +88,7 @@ function useActiveSection(sections: SectionLink[]) {
       history.replaceState(history.state, "", location.pathname + location.search);
       return;
     }
+    hideNavForJump(target); // phones: the site header slides away so the heading lands under the bar
     target?.scrollIntoView({ behavior, block: "start" });
     document.getElementById(`${id}-title`)?.focus({ preventScroll: true });
     history.replaceState(history.state, "", `#${id}`);
@@ -174,7 +178,7 @@ export default function SectionNav({ sections }: Props) {
   return (
     <>
       {/* Phone and tablet: sticky bar with the current section. */}
-      <div ref={barRef} className="sticky top-0 z-30 lg:hidden">
+      <div ref={barRef} className="sticky top-(--nav-offset) z-30 motion-safe:transition-[top] motion-safe:duration-200 motion-safe:ease-out lg:hidden">
         <nav aria-label="Case study" className="border-b border-hairline bg-paper">
           <div className="flex h-section-bar items-center justify-between gap-4 px-4">
             <HomeChip />
@@ -203,7 +207,7 @@ export default function SectionNav({ sections }: Props) {
           <div
             id={menuId}
             hidden={!open}
-            className="absolute inset-x-0 top-full max-h-[calc(100dvh-var(--spacing-section-bar))] overflow-y-auto border-b border-hairline bg-paper px-2.5 py-3"
+            className="absolute inset-x-0 top-full max-h-[calc(100dvh-var(--nav-offset)-var(--spacing-section-bar))] overflow-y-auto border-b border-hairline bg-paper px-2.5 py-3"
           >
             <SectionLinks sections={sections} active={active} onPick={pick} />
           </div>
@@ -212,7 +216,7 @@ export default function SectionNav({ sections }: Props) {
 
       {/* Desktop: Figma's sticky sidebar. */}
       <aside className="hidden lg:block">
-        <div className="sticky top-0 flex h-dvh flex-col gap-6 p-sidebar-pad">
+        <div className="sticky top-(--nav-offset) flex h-[calc(100dvh-var(--nav-offset))] flex-col gap-6 p-sidebar-pad">
           <nav aria-label="Case study" className="flex min-h-0 flex-col gap-6">
             <div className="px-3 py-0.5">
               <HomeChip />

@@ -2,7 +2,6 @@ import path from "node:path";
 import type { Metadata } from "next";
 import CaseStudyLayout from "@/components/CaseStudyLayout";
 import Footer from "@/components/Footer";
-import Nav from "@/components/Nav";
 import { getSections } from "@/lib/sections";
 import Demo from "./demo.mdx";
 
@@ -19,7 +18,6 @@ const sections = getSections(path.join(process.cwd(), "src/app/dev/kit/demo.mdx"
 export default function Kit() {
   return (
     <>
-      <Nav />
       <main className="flex-1">
         <CaseStudyLayout sections={sections}>
           <h1 className="pt-8 font-display text-footer-title text-ink lg:pt-case-top">Case study kit</h1>
