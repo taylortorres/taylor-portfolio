@@ -29,6 +29,15 @@
   --next-text: #d4d6f8;
   --next-ring: rgba(153, 144, 121, 0.32);
   --next-ink: #4a4cb0; /* "READ NEXT" text on the white pill */
+  /* Case study sections (Figma nodes 2682:69275, 2682:69284, 2682:69330) */
+  --figure-bg: #f9f9fa; /* gray panel behind charts and diagrams */
+  --figure-border: #eaebed;
+  --chart-card-border: #e5e5e5;
+  --chart-grid: #e6e6e6; /* dashed guide lines (drawn at 40% opacity) */
+  --chart-up: #dc1a1a; /* "with ATSB" line, legend, +21% and the red notes (Figma notes at 0.8 opacity, solid for AA) */
+  --chart-base: #0467d1; /* "baseline" line and legend (Figma 0.6 opacity, solid to meet 3:1) */
+  --chart-gray: #6b7480; /* TL;DR on the gray panel (Figma #878f98 darkened to meet WCAG AA) */
+  --callout: #2e8550; /* "How might we" block (Figma #3b9d5c darkened so the 14px label meets WCAG AA) */
 }
 
 @theme inline {
@@ -57,6 +66,14 @@
   --color-next-text: var(--next-text);
   --color-next-ring: var(--next-ring);
   --color-next-ink: var(--next-ink);
+  --color-figure-bg: var(--figure-bg);
+  --color-figure-border: var(--figure-border);
+  --color-chart-card-border: var(--chart-card-border);
+  --color-chart-grid: var(--chart-grid);
+  --color-chart-up: var(--chart-up);
+  --color-chart-base: var(--chart-base);
+  --color-chart-gray: var(--chart-gray);
+  --color-callout: var(--callout);
 
   /* Fonts (variables set by next/font in layout.tsx) */
   --font-display: var(--font-newsreader);
@@ -127,6 +144,23 @@
   --text-next-button: 13px; /* "READ NEXT →" */
   --text-next-button--line-height: 13px;
   --text-next-button--letter-spacing: 0.65px;
+  --text-section-title: 32px; /* section headline, Source Serif 4 (Figma 31.5/38.4) */
+  --text-section-title--line-height: 38px;
+  --text-section-title--letter-spacing: -0.64px;
+  --text-section-title-sm: 26px; /* same, on phones */
+  --text-section-title-sm--line-height: 31px;
+  --text-section-title-sm--letter-spacing: -0.52px;
+  --text-case-body: 16px; /* section body copy (Figma 16/22.5) */
+  --text-case-body--line-height: 23px;
+  --text-chart-label: 11px; /* chart axis, legend and title (Geist Mono) */
+  --text-chart-label--line-height: 12px;
+  --text-chart-note: 14px; /* annotations on a chart (Figma 14/15–16) */
+  --text-chart-note--line-height: 16px;
+  --text-chart-note--letter-spacing: -0.64px;
+  --text-callout-label: 14px; /* "HOW MIGHT WE..." */
+  --text-callout-label--line-height: 18px;
+  --text-callout-question: 24px; /* callout question, Source Serif 4 */
+  --text-callout-question--line-height: 26px;
 
   /* Spacing → p-*, gap-*, h-*, max-w-* */
   --spacing-nav-h: 64px;
@@ -179,6 +213,12 @@
   --spacing-impact-label-gap: 21px; /* IMPACT label to the stat callouts */
   --spacing-next-top: 91px; /* last section to the "next up" block */
   --spacing-case-bottom: 162px; /* "next up" block to the footer */
+  --spacing-case-label-gap: 20px; /* section label (OVERVIEW) to headline */
+  --spacing-case-headline-gap: 22px; /* headline to body (Figma 21–22.5: fixed 79px title boxes) */
+  --spacing-case-para: 23px; /* between paragraphs (one empty 22.5px line in Figma) */
+  --spacing-case-block: 45px; /* text to a figure inside a section */
+  --spacing-figure-label-gap: 13px; /* figure label (STORIES FLOW) to the media */
+  --spacing-chart-card-max: 687px; /* white chart card inside the gray panel */
   --spacing-lightbox-pad: 40px; /* zoom viewer space around the media */
   --spacing-lightbox-pad-sm: 16px; /* same, below sm */
 
@@ -187,7 +227,9 @@
   --radius-chip: 4px; /* HOME, BACK TO TOP */
   --radius-section: 8px; /* sidebar section links */
   --radius-media: 16px; /* case study hero media, "next up" block */
-  --radius-stat: 8px; /* impact stat callouts */
+  --radius-stat: 8px; /* impact stat callouts, figure panels */
+  --radius-chart: 10px; /* white chart card */
+  --radius-callout: 12px; /* "How might we" block */
 
   /* Signature handwriting reveal. Each stroke sets its own delay and
      duration (see Signature.tsx), then holds the final state. */

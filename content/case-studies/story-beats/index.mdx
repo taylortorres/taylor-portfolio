@@ -19,6 +19,8 @@ export const meta = {
   },
 }
 
+import storiesFlow from "./stories-flow.png"
+
 <Impact
   stats={[
     { value: "↓2.44%", label: "Total stories quit rate" },
@@ -27,11 +29,41 @@ export const meta = {
   ]}
 />
 
-<Section id="overview" title="Overview" />
+<Section id="overview" title="Overview" headline="Making a brand-new interaction feel obvious from the first try">
 
-<Section id="context" title="Context" />
+During my second summer at Duolingo, I spent most of my internship redesigning how learners interact with **Arrange the Story Beats**, an exercise where many **learners were getting stuck**.
 
-<Section id="problem" title="Problem" />
+Over six weeks, I explored everything from layout changes to AI-prototyped motion, jammed with our design studio, and worked with PM and engineering to find the right balance of impact and effort.
+
+**The final design was approved at product review and is now live in the app, where it reduced the total Stories quit rate by 2.44%.**
+
+</Section>
+
+<Section id="context" title="Context" headline="Arrange the Beats (ATSB) checks narrative understanding">
+
+Duolingo Stories are short conversations between two characters that build reading and listening skills through embedded interactive exercises. **Arrange the Story Beats (ATSB) is the final exercise in every story.** It asks learners to drag three key events into order to test whether they understood the full story.
+
+<Figure label="Stories flow">
+  <CaseImage
+    src={storiesFlow}
+    alt="The Duolingo Stories flow on iPhone, left to right: a dialogue screen, a sample fill-in-the-blank exercise, more exercises and dialogue, and the final Arrange the Beats exercise, where three events are dragged into story order"
+    zoomable
+  />
+</Figure>
+
+</Section>
+
+<Section id="problem" title="Problem" headline="Learners expected to tap, not drag">
+
+**ATSB was the first Duolingo language exercise to use drag.** Every other exercise works by tapping, so that’s exactly what learners did. When nothing happened, many assumed they ran into a bug and quit.
+
+Quits spiked on initial exposure and dropped once learners adapted, demonstrating that the issue was **first-use friction**. Previous experimental data showed that clarifying instructional copy wasn’t enough since **text was largely ignored**.
+
+<QuitRateChart />
+
+<Callout label="How might we...">make dragging feel *obvious* without relying on explicit instruction?</Callout>
+
+</Section>
 
 <Section id="early-explorations" title="Early Explorations" />
 
