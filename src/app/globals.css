@@ -46,6 +46,13 @@
   --crit-teal-text: #eff8f9;
   --crit-purple: #7e69b9; /* "Wrong signal" card */
   --pick-border: rgba(157, 169, 182, 0.2); /* "ENG'S PICK" pill outline */
+  /* The Plan, Shipped & Up Next, Reflections (Figma 2682:69674, 2682:69732, 2682:69749, 2682:69763) */
+  --plan-bg: rgba(249, 249, 250, 0.5); /* phase timeline panel */
+  --status-bg: rgba(224, 227, 231, 0.25); /* "Next, if needed" / "Later" pills */
+  --status-border: rgba(224, 227, 231, 0.5);
+  --effort-empty: rgba(152, 163, 174, 0.3); /* unfilled effort bar */
+  --photo-shadow: rgba(147, 147, 147, 0.25); /* under the intern photos */
+  --wide-demo-bg: #e1e7e9; /* building hub demo panel: the recording's own background, so no seam shows */
   --callout: #2e8550; /* "How might we" block (Figma #3b9d5c darkened so the 14px label meets WCAG AA) */
 }
 
@@ -84,6 +91,11 @@
   --color-figure-ink: var(--figure-ink);
   --color-figure-arrow: var(--figure-arrow);
   --color-callout: var(--callout);
+  --color-plan-bg: var(--plan-bg);
+  --color-status-bg: var(--status-bg);
+  --color-status-border: var(--status-border);
+  --color-effort-empty: var(--effort-empty);
+  --color-wide-demo-bg: var(--wide-demo-bg);
   --color-choice-bg: var(--choice-bg);
   --color-choice-border: var(--choice-border);
   --color-choice-ink: var(--choice-ink);
@@ -205,10 +217,23 @@
   --text-option-title--line-height: 23px;
   --text-option-pick: 12px; /* "ENG'S PICK" pill (Geist Mono semibold; Figma 12/12.6) */
   --text-option-pick--line-height: 13px;
-  --text-option-desc: 12px; /* option description (Geist medium) */
-  --text-option-desc--line-height: 18px;
+  --text-option-desc: 14px; /* option description (Geist medium; Figma 12/18, enlarged for reading) */
+  --text-option-desc--line-height: 21px;
   --text-scale-label: 14px; /* LEAST MOTION / MOST MOTION (Geist Mono semibold; 15px box) */
   --text-scale-label--line-height: 15px;
+  --text-phase-title: 14px; /* PHASE 1: DRAG HANDLE (Geist Mono semibold; Figma 14.4/20.25) */
+  --text-phase-title--line-height: 20px;
+  --text-phase: 13px; /* phase description, status pill (Geist; Figma 12.6/20.25) */
+  --text-phase--line-height: 20px;
+  --text-effort: 14px; /* EFFORT (Geist Mono; Figma 13.5/20.25) */
+  --text-effort--line-height: 20px;
+  --text-phase-step: 12px; /* "2" in its circle (Geist Mono semibold; Figma 11.88) */
+  --text-phase-step--line-height: 12px;
+  --text-lesson-title: 24px; /* "Go into feedback with a point of view" (Source Serif 4; Figma 24/31.8) */
+  --text-lesson-title--line-height: 32px;
+  --text-lesson-title--letter-spacing: -0.424px;
+  --text-lesson: 15px; /* its text (Geist; Figma 15/22.5) */
+  --text-lesson--line-height: 23px;
   --text-callout-label: 14px; /* "HOW MIGHT WE..." */
   --text-callout-label--line-height: 18px;
   --text-callout-question: 24px; /* callout question, Source Serif 4 */
@@ -290,6 +315,17 @@
   --spacing-choice-pair-gap: 40px; /* two panels side by side */
   --spacing-choice-trio-gap: 18px; /* three panels side by side */
   --spacing-option-gap: 35px; /* between the three Converging options */
+  --spacing-plan-h: 237px; /* phase timeline panel (from md) */
+  --spacing-plan-x: 36px; /* its left padding inside the 1px border (Figma 37 from the edge) */
+  --spacing-plan-step: 25px; /* step circle (Figma 25.2) */
+  --spacing-effort-bar: 32px; /* one effort bar (Figma 32.4 × 12.6) */
+  --spacing-effort-bar-h: 13px;
+  --spacing-lessons-gap: 24px; /* between the three lessons */
+  --spacing-photos-top: 50px; /* lessons to the intern photos */
+  --spacing-photo-gap: 18px; /* between the two photos */
+  --spacing-wide-demo-h: 451px; /* building hub demo (768 × 451) */
+  --spacing-dark-demo-h: 446px; /* dark mode demo panel */
+  --spacing-dark-demo-phone: 183px; /* the phone inside it (Figma 183.38 × 398.69) */
   --spacing-demo-note: 220px; /* sentence under a demo phone (Figma boxes 172 and 218, balanced) */
   --spacing-lightbox-pad: 40px; /* zoom viewer space around the media */
   --spacing-lightbox-pad-sm: 16px; /* same, below sm */
@@ -305,7 +341,12 @@
   --radius-screen: 12px; /* phone recording inside a decision panel */
   --radius-option-frame: 6px; /* white frame inside a Converging option */
   --radius-option-video: 13px; /* the tap nudge clip inside it */
+  --radius-photo: 12px; /* intern photos */
+  --radius-effort: 4px; /* effort bars (Figma 3.6) */
   --radius-phone: 18px; /* phone frame around a demo video */
+
+  /* Shadows */
+  --shadow-photo: 0 4px 8px var(--photo-shadow); /* intern photos */
 
   /* Signature handwriting reveal. Each stroke sets its own delay and
      duration (see Signature.tsx), then holds the final state. */

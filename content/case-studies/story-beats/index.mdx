@@ -31,6 +31,8 @@ import critSticky1 from "./crit-sticky-1.png"
 import critSticky2 from "./crit-sticky-2.png"
 import critSticky3 from "./crit-sticky-3.png"
 import dragHandleOption from "./converging-drag-handle.png"
+import owlPhoto from "./reflections-owl.jpg"
+import piratesPhoto from "./reflections-pirates.jpg"
 
 <Impact
   stats={[
@@ -116,7 +118,7 @@ Each layout changed how the exercise looked, but none of them showed learners wh
 
 </Section>
 
-<Section id="design-crit" title="Design Crit" headline="Motion was promising, but it didn’t feel quite right yet">
+<Section id="design-crit" title="Design Crit" label="Crit" headline="Motion was promising, but it didn’t feel quite right yet">
 
 Upon taking this V1 prototype to crit with both the shuffle demo and wiggle, both PMs and designers agreed that motion was the right direction. The **execution just needed rethinking**.
 
@@ -207,8 +209,69 @@ I brought three directions to PM, engineering, and design studio leads, but...**
 
 </Section>
 
-<Section id="the-plan" title="The Plan" />
+<Section id="the-plan" title="The Plan" headline="Start with the simplest fix, add motion only if needed">
 
-<Section id="shipped-up-next" title="Shipped & Up Next" />
+**The drag handle gave learners exactly that cue, with the least engineering effort.** So we planned all three as experiments, starting with the handle and adding motion only if the metrics called for it.
 
-<Section id="reflections" title="Reflections" />
+<PhasePlan
+  phases={[
+    { title: "Phase 1: Drag handle", description: "A visual cue, no new motion", effort: 1, status: "Shipped", done: true },
+    { title: "Phase 2: Tap nudge", description: "Motion only when learners tap", effort: 2, status: "Next, if needed" },
+    { title: "Phase 3: Shuffle", description: "A full demo on every load", effort: 3, status: "Later" },
+  ]}
+/>
+
+</Section>
+
+<Section id="shipped-up-next" title="Shipped & Up Next" label="🚀 Shipped" headline="Phase 1 approved at product review and live now! (ㅅ´ ˘ `)">
+
+**Next, I presented Phase 1 of the design at product review with my PM, and it was approved to ship.** <b>I then worked with our engineer to build it, covering details like dark mode and new edge cases.</b>
+
+<b>Since launching, the design has</b> **reduced the total Stories quit rate (our north star metric) by 2.44%.**
+
+<DemoVideo
+  variant="phone"
+  label="↪ Dark mode demo"
+  src="/videos/shipped-dark-mode.mp4"
+  poster="/videos/posters/shipped-dark-mode.jpg"
+  alt="The shipped design in dark mode: a story dialogue on a dark background, then the event cards with drag handles"
+  width={760}
+  height={1652}
+/>
+
+<SectionPart label="What’s next" headline="Turning my motion explorations into a team resource">
+
+Even though the more elaborate motion directions didn’t make it to product review, I didn't want everything I’d learned to stay with me. So **I built a page on Duolingo's internal prototyping hub where anyone at the company can try them out.**
+
+<DemoVideo
+  variant="wide"
+  label="↪ Building hub demo"
+  src="/videos/hub-demo.mp4"
+  poster="/videos/posters/hub-demo.jpg"
+  alt="The prototyping hub page: a panel of variation toggles (intro animation, token layout, drag lift, drop indicator, tap nudge) beside a live phone prototype that updates as they change"
+  width={1600}
+  height={940}
+/>
+
+</SectionPart>
+
+</Section>
+
+<Section id="reflections" title="Reflections" label="Final reflections ദ്ദി(˵ •̀ ᴗ - ˵ ) ✧" headline="What I learned">
+
+<Lessons
+  lessons={[
+    { title: "Go into feedback with a point of view", text: "Early on, I’d bring work to crit and leave with more questions than answers. Coming in with a clear recommendation made the feedback sharper and my decisions easier to defend." },
+    { title: "Step back when you lose your intuition", text: "After so many rounds of feedback from different stakeholders, I lost track of what felt right midway through. Going back to the core problem, a learner tapping and giving up, helped me find my footing again." },
+    { title: "Be resourceful!", text: "I’d never designed UI motion before. Jamming with a motion designer, learning Figma Motion, and prototyping with AI got me up to speed fast, and showed me how much I can learn by simply reaching out to experts and trying new tools." },
+  ]}
+/>
+
+<CaptionedPhotos
+  photos={[
+    { src: owlPhoto, caption: "design interns with da owl", alt: "Four design interns taking a selfie with a giant green Duo owl mascot" },
+    { src: piratesPhoto, caption: "@ my first ever pirates game!", alt: "A group of interns smiling in the stands at a Pittsburgh Pirates baseball game" },
+  ]}
+/>
+
+</Section>

@@ -77,13 +77,15 @@ export default function MotionOptions({ options }: { options: Option[] }) {
         </span>
         <span className="shrink-0 pl-1.5 text-right">Most motion</span>
       </div>
-      <ul className="mt-6 grid gap-8 sm:grid-cols-3 sm:gap-option-gap">
+      {/* From sm, each card spans three subgrid rows (frame, title, description), so the
+          titles and descriptions line up across the cards even when a title wraps. */}
+      <ul className="mt-6 grid gap-8 sm:grid-cols-3 sm:gap-x-option-gap sm:gap-y-0">
         {options.map((o) => (
-          <li key={o.title}>
+          <li key={o.title} className="sm:row-span-3 sm:grid sm:grid-rows-subgrid">
             <div className="aspect-[232/234] rounded-stat border border-chart-card-border bg-figure-bg px-[8.2%] pt-[11.1%]">
               <Frame media={o.media} />
             </div>
-            <div className="mt-4 flex items-start justify-between gap-2">
+            <div className="mt-4 flex flex-wrap items-start justify-between gap-x-2 gap-y-1.5">
               <h4 className="font-mono text-option-title font-semibold text-figure-ink uppercase">{o.title}</h4>
               {o.pick && (
                 <span className="shrink-0 rounded-stat border border-pick-border bg-figure-bg px-1.75 py-1.25 font-mono text-option-pick font-semibold text-figure-ink uppercase">
