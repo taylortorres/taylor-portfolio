@@ -19,8 +19,8 @@ type Feature = {
 // last a 267px home screen widget. From md, rows are 60px apart with 60px
 // padding (the first has 40, the widget row 100 / 120). On
 // phones each row stacks, text then the phone centered, 64px apart.
-// Recordings load near the screen, play once half is on it, rewind when
-// they leave and have a pause button (all longer than 5s).
+// Recordings buffer within a screen of the viewport, play once a quarter is
+// on it, rewind when they leave and have a pause button (all longer than 5s).
 
 function Phone({ media }: { media: Media }) {
   if ("video" in media) {
@@ -33,7 +33,7 @@ function Phone({ media }: { media: Media }) {
           width={media.width}
           height={media.height}
           zoomable
-          playAtHalf
+          playEarly
           pausable
           className="rounded-feature"
         />

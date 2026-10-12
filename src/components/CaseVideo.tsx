@@ -19,8 +19,8 @@ type Props = {
   fullSrc?: string;
   /** Extra classes for the inline video (e.g. rounded corners). */
   className?: string;
-  /** Loads about 400px before the screen, starts once half is on screen, and pauses and rewinds once off screen. */
-  playAtHalf?: boolean;
+  /** Buffers once it is within one screen of the viewport, starts once a quarter is on screen (so it is already moving when it arrives), and pauses and rewinds once fully off screen. */
+  playEarly?: boolean;
   /** Pause button in the corner (WCAG 2.2.2, for loops longer than 5s). */
   pausable?: boolean;
 };
@@ -29,10 +29,11 @@ type Props = {
 // downloads until then (preload="none"; play() starts the download), so a
 // page of videos costs only its posters up front. With reduced motion it
 // shows the poster. With `zoomable`, the viewer plays it large with
-// controls while the inline copy pauses. `playAtHalf` and `pausable` are the
-// Treeats feature recordings' stricter rules (see Props).
-const NEAR = { rootMargin: "400px 0px" };
-const HALF = { threshold: 0.5 };
+// controls while the inline copy pauses. `playEarly` and `pausable` are the
+// Treeats feature recordings' rules (see Props); other videos keep the
+// default above.
+const NEAR = { rootMargin: "100% 0px" }; // one viewport height above and below
+const QUARTER = { threshold: 0.25 };
 
 export default function CaseVideo({
   src,
@@ -43,13 +44,13 @@ export default function CaseVideo({
   zoomable = false,
   fullSrc = src,
   className = "",
-  playAtHalf = false,
+  playEarly = false,
   pausable = false,
 }: Props) {
   const ref = useRef<HTMLVideoElement>(null);
   const inView = useInView(ref);
   const near = useInView(ref, NEAR);
-  const half = useInView(ref, HALF);
+  const quarter = useInView(ref, QUARTER);
   const reduced = useMediaQuery(REDUCED_MOTION);
   const [zoomed, setZoomed] = useState(false);
   const [paused, setPaused] = useState(false);
@@ -58,15 +59,15 @@ export default function CaseVideo({
     const video = ref.current;
     if (!video) return;
     const stopped = reduced || zoomed || paused;
-    if (!playAtHalf) {
+    if (!playEarly) {
       if (inView && !stopped) video.play().catch(() => {});
       else video.pause();
       return;
     }
-    if (half && !stopped) video.play().catch(() => {});
+    if (quarter && !stopped) video.play().catch(() => {});
     else if (!inView || stopped) video.pause();
     if (!inView && video.currentTime > 0) video.currentTime = 0;
-  }, [inView, half, reduced, zoomed, paused, playAtHalf]);
+  }, [inView, quarter, reduced, zoomed, paused, playEarly]);
 
   const inline = (
     <video
@@ -79,7 +80,7 @@ export default function CaseVideo({
       muted
       loop
       playsInline
-      preload={playAtHalf && near && !reduced ? "auto" : "none"}
+      preload={playEarly && near && !reduced ? "auto" : "none"}
       className={`block h-auto w-full ${className}`}
     />
   );
