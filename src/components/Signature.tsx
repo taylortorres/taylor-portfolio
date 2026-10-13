@@ -3,8 +3,9 @@
 // design. Each ink vector is revealed by an animated stroke mask that traces it.
 // Strokes keep Figma's easing and in-word overlap, but play in order: "Taylor"
 // finishes before "Torres" starts (0.1s gap). The whole signature takes 2.4s
-// and starts once the nav has slid in (NAV_IN). With reduced motion it is
-// drawn from the start.
+// and starts once the nav has slid in (NAV_IN). The home intro pushes it
+// back by --nav-delay and sets the slide's length with --nav-in (globals.css).
+// With reduced motion it is drawn from the start.
 
 const FLOURISH_STROKE =
   "M18.315 20.0655C8.415 21.0555 10.395 10.1655 14.355 10.1655C22.275 9.17553 15.345 21.0555 8.415 20.0655C-0.495 19.0755 2.475 6.20553 13.365 3.23553C27.225 -0.724469 36.135 12.1455 50.985 10.1655C54.945 10.1655 56.925 9.17553 58.905 8.18553L37.125 9.17553C22.275 15.1155 27.225 26.0055 17.325 31.9455C9.405 36.8955 5.445 27.9855 10.395 26.9955C14.355 26.9955 10.395 35.9055 5.445 32.9355C3.465 31.9455 2.475 29.9655 2.475 28.9755";
@@ -69,7 +70,7 @@ export default function Signature({ className }: { className?: string }) {
             <path
               className="motion-safe:animate-write-stroke"
               style={{
-                animationDelay: `${NAV_IN + timing.delay}ms`,
+                animationDelay: `calc(var(--nav-delay, 0ms) + var(--nav-in, ${NAV_IN}ms) + ${timing.delay}ms)`,
                 animationDuration: `${timing.duration}ms`,
               }}
               d={mask.d}

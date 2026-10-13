@@ -447,6 +447,93 @@
   --animate-page-enter: page-enter 450ms cubic-bezier(0.22, 1, 0.36, 1) backwards;
 }
 
+/* Home intro (first load of the home page in a session; html.intro is set
+   before the first paint by src/lib/intro.ts). Every timing value is here.
+   Three beats after a short hold: the headline lines, then the nav (+ the
+   signature as it lands) with the subline, then the project cards row by
+   row; cards below the fold play when scrolled to (IntroCards.tsx). While
+   html.intro-wait is set (until fonts and hero images are ready, 600ms at
+   most) everything is paused in its hidden start state, so delays count
+   from the release. Opacity, transform and filter only. */
+:root {
+  --intro-hold: 150ms; /* after the release, before anything appears */
+  --intro-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --intro-blur: 8px; /* start blur on phones (lighter, avoids jank) */
+  --intro-scale: 0.98; /* start scale */
+  --intro-rise: 20px; /* headline, subline */
+  --intro-line-dur: 700ms; /* beat 1: each headline line */
+  --intro-line-1: 0ms;
+  --intro-line-2: 200ms;
+  --intro-step-2: 900ms; /* beat 2: nav and subline start */
+  --intro-step-2-dur: 600ms; /* the signature starts when the nav lands */
+  --intro-cards: 1650ms; /* beat 3: first project card (after the header has had a moment) */
+  --intro-card-gap: 150ms; /* between cards */
+  --intro-card-dur: 800ms; /* a little slower than the headline */
+  --intro-card-rise: 24px;
+}
+@media (width >= 40rem) {
+  :root {
+    --intro-blur: 14px;
+  }
+}
+@keyframes intro-in {
+  from {
+    opacity: 0;
+    filter: blur(var(--intro-blur));
+    transform: translateY(var(--rise, var(--intro-rise))) scale(var(--intro-scale));
+  }
+}
+@keyframes intro-nav {
+  from {
+    opacity: 0;
+    filter: blur(var(--intro-blur));
+    transform: translateY(calc(-1 * var(--intro-rise)));
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  html.intro {
+    --nav-delay: calc(var(--intro-hold) + var(--intro-step-2));
+    --nav-in: var(--intro-step-2-dur);
+  }
+  html.intro [data-nav-shell] {
+    animation: intro-nav var(--intro-step-2-dur) var(--intro-ease) var(--nav-delay) backwards;
+  }
+  html.intro [data-page] {
+    animation: none; /* the intro replaces the shared page blur-in */
+  }
+  html.intro [data-intro] {
+    animation: intro-in var(--intro-line-dur) var(--intro-ease) backwards;
+  }
+  html.intro [data-intro="line-1"] {
+    animation-delay: calc(var(--intro-hold) + var(--intro-line-1));
+  }
+  html.intro [data-intro="line-2"] {
+    animation-delay: calc(var(--intro-hold) + var(--intro-line-2));
+  }
+  html.intro [data-intro="sub"] {
+    animation-duration: var(--intro-step-2-dur);
+    animation-delay: calc(var(--intro-hold) + var(--intro-step-2));
+  }
+  html.intro [data-intro="card"] {
+    --rise: var(--intro-card-rise);
+    animation-duration: var(--intro-card-dur);
+    animation-delay: calc(var(--intro-hold) + var(--intro-cards) + var(--intro-i, 0) * var(--intro-card-gap));
+  }
+  /* Held in the start state until fonts and images are ready. */
+  html.intro-wait :is([data-intro], [data-nav-shell], [data-nav] svg mask path) {
+    animation-play-state: paused;
+  }
+  html.intro [data-intro][data-intro-wait] {
+    animation: none;
+    opacity: 0;
+    filter: blur(var(--intro-blur));
+    transform: translateY(var(--rise, var(--intro-rise))) scale(var(--intro-scale));
+  }
+  html.intro [data-intro][data-intro-now] {
+    animation-delay: 0ms;
+  }
+}
+
 /* How much of the sticky site header covers the top of the screen,
    including its 1px border: 109px on phones (two rows), 65px from sm. SiteHeader sets it to 0 while the
    phone header is hidden. Sticky bars and scroll margins use it. */

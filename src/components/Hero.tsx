@@ -59,7 +59,7 @@ export default function Hero() {
           id="hero-heading"
           className="font-display text-hero-sm text-ink opsz-hero sm:text-hero-md lg:text-hero"
         >
-          <span className="block">
+          <span data-intro="line-1" className="block">
             Taylor
             <span className="relative whitespace-pre">
               {"         "}
@@ -69,9 +69,9 @@ export default function Hero() {
             </span>
             designs the <em className="font-medium text-accent">threads</em> that
           </span>
-          <span className="block lg:mt-hero-line-gap">tie people, ideas, and systems together.</span>
+          <span data-intro="line-2" className="block lg:mt-hero-line-gap">tie people, ideas, and systems together.</span>
         </h1>
-        <p className="font-mono text-subline-sm text-accent-deep uppercase text-balance word-tight-mono sm:text-subline">
+        <p data-intro="sub" className="font-mono text-subline-sm text-accent-deep uppercase text-balance word-tight-mono sm:text-subline">
           <span aria-hidden="true">⌯⌲ </span>
           currently @ <span className="font-medium whitespace-nowrap">stanford d.school</span>
           <span aria-hidden="true" className="whitespace-pre">{"  ⊹ ࣪ ˖  "}</span>

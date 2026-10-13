@@ -1,4 +1,6 @@
+import type { CSSProperties } from "react";
 import { getCaseStudies, type CaseStudy } from "@/lib/case-studies";
+import IntroCards from "./IntroCards";
 import ProjectCard from "./ProjectCard";
 
 // Card height in column widths: the thumbnail plus the ~106px text block of a
@@ -26,6 +28,7 @@ export default async function ProjectGrid() {
   const studies = await getCaseStudies();
   const columns = splitColumns(studies);
   let index = 0;
+  // Intro order reads row by row across the two columns (--intro-i, globals.css).
   return (
     <section id="work" aria-labelledby="work-heading" className="scroll-mt-(--nav-offset) pt-projects-top pb-projects-bottom">
       <h2 id="work-heading" className="sr-only">
@@ -34,14 +37,15 @@ export default async function ProjectGrid() {
       <div className="mx-auto flex max-w-content-max flex-col gap-stack px-4 md:grid md:grid-cols-2 md:items-start md:gap-gutter md:px-gutter">
         {columns.map((column, c) => (
           <ul key={c} className="flex flex-col gap-stack">
-            {column.map((study) => (
-              <li key={study.slug}>
+            {column.map((study, row) => (
+              <li key={study.slug} data-intro="card" style={{ "--intro-i": row * 2 + c } as CSSProperties}>
                 <ProjectCard study={study} preload={index++ === 0} />
               </li>
             ))}
           </ul>
         ))}
       </div>
+      <IntroCards />
     </section>
   );
 }

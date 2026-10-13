@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Newsreader, Source_Serif_4 } from "next/font/google"
 import CustomCursor from "@/components/CustomCursor";
 import Nav from "@/components/Nav";
 import SiteHeader from "@/components/SiteHeader";
+import { INTRO_SCRIPT } from "@/lib/intro";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -40,9 +41,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="en"
       data-scroll-behavior="smooth"
+      suppressHydrationWarning // the intro script may add class="intro" before hydration
       className={`${geistSans.variable} ${geistMono.variable} ${newsreader.variable} ${sourceSerif.variable} h-full antialiased motion-safe:scroll-smooth`}
     >
       <body className="min-h-full flex flex-col">
+        {/* Before any content: decides the home intro before the first paint (src/lib/intro.ts). */}
+        <script dangerouslySetInnerHTML={{ __html: INTRO_SCRIPT }} />
         {/* Outside the page template: mounts once per full load, stays put on navigation. */}
         <SiteHeader>
           <Nav />

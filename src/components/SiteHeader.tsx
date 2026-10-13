@@ -76,6 +76,12 @@ export default function SiteHeader({ children }: { children: ReactNode }) {
     document.documentElement.style.removeProperty("--nav-offset");
   }, [pathname]);
 
+  // The home intro is for the first page only: leaving it ends intro mode, so
+  // coming back uses the normal page transition.
+  useEffect(() => {
+    if (pathname !== "/") document.documentElement.classList.remove("intro");
+  }, [pathname]);
+
   return (
     <header
       onFocus={() => {
@@ -84,7 +90,7 @@ export default function SiteHeader({ children }: { children: ReactNode }) {
       }}
       className={`sticky top-0 z-40 motion-safe:transition-transform motion-safe:duration-200 motion-safe:ease-out ${hidden ? "max-sm:-translate-y-full" : ""}`}
     >
-      <div className="border-b border-hairline bg-paper motion-safe:animate-nav-enter">{children}</div>
+      <div data-nav-shell className="border-b border-hairline bg-paper motion-safe:animate-nav-enter">{children}</div>
     </header>
   );
 }
