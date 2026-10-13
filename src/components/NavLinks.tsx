@@ -2,12 +2,14 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { RESUME_URL } from "@/lib/links";
 
+// `external` links open in a new tab and are never the current page.
 const links = [
   { label: "Work", href: "/#work" },
   { label: "Fun", href: "/fun" },
   { label: "About", href: "/about" },
-  { label: "Resume", href: "/resume.pdf" },
+  { label: "Resume", href: RESUME_URL, external: true },
 ];
 
 const focusRing =
@@ -15,12 +17,11 @@ const focusRing =
 
 // aria-current for a nav link: WORK is the current page on the home page and
 // "true" (part of the current section) on every /work/... page; FUN and
-// ABOUT on their own pages. The resume is a PDF, never the current page.
+// ABOUT on their own pages. External links (the résumé) never are.
 // usePathname is correct during server rendering too, so the right link is
 // purple in the HTML (no flash) and follows client navigation and Back.
 function current(href: string, pathname: string): "page" | "true" | undefined {
   if (href === "/#work") return pathname === "/" ? "page" : pathname.startsWith("/work/") ? "true" : undefined;
-  if (href.endsWith(".pdf")) return undefined;
   return pathname === href ? "page" : undefined;
 }
 
@@ -31,19 +32,28 @@ export default function NavLinks() {
   const pathname = usePathname();
   return (
     <ul className="flex items-center justify-between sm:justify-start sm:gap-nav-link-gap">
-      {links.map(({ label, href }) => {
-        const state = current(href, pathname);
+      {links.map(({ label, href, external }) => {
+        const state = external ? undefined : current(href, pathname);
+        const className = `-mx-2.5 flex h-11 items-center px-2.5 font-mono text-nav uppercase hover:text-section-active focus-visible:text-section-active sm:-mx-4 sm:px-4 ${state ? "text-section-active" : "text-muted"} ${focusRing}`;
         return (
           <li key={label}>
-            <Link
-              href={href}
-              aria-current={state}
-              data-nav-item
-              data-nav-link
-              className={`-mx-2.5 flex h-11 items-center px-2.5 font-mono text-nav uppercase hover:text-section-active focus-visible:text-section-active sm:-mx-4 sm:px-4 ${state ? "text-section-active" : "text-muted"} ${focusRing}`}
-            >
-              {label}
-            </Link>
+            {external ? (
+              <a
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`${label} (opens in a new tab)`}
+                data-nav-item
+                data-nav-link
+                className={className}
+              >
+                {label}
+              </a>
+            ) : (
+              <Link href={href} aria-current={state} data-nav-item data-nav-link className={className}>
+                {label}
+              </Link>
+            )}
           </li>
         );
       })}
