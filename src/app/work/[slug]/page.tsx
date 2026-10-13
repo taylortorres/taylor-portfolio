@@ -6,6 +6,7 @@ import CaseStudyLayout from "@/components/CaseStudyLayout";
 import Footer from "@/components/Footer";
 import NextProject from "@/components/NextProject";
 import { getCaseStudies, getCaseStudySections } from "@/lib/case-studies";
+import { pageMetadata } from "@/lib/site";
 
 // One page per folder in content/case-studies. With a meta.hero and <Section>
 // tags it gets the full layout (sidebar, hero, sections); placeholders without
@@ -29,7 +30,13 @@ async function getStudy(slug: string) {
 
 export async function generateMetadata({ params }: PageProps<"/work/[slug]">): Promise<Metadata> {
   const study = await getStudy((await params).slug);
-  return study ? { title: `${study.title} · Taylor Torres`, description: study.description } : {};
+  if (!study) return {};
+  return pageMetadata({
+    path: `/work/${study.slug}`,
+    title: `${study.title} · Taylor Torres`,
+    description: study.description,
+    type: "article",
+  });
 }
 
 // The footer is the instant shell (the nav is in the root layout); everything that reads `params` sits

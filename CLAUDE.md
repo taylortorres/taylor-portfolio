@@ -197,6 +197,11 @@ Tags have a 6px radius (`rounded-tag`) and a 1px `tag` border. Thumbnails have s
 - **Smooth scrolling:** in-page anchors and sidebar jumps scroll smoothly (`motion-safe:scroll-smooth` on `<html>`; instant with reduced motion). `data-scroll-behavior="smooth"` lets Next jump instantly to the top on page changes. No smooth-scroll library (Lenis): it would need hooks into the zoom viewer's scroll lock, scroll-driven videos, scroll-spy and the hiding nav, and can feel wrong on trackpads and phones.
 - **Components:** keep them small, typed and server components by default. Add `"use client"` only when a component needs interactivity.
 
+## Site URL and metadata
+- The public address is `SITE_URL` (`https://taylortorres.me`) in `src/lib/site.ts`; never hardcode a domain (no `.vercel.app`). The root layout sets `metadataBase` from it, so relative metadata URLs become absolute.
+- Every page sets its own canonical link and Open Graph / Twitter tags with `pageMetadata({ path, title, description, type })` from `src/lib/site.ts` (Next replaces `openGraph` wholesale per page). The home page is `website`, case studies `article`. There is no share image yet (no `og:image`).
+- `src/app/sitemap.ts` lists the home page and every case study page (not link-out projects or `/dev`); `src/app/robots.ts` disallows `/dev/` and points to the sitemap. New case studies appear in the sitemap automatically.
+
 ## Case studies (MDX)
 - Each case study is a folder: `content/case-studies/<slug>/`, holding `index.mdx` and its images.
 - `@next/mdx` doesn't support YAML frontmatter, so put card data in an exported `meta` object at the top of `index.mdx`:

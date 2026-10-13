@@ -4,6 +4,7 @@ import CustomCursor from "@/components/CustomCursor";
 import Nav from "@/components/Nav";
 import SiteHeader from "@/components/SiteHeader";
 import { INTRO_SCRIPT } from "@/lib/intro";
+import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -30,10 +31,14 @@ const sourceSerif = Source_Serif_4({
   axes: ["opsz"], // optical size follows the font size, like Figma's Source Serif Pro display cuts
 });
 
+// Site-wide defaults. metadataBase makes every relative metadata URL
+// (canonical, Open Graph) absolute on taylortorres.me; each page sets its own
+// canonical and Open Graph tags (pageMetadata in src/lib/site.ts).
 export const metadata: Metadata = {
-  title: "Taylor Torres",
-  description:
-    "Taylor designs the threads that tie people, ideas, and systems together.",
+  metadataBase: new URL(SITE_URL),
+  title: SITE_NAME,
+  description: SITE_DESCRIPTION,
+  openGraph: { type: "website", siteName: SITE_NAME, title: SITE_NAME, description: SITE_DESCRIPTION, locale: "en_US" },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
