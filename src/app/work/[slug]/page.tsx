@@ -36,6 +36,12 @@ export async function generateMetadata({ params }: PageProps<"/work/[slug]">): P
     title: `${study.title} · Taylor Torres`,
     description: study.description,
     type: "article",
+    image: study.shareImage && {
+      url: study.shareImage.image.src,
+      width: study.shareImage.image.width,
+      height: study.shareImage.image.height,
+      alt: study.shareImage.alt,
+    },
   });
 }
 

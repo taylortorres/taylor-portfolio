@@ -199,7 +199,8 @@ Tags have a 6px radius (`rounded-tag`) and a 1px `tag` border. Thumbnails have s
 
 ## Site URL and metadata
 - The public address is `SITE_URL` (`https://taylortorres.me`) in `src/lib/site.ts`; never hardcode a domain (no `.vercel.app`). The root layout sets `metadataBase` from it, so relative metadata URLs become absolute.
-- Every page sets its own canonical link and Open Graph / Twitter tags with `pageMetadata({ path, title, description, type })` from `src/lib/site.ts` (Next replaces `openGraph` wholesale per page). The home page is `website`, case studies `article`. There is no share image yet (no `og:image`).
+- Every page sets its own canonical link and Open Graph / Twitter tags with `pageMetadata({ path, title, description, type })` from `src/lib/site.ts` (Next replaces `openGraph` wholesale per page). The home page is `website`, case studies `article`. Titles: "Taylor Torres" on the home page, "<case study title> · Taylor Torres" on case studies. The home page description is `SITE_DESCRIPTION`, case studies use `meta.description`.
+- Share image: `public/og-image.png` (1200 × 630 PNG, about 150 KB, scaled from the 6000 × 3150 `design-assets/og-image.png`) is the og:image and twitter:image (`summary_large_image`) on every page, with alt text (`DEFAULT_SHARE_IMAGE` in `src/lib/site.ts`; the root layout uses it too, so not-found pages have it). A case study can use its own with optional `meta.shareImage: { image: "./share.png", alt: "..." }` (1200 × 630, in its folder).
 - `src/app/sitemap.ts` lists the home page and every case study page (not link-out projects or `/dev`); `src/app/robots.ts` disallows `/dev/` and points to the sitemap. New case studies appear in the sitemap automatically.
 
 ## Case studies (MDX)

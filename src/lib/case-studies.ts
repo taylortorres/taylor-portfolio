@@ -16,6 +16,10 @@ import { getSections, type SectionLink } from "./sections";
 // `meta.hero` is optional (placeholder case studies don't have one yet); when
 // present, every field in it is required except `zoomable` (default true;
 // false keeps the hero image out of the zoom viewer, e.g. Props).
+//
+// `meta.shareImage` is optional: `{ image: "./share.png", alt: "..." }`, a
+// 1200 × 630 image in the case study folder used as the page's og:image and
+// twitter:image instead of the site default (public/og-image.png).
 
 const DIR = path.join(process.cwd(), "content", "case-studies");
 export const DEFAULT_CURSOR_LABEL = "view case study";
@@ -50,6 +54,8 @@ export type CaseStudy = {
   /** Visible tag for an external link, e.g. "Slides" (shown as SLIDES ↗ on the card). */
   externalTag?: string;
   hero?: CaseStudyHero;
+  /** The page's own share image (og:image / twitter:image); the site default when absent. */
+  shareImage?: { image: StaticImageData; alt: string };
   Content: MDXContent;
 };
 
@@ -102,6 +108,15 @@ function validate(slug: string, meta: RawMeta | undefined) {
     fail(slug, "meta.externalUrl and meta.hero can't both be set: an external project has no page.");
   }
   if (meta.hero !== undefined) validateHero(slug, meta.hero);
+  if (meta.shareImage !== undefined) validateShareImage(slug, meta.shareImage);
+}
+
+function validateShareImage(slug: string, share: unknown) {
+  const s = (share && typeof share === "object" ? share : {}) as RawMeta;
+  const image = s.image;
+  if (!isString(image) || !image.startsWith("./") || !fs.existsSync(path.join(DIR, slug, image)) || !isString(s.alt)) {
+    fail(slug, 'meta.shareImage must be { image: "./<file>", alt: "..." } with the image in the case study folder, or left out.');
+  }
 }
 
 const HERO_LISTS = ["tags", "role", "timeline", "team", "skills"] as const;
@@ -150,6 +165,11 @@ async function load(slug: string): Promise<CaseStudy> {
     skills: rawHero.skills as string[],
     zoomable: rawHero.zoomable !== false,
   };
+  const rawShare = meta.shareImage as RawMeta | undefined;
+  const shareImage = rawShare && {
+    image: await importImage(slug, rawShare.image as string),
+    alt: rawShare.alt as string,
+  };
   return {
     slug,
     title: meta.title as string,
@@ -164,6 +184,7 @@ async function load(slug: string): Promise<CaseStudy> {
     externalUrl: meta.externalUrl as string | undefined,
     externalTag: meta.externalTag as string | undefined,
     hero,
+    shareImage,
     Content: mod.default,
   };
 }

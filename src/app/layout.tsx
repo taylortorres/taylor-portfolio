@@ -4,7 +4,7 @@ import CustomCursor from "@/components/CustomCursor";
 import Nav from "@/components/Nav";
 import SiteHeader from "@/components/SiteHeader";
 import { INTRO_SCRIPT } from "@/lib/intro";
-import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
+import { DEFAULT_SHARE_IMAGE, SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -38,7 +38,15 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: SITE_NAME,
   description: SITE_DESCRIPTION,
-  openGraph: { type: "website", siteName: SITE_NAME, title: SITE_NAME, description: SITE_DESCRIPTION, locale: "en_US" },
+  openGraph: {
+    type: "website",
+    siteName: SITE_NAME,
+    title: SITE_NAME,
+    description: SITE_DESCRIPTION,
+    locale: "en_US",
+    images: [DEFAULT_SHARE_IMAGE],
+  },
+  twitter: { card: "summary_large_image", title: SITE_NAME, description: SITE_DESCRIPTION, images: [DEFAULT_SHARE_IMAGE] },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
