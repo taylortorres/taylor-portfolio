@@ -534,6 +534,58 @@
   }
 }
 
+/* Nav hover softening (Nav.tsx, NavLinks.tsx): hovering a nav link (mouse
+   only) softens the logo and the other links; keyboard focus does the same,
+   a little lighter, so the neighbors stay readable. The hovered or focused
+   link turns purple; the current page's link loses its purple meanwhile, so
+   only one link reads as highlighted. Text and logo only, never the bar. */
+:root {
+  --nav-soft-blur: 2.5px;
+  --nav-soft-opacity: 0.45;
+  --nav-soft-focus-blur: 1.5px;
+  --nav-soft-focus-opacity: 0.6;
+  --nav-soft-dur: 180ms;
+  --nav-soft-reduced-opacity: 0.7; /* reduced motion: no blur, no transition */
+}
+[data-nav-item] {
+  transition:
+    opacity var(--nav-soft-dur) ease-out,
+    filter var(--nav-soft-dur) ease-out,
+    color var(--nav-soft-dur) ease-out;
+}
+@media (hover: hover) and (pointer: fine) {
+  [data-nav]:has([data-nav-link]:hover) [data-nav-item]:not(:hover) {
+    opacity: var(--nav-soft-opacity);
+    filter: blur(var(--nav-soft-blur));
+  }
+  [data-nav]:has([data-nav-link]:hover) [data-nav-link][aria-current]:not(:hover) {
+    color: var(--muted);
+  }
+}
+[data-nav]:has([data-nav-link]:focus-visible) [data-nav-item]:not(:focus-visible) {
+  opacity: var(--nav-soft-focus-opacity);
+  filter: blur(var(--nav-soft-focus-blur));
+}
+[data-nav]:has([data-nav-link]:focus-visible) [data-nav-link][aria-current]:not(:focus-visible) {
+  color: var(--muted);
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-nav-item] {
+    transition: none;
+  }
+  [data-nav] [data-nav-item] {
+    filter: none !important;
+  }
+  [data-nav]:has([data-nav-link]:focus-visible) [data-nav-item]:not(:focus-visible) {
+    opacity: var(--nav-soft-reduced-opacity);
+  }
+}
+@media (prefers-reduced-motion: reduce) and (hover: hover) and (pointer: fine) {
+  [data-nav]:has([data-nav-link]:hover) [data-nav-item]:not(:hover) {
+    opacity: var(--nav-soft-reduced-opacity);
+  }
+}
+
 /* How much of the sticky site header covers the top of the screen,
    including its 1px border: 109px on phones (two rows), 65px from sm. SiteHeader sets it to 0 while the
    phone header is hidden. Sticky bars and scroll margins use it. */

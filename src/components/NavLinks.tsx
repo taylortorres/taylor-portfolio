@@ -1,0 +1,52 @@
+"use client";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+
+const links = [
+  { label: "Work", href: "/#work" },
+  { label: "Fun", href: "/fun" },
+  { label: "About", href: "/about" },
+  { label: "Resume", href: "/resume.pdf" },
+];
+
+const focusRing =
+  "rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
+
+// aria-current for a nav link: WORK is the current page on the home page and
+// "true" (part of the current section) on every /work/... page; FUN and
+// ABOUT on their own pages. The resume is a PDF, never the current page.
+// usePathname is correct during server rendering too, so the right link is
+// purple in the HTML (no flash) and follows client navigation and Back.
+function current(href: string, pathname: string): "page" | "true" | undefined {
+  if (href === "/#work") return pathname === "/" ? "page" : pathname.startsWith("/work/") ? "true" : undefined;
+  if (href.endsWith(".pdf")) return undefined;
+  return pathname === href ? "page" : undefined;
+}
+
+// The nav's links. Each is a [data-nav-item] for the hover softening in
+// globals.css; from sm their hit areas meet in the middle of the 32px gaps,
+// so moving between links never passes over a dead zone.
+export default function NavLinks() {
+  const pathname = usePathname();
+  return (
+    <ul className="flex items-center justify-between sm:justify-start sm:gap-nav-link-gap">
+      {links.map(({ label, href }) => {
+        const state = current(href, pathname);
+        return (
+          <li key={label}>
+            <Link
+              href={href}
+              aria-current={state}
+              data-nav-item
+              data-nav-link
+              className={`-mx-2.5 flex h-11 items-center px-2.5 font-mono text-nav uppercase hover:text-section-active focus-visible:text-section-active sm:-mx-4 sm:px-4 ${state ? "text-section-active" : "text-muted"} ${focusRing}`}
+            >
+              {label}
+            </Link>
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
