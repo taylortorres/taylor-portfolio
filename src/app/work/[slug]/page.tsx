@@ -6,7 +6,7 @@ import CaseStudyLayout from "@/components/CaseStudyLayout";
 import Footer from "@/components/Footer";
 import NextProject from "@/components/NextProject";
 import { getCaseStudies, getCaseStudySections } from "@/lib/case-studies";
-import { pageMetadata } from "@/lib/site";
+import { pageMetadata, SITE_NAME } from "@/lib/site";
 
 // One page per folder in content/case-studies. With a meta.hero and <Section>
 // tags it gets the full layout (sidebar, hero, sections); placeholders without
@@ -30,7 +30,7 @@ async function getStudy(slug: string) {
 
 export async function generateMetadata({ params }: PageProps<"/work/[slug]">): Promise<Metadata> {
   const study = await getStudy((await params).slug);
-  if (!study) return {};
+  if (!study) return { title: `Page not found · ${SITE_NAME}` }; // renders not-found.tsx
   return pageMetadata({
     path: `/work/${study.slug}`,
     title: `${study.title} · Taylor Torres`,
