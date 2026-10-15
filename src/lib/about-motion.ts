@@ -28,7 +28,9 @@ export const ABOUT_MOTION = {
   characterInEase: "cubic-bezier(0.34, 1.56, 0.64, 1)",
   characterOutMs: 260,
   characterOutEase: "cubic-bezier(0.4, 0, 1, 1)",
-  // Touch screens: play once when this much of the portrait is in view, after a short pause.
+  // The portrait's load blur-in reuses the headline's values and start (--intro-* in globals.css).
+  // Touch screens: play once when this much of the portrait is in view, after a short pause
+  // (and never before the blur-in has ended).
   touchThreshold: 0.6,
   touchDelayMs: 300,
 

@@ -22,7 +22,7 @@ export default function AboutPage() {
         <div className="mx-auto max-w-[calc(var(--spacing-about-max)+2*var(--spacing-gutter))] px-4 pt-about-top-sm sm:px-gutter lg:pt-about-top lg:pb-about-bottom">
           {/* Intro (Figma 2824:12259): portrait beside the text from lg, above it below lg. */}
           <div className="flex flex-col items-center gap-12 lg:flex-row lg:justify-center lg:gap-about-intro-gap">
-            <div className="flex shrink-0 justify-center motion-safe:animate-page-enter lg:w-portrait-box">
+            <div className="flex shrink-0 justify-center lg:w-portrait-box">
               <AboutPortrait photo={portrait.photo} caption={portrait.caption} character={portrait.character} />
             </div>
             <div className="flex max-w-about-text flex-col gap-about-stack">

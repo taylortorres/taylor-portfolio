@@ -850,19 +850,20 @@ body {
   transform: translate(-50%, var(--character-hidden));
   transition: transform var(--character-out-ms) var(--character-out-ease);
 }
+/* Hover and focus only once the load blur-in has ended (data-entered, set by AboutPortrait). */
 @media (hover: hover) and (pointer: fine) {
-  [data-portrait]:hover [data-portrait-card] {
+  [data-portrait][data-entered]:hover [data-portrait-card] {
     transform: rotate(0deg) scale(var(--portrait-scale));
   }
-  [data-portrait]:hover [data-portrait-character] {
+  [data-portrait][data-entered]:hover [data-portrait-character] {
     transform: translate(-50%, var(--character-peek));
     transition: transform var(--character-in-ms) var(--character-in-ease) var(--character-in-delay);
   }
 }
-:is([data-portrait]:focus-visible, [data-portrait][data-active]) [data-portrait-card] {
+:is([data-portrait][data-entered]:focus-visible, [data-portrait][data-active]) [data-portrait-card] {
   transform: rotate(0deg) scale(var(--portrait-scale));
 }
-:is([data-portrait]:focus-visible, [data-portrait][data-active]) [data-portrait-character] {
+:is([data-portrait][data-entered]:focus-visible, [data-portrait][data-active]) [data-portrait-character] {
   transform: translate(-50%, var(--character-peek));
   transition: transform var(--character-in-ms) var(--character-in-ease) var(--character-in-delay);
 }
@@ -936,7 +937,10 @@ body {
   [data-page]:has([data-about-intro]) {
     animation: none;
   }
-  [data-about-intro="headline"] {
+  /* The portrait blurs in with the headline, same values, same start, at its
+     tilted rest (the outer wrapper animates; the tilt is on an inner element). */
+  [data-about-intro="headline"],
+  [data-about-intro="portrait"] {
     animation: intro-in var(--intro-line-dur) var(--intro-ease) var(--intro-hold) backwards;
   }
   [data-about-intro="text"] {
