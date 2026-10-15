@@ -4,6 +4,7 @@ import Image, { type StaticImageData } from "next/image";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { ABOUT_MOTION, FAN_TOTAL_MS } from "@/lib/about-motion";
 import { REDUCED_MOTION } from "@/lib/use-media-query";
+import { HEADING_TYPED } from "./AboutHeading";
 import CursorCaption from "./CursorCaption";
 
 type Item = {
@@ -34,7 +35,10 @@ type Fan = "static" | "pile" | "spread";
 // so arriving later (a reload further down, Back) shows the final row. Below
 // lg, and with reduced motion, it's always the final layout (one column,
 // two from sm). Each photo's cursor caption works once the row has landed.
-export default function AboutBigOn({ items }: { items: Item[] }) {
+// If the section heading (`headingId`) is still typing itself out, the fan
+// waits for it to finish, so the two never run at once. Once landed, hovering
+// or focusing a photo tilts it 2° (alternating) and shrinks it a little (CSS).
+export default function AboutBigOn({ items, headingId }: { items: Item[]; headingId?: string }) {
   const ref = useRef<HTMLUListElement>(null);
   const [fan, setFan] = useState<Fan>("static");
 
@@ -49,8 +53,16 @@ export default function AboutBigOn({ items }: { items: Item[] }) {
           setFan((f) => (f === "static" && below ? "pile" : f));
         } else if (entry.intersectionRatio >= ABOUT_MOTION.fanThreshold) {
           observer.disconnect();
-          setFan((f) => (f === "pile" ? "spread" : f));
-          timer = window.setTimeout(() => setFan("static"), FAN_TOTAL_MS);
+          const spread = () => {
+            setFan((f) => (f === "pile" ? "spread" : f));
+            timer = window.setTimeout(() => setFan("static"), FAN_TOTAL_MS);
+          };
+          const heading = headingId ? document.getElementById(headingId) : null;
+          if (heading?.hasAttribute("data-typing")) {
+            heading.addEventListener(HEADING_TYPED, () => (timer = window.setTimeout(spread, ABOUT_MOTION.fanAfterHeadingMs)), { once: true });
+          } else {
+            spread();
+          }
         }
       },
       { threshold: [0, ABOUT_MOTION.fanThreshold] },
@@ -60,7 +72,7 @@ export default function AboutBigOn({ items }: { items: Item[] }) {
       observer.disconnect();
       window.clearTimeout(timer);
     };
-  }, []);
+  }, [headingId]);
 
   return (
     <ul
@@ -76,22 +88,29 @@ export default function AboutBigOn({ items }: { items: Item[] }) {
           "--pile-z": p.z,
           "--pile-dx": `${p.dx}px`,
           "--pile-dy": `${p.dy}px`,
+          "--hover-tilt": `calc(var(--big-on-hover-tilt) * ${i % 2 === 0 ? -1 : 1})`, // left, right, left, right
         } as CSSProperties;
         return (
           <li key={item.title} data-fan-item style={vars} className="relative">
-            <div data-fan-card>
-              <CursorCaption
-                caption={item.cursorCaption}
-                keepCase
-                className="border border-polaroid-border bg-polaroid p-polaroid-pad shadow-polaroid"
-              >
-                <Image
-                  src={item.photo.src}
-                  alt={item.photo.alt}
-                  sizes="(min-width: 1280px) 250px, (min-width: 1024px) 22vw, (min-width: 640px) 45vw, 100vw"
-                  className="block h-auto w-full"
-                />
-              </CursorCaption>
+            <div
+              data-fan-card
+              tabIndex={0}
+              className="outline-offset-4 focus-visible:outline-2 focus-visible:outline-accent"
+            >
+              <div data-big-on-tilt>
+                <CursorCaption
+                  caption={item.cursorCaption}
+                  keepCase
+                  className="border border-polaroid-border bg-polaroid p-polaroid-pad shadow-polaroid"
+                >
+                  <Image
+                    src={item.photo.src}
+                    alt={item.photo.alt}
+                    sizes="(min-width: 1280px) 250px, (min-width: 1024px) 22vw, (min-width: 640px) 45vw, 100vw"
+                    className="block h-auto w-full"
+                  />
+                </CursorCaption>
+              </div>
             </div>
             <div data-fan-text className="mt-big-on-text-top">
               <h3 className="flex items-center gap-2.5 font-display text-big-on-title font-medium text-ink italic">

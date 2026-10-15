@@ -1,15 +1,97 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+import { ABOUT_MOTION } from "@/lib/about-motion";
+import { graphemes } from "@/lib/graphemes";
+import { REDUCED_MOTION } from "@/lib/use-media-query";
 import type { Heading } from "../../content/about";
+
+// Fired on the heading when its typing has finished (AboutBigOn waits for it).
+export const HEADING_TYPED = "about-heading-typed";
+
+// "static": shown complete (server render, no JavaScript, reduced motion, or
+// already scrolled past on load). "armed": not reached yet, waiting.
+// "typing": being typed. "done": typed.
+type Phase = "static" | "armed" | "typing" | "done";
 
 // About page section heading (Figma 2801:5783, 2804:5826, 2804:11929): serif
 // medium italic. The leading kaomoji or symbol is decorative, so screen
 // readers hear only the words. "[°◉]" is upright in Figma; the others italic.
-export default function AboutHeading({ heading, id }: { heading: Heading; id: string }) {
+// With `typed`, it types itself out once, character by character (whole
+// graphemes, so kaomoji never split), when 40% of it is in view (right away
+// if it's already on screen at load, while its section fades in). The untyped
+// rest stays in place but invisible, so nothing moves; the visible copy is
+// aria-hidden and screen readers get the full words at once.
+export default function AboutHeading({ heading, id, typed = false }: { heading: Heading; id: string; typed?: boolean }) {
+  const ref = useRef<HTMLHeadingElement>(null);
+  const [phase, setPhase] = useState<Phase>("static");
+  const phaseRef = useRef<Phase>("static");
+  const go = (p: Phase) => {
+    phaseRef.current = p;
+    setPhase(p);
+  };
+  const [count, setCount] = useState(0);
+
+  const mark = graphemes(heading.mark);
+  const text = graphemes(` ${heading.text}`);
+  const total = mark.length + text.length;
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!typed || !el || window.matchMedia(REDUCED_MOTION).matches) return;
+    let timer: number | undefined;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        // Arm on the first report unless it's already above the screen (scrolled past: stays complete).
+        if (phaseRef.current === "static" && entry.boundingClientRect.top > 0) go("armed");
+        if (entry.intersectionRatio < ABOUT_MOTION.headingThreshold) return;
+        observer.disconnect();
+        if (phaseRef.current !== "armed") return;
+        go("typing");
+        let n = 0;
+        timer = window.setInterval(() => {
+          n += 1;
+          setCount(n);
+          if (n >= total) {
+            window.clearInterval(timer);
+            go("done");
+            el.dispatchEvent(new Event(HEADING_TYPED));
+          }
+        }, ABOUT_MOTION.headingTypeMsPerChar);
+      },
+      { threshold: [0, ABOUT_MOTION.headingThreshold] },
+    );
+    observer.observe(el);
+    return () => {
+      observer.disconnect();
+      window.clearInterval(timer);
+    };
+  }, [typed, total]);
+
+  const shown = phase === "armed" ? 0 : phase === "typing" ? count : total;
+  const markShown = Math.min(shown, mark.length);
+  const textShown = Math.max(0, shown - mark.length);
+  // The caret follows the last typed character, in the mark or in the words.
+  const caret = phase === "typing" && <span data-heading-caret />;
+
   return (
-    <h2 id={id} className="font-display text-about-heading-sm font-medium text-ink italic lg:text-about-heading">
-      <span aria-hidden="true" className={heading.markItalic ? "" : "font-normal not-italic"}>
-        {heading.mark}
-      </span>{" "}
-      {heading.text}
+    <h2
+      ref={ref}
+      id={id}
+      data-typing={phase === "armed" || phase === "typing" || undefined}
+      className="font-display text-about-heading-sm font-medium text-ink italic lg:text-about-heading"
+    >
+      <span className="sr-only">{heading.text}</span>
+      <span aria-hidden="true">
+        <span className={heading.markItalic ? "" : "font-normal not-italic"}>
+          {mark.slice(0, markShown).join("")}
+          {markShown < mark.length && caret}
+          <span className="invisible">{mark.slice(markShown).join("")}</span>
+        </span>
+        {text.slice(0, textShown).join("")}
+        {markShown === mark.length && caret}
+        <span className="invisible">{text.slice(textShown).join("")}</span>
+      </span>
     </h2>
   );
 }

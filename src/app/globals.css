@@ -920,7 +920,73 @@ body {
   }
 }
 
+/* Intro text on page load (every arrival on /about; the page template
+   remounts). The headline plays the home headline's intro-in with the same
+   values; the text under it fades and rises in, staggered (--about-i), once
+   the headline has mostly settled. CSS only: no hidden text before it
+   starts, nothing without JavaScript changes, reduced motion skips it. The
+   rest of the page keeps the shared page blur-in; the intro text replaces it. */
+@keyframes about-text-in {
+  from {
+    opacity: 0;
+    transform: translateY(var(--about-text-rise));
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  [data-page]:has([data-about-intro]) {
+    animation: none;
+  }
+  [data-about-intro="headline"] {
+    animation: intro-in var(--intro-line-dur) var(--intro-ease) var(--intro-hold) backwards;
+  }
+  [data-about-intro="text"] {
+    animation: about-text-in var(--about-text-ms) var(--intro-ease)
+      calc(var(--intro-hold) + var(--about-text-start) + var(--about-i, 0) * var(--about-text-stagger)) backwards;
+  }
+}
+
+/* Typed section headings (AboutHeading): the untyped rest stays in place,
+   invisible, so the heading never changes size; a thin caret, slanted with
+   the italics, follows the last typed character until it's done. */
+[data-heading-caret] {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0.8em; /* cap height to a little below the baseline */
+  vertical-align: -0.12em;
+}
+[data-heading-caret]::after {
+  content: "";
+  position: absolute;
+  left: 1px;
+  top: 0;
+  height: 100%;
+  width: 1.5px;
+  background: currentColor;
+  opacity: 0.55;
+  transform: skewX(-12deg);
+}
+
+/* "Big on" photos once the row has landed: hover (mouse) or keyboard focus
+   tilts the photo 2° (left, right, left, right: --hover-tilt) and shrinks it
+   a little. The hover target is the untransformed slot around it, so the
+   shrink never pulls the edge out from under the pointer. */
+[data-big-on-tilt] {
+  transition: transform var(--big-on-hover-ms) var(--big-on-hover-ease);
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  [data-fan="static"] [data-fan-card]:hover [data-big-on-tilt] {
+    transform: rotate(var(--hover-tilt)) scale(var(--big-on-hover-scale));
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  [data-fan="static"] [data-fan-card]:focus-visible [data-big-on-tilt] {
+    transform: rotate(var(--hover-tilt)) scale(var(--big-on-hover-scale));
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  [data-big-on-tilt],
   [data-portrait-card],
   [data-portrait-character],
   [data-portrait] [data-portrait-card],

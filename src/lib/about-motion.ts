@@ -5,6 +5,19 @@ import type { CSSProperties } from "react";
 // the components' JavaScript (typing speed, fan-out end) read the same values.
 // Reduced motion turns every transition off (globals.css) and shows final states.
 export const ABOUT_MOTION = {
+  // Intro text on page load. The headline reuses the home headline's values
+  // (--intro-hold, --intro-line-dur, --intro-ease, --intro-blur, --intro-rise
+  // in globals.css); the text under it fades in once the headline has mostly settled.
+  introTextStartMs: 500, // after the headline starts (it takes 700ms)
+  introTextStaggerMs: 100,
+  introTextMs: 500,
+  introTextRisePx: 8,
+
+  // Section headings ("snapshots of my life...", "taylor is big on..."): typed once when 40% in view.
+  headingThreshold: 0.4,
+  headingTypeMsPerChar: 40,
+  fanAfterHeadingMs: 150, // the "big on" fan-out waits for its heading to finish typing, then this
+
   // Portrait polaroid: straightens and grows on hover or focus.
   portraitMs: 380,
   portraitScale: 1.05, // Figma's straight frame (2824:12270) is the polaroid at 1.05
@@ -33,12 +46,26 @@ export const ABOUT_MOTION = {
   textMs: 520,
   textBlurPx: 8,
   textRisePx: 8,
+
+  // "Big on" photos after the fan-out: hover or focus tilts one 2° (alternating left, right) and shrinks it a little.
+  bigOnHoverMs: 250,
+  bigOnHoverTiltDeg: 2,
+  bigOnHoverScale: 0.97,
+  bigOnHoverEase: "cubic-bezier(0.33, 1, 0.68, 1)",
 } as const;
 
 /** The timings as CSS variables, for the page's root element. */
 export function aboutMotionVars(): CSSProperties {
   const m = ABOUT_MOTION;
   return {
+    "--about-text-start": `${m.introTextStartMs}ms`,
+    "--about-text-stagger": `${m.introTextStaggerMs}ms`,
+    "--about-text-ms": `${m.introTextMs}ms`,
+    "--about-text-rise": `${m.introTextRisePx}px`,
+    "--big-on-hover-ms": `${m.bigOnHoverMs}ms`,
+    "--big-on-hover-tilt": `${m.bigOnHoverTiltDeg}deg`,
+    "--big-on-hover-scale": m.bigOnHoverScale,
+    "--big-on-hover-ease": m.bigOnHoverEase,
     "--portrait-ms": `${m.portraitMs}ms`,
     "--portrait-scale": m.portraitScale,
     "--portrait-ease": m.portraitEase,

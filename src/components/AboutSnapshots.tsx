@@ -3,6 +3,7 @@
 import type { StaticImageData } from "next/image";
 import { useEffect, useState, type CSSProperties } from "react";
 import { ABOUT_MOTION } from "@/lib/about-motion";
+import { graphemes } from "@/lib/graphemes";
 import { REDUCED_MOTION, useMediaQuery } from "@/lib/use-media-query";
 import Polaroid from "./Polaroid";
 
@@ -18,18 +19,58 @@ const LAYOUT = [
   { cx: 1065, cy: 185, w: 248, h: 329, tilt: 4.33, captionW: 255 },
 ];
 const FRAME = 20; // 9px padding and 1px border on each side
+const CAPTION_GAP = 24; // grown frame to its caption (--spacing-snapshot-caption)
+const CAPTION_H = 44; // two 22px lines
+const CLEAR = 12; // least space between a caption and a neighbor's frame
+
+type Point = [number, number];
+
+// A tilted frame's corners on the stage (CSS rotation: clockwise for positive degrees).
+function corners(cx: number, cy: number, w: number, h: number, deg: number): Point[] {
+  const a = (deg * Math.PI) / 180;
+  const [c, s] = [Math.cos(a), Math.sin(a)];
+  return [[-w / 2, -h / 2], [w / 2, -h / 2], [w / 2, h / 2], [-w / 2, h / 2]].map(([x, y]) => [cx + x * c - y * s, cy + x * s + y * c]);
+}
+
+// Where a convex outline crosses the horizontal line `y` (its left and right x), if it does.
+function spanAt(poly: Point[], y: number): [number, number] | null {
+  const xs: number[] = [];
+  poly.forEach(([x1, y1], i) => {
+    const [x2, y2] = poly[(i + 1) % poly.length];
+    if (y1 !== y2 && (y1 - y) * (y2 - y) <= 0) xs.push(x1 + ((y - y1) * (x2 - x1)) / (y2 - y1));
+  });
+  return xs.length ? [Math.min(...xs), Math.max(...xs)] : null;
+}
+
+// Each typed caption's spot, relative to its photo's center: under the grown
+// photo's left edge, as wide as Figma's caption but never wider than the
+// photo. If a neighbor's tilted frame shows anywhere between the photo and
+// the bottom of its caption (Duolingo: the board photo's corner), the caption
+// moves inward past it (or its right edge in), so it reads as one photo's.
+const CAPTIONS = LAYOUT.map((l, i) => {
+  const scale = ABOUT_MOTION.snapshotScale;
+  const photoLeft = l.cx - (l.w * scale) / 2;
+  const photoRight = l.cx + (l.w * scale) / 2;
+  const frameBottom = l.cy + ((l.h + FRAME) * scale) / 2;
+  const top = frameBottom + CAPTION_GAP;
+  let left = photoLeft;
+  let right = photoRight; // only a neighbor on the right pulls this in
+  LAYOUT.forEach((n, j) => {
+    if (j === i) return;
+    const poly = corners(n.cx, n.cy, n.w + FRAME, n.h + FRAME, n.tilt);
+    for (let y = Math.floor(frameBottom); y <= top + CAPTION_H; y++) {
+      const span = spanAt(poly, y);
+      if (!span || span[1] < left - CLEAR || span[0] > Math.min(left + l.captionW, right) + CLEAR) continue;
+      if (n.cx < l.cx) left = Math.max(left, span[1] + CLEAR);
+      else right = Math.min(right, span[0] - CLEAR);
+    }
+  });
+  const width = Math.min(l.captionW, right - left);
+  return { x: Math.round(left - l.cx), y: Math.round(top - l.cy), w: Math.round(width) };
+});
 
 // Must match the `stage` variant in globals.css.
 const STAGE = "(width >= 80rem) and (hover: hover) and (pointer: fine)";
-
-// Splits text into what a reader sees as characters, so an emoji (even a
-// multi-part one) types as one.
-function graphemes(text: string): string[] {
-  if (typeof Intl !== "undefined" && "Segmenter" in Intl) {
-    return Array.from(new Intl.Segmenter(undefined, { granularity: "grapheme" }).segment(text), (s) => s.segment);
-  }
-  return Array.from(text);
-}
 
 // "Snapshots of my life as a designer" (Figma 2801:5783). With a mouse on a
 // wide screen: four overlapping, tilted polaroids; hovering or focusing one
@@ -73,10 +114,9 @@ export default function AboutSnapshots({ photos }: { photos: Snapshot[] }) {
           "--fw": `${l.w + FRAME}px`,
           "--tilt": `${l.tilt}deg`,
           "--z": i + 1,
-          // The caption starts under the grown photo's left edge, 24px below the grown frame.
-          "--cap-x": `calc(${l.w / 2}px * var(--snapshot-scale) * -1)`,
-          "--cap-y": `calc(${(l.h + FRAME) / 2}px * var(--snapshot-scale) + var(--spacing-snapshot-caption))`,
-          "--cap-w": `${l.captionW}px`,
+          "--cap-x": `${CAPTIONS[i].x}px`,
+          "--cap-y": `${CAPTIONS[i].y}px`,
+          "--cap-w": `${CAPTIONS[i].w}px`,
         } as CSSProperties;
         const isActive = active === i;
         return (
