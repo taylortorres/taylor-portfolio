@@ -10,7 +10,7 @@ type NavLink = { label: string; href: string; external?: boolean; hidden?: boole
 const links: NavLink[] = [
   { label: "Work", href: "/#work" },
   { label: "Fun", href: "/fun", hidden: true }, // no /fun page yet
-  { label: "About", href: "/about", hidden: true }, // no /about page yet
+  { label: "About", href: "/about" },
   { label: "Resume", href: RESUME_URL, external: true },
 ];
 
