@@ -15,8 +15,13 @@ const DEV_REPLAY =
 // headline fonts and the hero's images are ready (at most 600ms), so the
 // sequence always starts cleanly. Then the timeline (and its 150ms hold)
 // begins. Without JavaScript nothing is added and the page is static.
+//
+// It also adds html.js on every full load (any page), before the first paint,
+// for CSS that should only hide things when JavaScript will bring them back
+// (the About page's section reveals).
 export const INTRO_SCRIPT = `(function(){try{
 var d=document.documentElement,force=${DEV_REPLAY};
+d.classList.add("js");
 if(location.pathname!=="/"||matchMedia("(prefers-reduced-motion: reduce)").matches)return;
 if(!force&&sessionStorage.getItem("${INTRO_KEY}"))return;
 sessionStorage.setItem("${INTRO_KEY}","1");

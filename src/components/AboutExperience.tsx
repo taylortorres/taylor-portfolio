@@ -1,4 +1,5 @@
 import Image from "next/image";
+import type { CSSProperties } from "react";
 
 type Row = { company: string; role: string; dates: string; logo: string; tile?: boolean };
 
@@ -6,13 +7,16 @@ type Row = { company: string; role: string; dates: string; logo: string; tile?: 
 // company, the role 242px from the row start, and the dates against the
 // right edge (Figma's last three rows end 2px short of it; aligned here).
 // Below md the role and dates stack under the company. Logos are
-// decorative: the company name is right beside each one.
+// decorative: the company name is right beside each one. Each row blurs in
+// after the heading types (data-reveal-item, CSS in globals.css), top to bottom.
 export default function AboutExperience({ rows }: { rows: Row[] }) {
   return (
-    <ul className="flex flex-col gap-6 md:gap-experience-row">
-      {rows.map((row) => (
+    <ul className="flex flex-col gap-6 md:gap-experience-row" style={{ "--reveal-stagger": "var(--experience-reveal-stagger)" } as CSSProperties}>
+      {rows.map((row, i) => (
         <li
           key={row.company}
+          data-reveal-item
+          style={{ "--reveal-i": i } as CSSProperties}
           className="grid grid-cols-[auto_1fr] items-center gap-x-logo-gap text-experience md:grid-cols-[var(--spacing-logo)_calc(var(--spacing-experience-role)-var(--spacing-logo)-2*var(--spacing-logo-gap))_1fr_auto]"
         >
           <span className="relative row-span-3 size-logo self-start md:row-span-1 md:self-center">

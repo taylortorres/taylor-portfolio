@@ -55,26 +55,27 @@ export default function AboutPage() {
             </div>
           </div>
 
-          <section aria-labelledby="snapshots-heading" className="mt-about-section-sm motion-safe:animate-page-enter lg:mt-about-section">
+          <section data-reveal-scope aria-labelledby="snapshots-heading" className="mt-about-section-sm motion-safe:animate-page-enter lg:mt-about-section">
             <AboutHeading id="snapshots-heading" heading={snapshots.heading} typed />
-            <div className="mt-8 stage:mt-about-heading-gap">
+            <div className="mt-about-content-gap stage:mt-about-heading-gap">
               <AboutSnapshots photos={snapshots.photos} />
             </div>
           </section>
 
           <section
+            data-reveal-scope
             aria-labelledby="big-on-heading"
-            className="mt-about-section-sm motion-safe:animate-page-enter lg:mt-about-section stage:mt-snapshot-after"
+            className="mt-big-on-top-sm motion-safe:animate-page-enter lg:mt-big-on-top stage:mt-snapshot-after"
           >
             <AboutHeading id="big-on-heading" heading={bigOn.heading} typed />
-            <div className="mt-8 lg:mt-big-on-heading-gap">
+            <div className="mt-(--about-content-gap)">
               <AboutBigOn items={bigOn.items} headingId="big-on-heading" />
             </div>
           </section>
 
-          <section aria-labelledby="experience-heading" className="mt-about-section-sm motion-safe:animate-page-enter lg:mt-about-section">
-            <AboutHeading id="experience-heading" heading={experience.heading} />
-            <div className="mt-8 md:mt-experience-gap">
+          <section data-reveal-scope aria-labelledby="experience-heading" className="mt-about-section-sm motion-safe:animate-page-enter lg:mt-about-section">
+            <AboutHeading id="experience-heading" heading={experience.heading} typed />
+            <div className="mt-(--about-content-gap)">
               <AboutExperience rows={experience.rows} />
             </div>
           </section>

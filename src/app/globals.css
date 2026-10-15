@@ -479,15 +479,18 @@
   --spacing-about-heading-gap: 28px; /* snapshots heading to the photos (from xl) */
   --spacing-snapshot-stage: 455px; /* overlapping snapshots, room for the tallest typed caption included (from xl) */
   --spacing-snapshot-caption: 24px; /* photo to its caption (Figma 24–27) */
-  --spacing-snapshot-after: 78px; /* reserved caption room to the "big on" heading (Figma caption → heading) */
+  --spacing-snapshot-after: 218px; /* reserved caption room to the "big on" heading, from xl with a mouse (Figma's 78 + 140, so reaching it takes a scroll) */
+  --spacing-big-on-top: 325px; /* snapshots to the "big on" heading, lg up to the stage layout (the 225 section gap + 100: the 140 above, scaled to 1024) */
+  --spacing-big-on-top-sm: 160px; /* below lg (the 120 section gap + 40) */
   --spacing-snapshot-grid: 32px; /* gap between straight snapshots (below xl or on touch) */
-  --spacing-big-on-heading-gap: 84px; /* "big on" heading to the row (from lg; the pile reaches 45px below the heading) */
+  --spacing-big-on-pile-gap: 84px; /* from lg the pile stays centered on a row 84px under the heading (where the row used to sit), so it starts 45px under it as before; the row itself sits --about-content-gap under the heading */
   --spacing-big-on-gap: 41px; /* between "big on" columns (from lg) */
   --spacing-big-on-row-gap: 56px; /* between stacked cards below lg */
   --spacing-big-on-text-top: 14px; /* photo to the title */
   --spacing-big-on-title-gap: 16px; /* title to its text (Figma 15–16: unified) */
   --spacing-big-on-square: 14px; /* square before the title */
-  --spacing-experience-gap: 45px; /* heading to the first row */
+  --spacing-about-content-gap: 32px; /* About heading box to its content, the same for all three (baseline to the first frame: 42–43px) */
+  --spacing-about-content-gap-stage: 35px; /* the same with the overlapping snapshots (xl, mouse): their first tilted frame sits 7px into the stage, 28 + 7 (baseline to frame 46px) */
   --spacing-experience-row: 31px; /* between rows (from md) */
   --spacing-experience-role: 242px; /* row start to the role column (Figma 242–243) */
   --spacing-logo: 36px; /* company logo tile */
@@ -896,7 +899,7 @@ body {
   [data-fan="pile"] [data-fan-card] {
     transform: translate(
         calc((1.5 - var(--i)) * (100% + var(--spacing-big-on-gap)) + var(--pile-dx)),
-        var(--pile-dy)
+        calc(var(--pile-dy) + var(--spacing-big-on-pile-gap) - var(--about-content-gap))
       )
       rotate(var(--pile-rot));
   }
@@ -946,6 +949,53 @@ body {
   [data-about-intro="text"] {
     animation: about-text-in var(--about-text-ms) var(--intro-ease)
       calc(var(--intro-hold) + var(--about-text-start) + var(--about-i, 0) * var(--about-text-stagger)) backwards;
+  }
+}
+
+/* Heading to content: one gap for every About section (Figma's snapshots
+   spacing), a little more where the overlapping snapshots' first frame is tilted. */
+:root {
+  --about-content-gap: var(--spacing-about-content-gap);
+}
+@media (width >= 80rem) and (hover: hover) and (pointer: fine) {
+  :root {
+    --about-content-gap: var(--spacing-about-content-gap-stage);
+  }
+}
+
+/* Section content after its typed heading (data-reveal on the section, set
+   by AboutHeading: armed → typing → shown, or static). Items wait hidden in
+   intro-in's start state while the heading is armed or typing, then blur in
+   with the intro headline's values, --after-heading after the last
+   character, --reveal-stagger apart (--reveal-i). Each takes pointer events
+   only once its own blur-in has ended (data-revealed). The outer item
+   animates; hover transforms live on elements inside it. Without JavaScript,
+   with reduced motion, or when already scrolled past, nothing is hidden. */
+@media (prefers-reduced-motion: no-preference) {
+  /* Before React has decided (no data-reveal yet), with JavaScript on
+     (html.js, set by the root layout's inline script before the first paint):
+     hidden, so content that's about to be armed never flashes. Without
+     JavaScript there's no .js and everything shows. */
+  html.js [data-reveal-scope]:not([data-reveal]) [data-heading-visual] {
+    visibility: hidden;
+  }
+  html.js [data-reveal-scope]:not([data-reveal]) [data-reveal-item] {
+    opacity: 0;
+    filter: blur(var(--intro-blur));
+    transform: translateY(var(--intro-rise)) scale(var(--intro-scale));
+  }
+  :is([data-reveal="armed"], [data-reveal="typing"]) [data-reveal-item] {
+    opacity: 0;
+    filter: blur(var(--intro-blur));
+    transform: translateY(var(--intro-rise)) scale(var(--intro-scale));
+    pointer-events: none;
+  }
+  [data-reveal="shown"] [data-reveal-item] {
+    animation: intro-in var(--intro-line-dur) var(--intro-ease)
+      calc(var(--after-heading) + var(--reveal-i, 0) * var(--reveal-stagger, 0ms)) backwards;
+  }
+  [data-reveal="shown"] [data-reveal-item]:not([data-revealed]) {
+    pointer-events: none;
   }
 }
 

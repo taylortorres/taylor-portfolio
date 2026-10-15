@@ -101,11 +101,19 @@ export default function AboutSnapshots({ photos }: { photos: Snapshot[] }) {
     return () => window.clearInterval(timer);
   }, [active, photos, reduced]);
 
-  const enter = (i: number) => stage && setActive(i);
+  // Not until the photo's own blur-in (after the heading types) has ended.
+  const enter = (i: number, el: Element) => {
+    const reveal = el.closest("[data-reveal]")?.getAttribute("data-reveal");
+    const ready = !reveal || reveal === "static" || (reveal === "shown" && el.closest("[data-revealed]"));
+    if (stage && ready) setActive(i);
+  };
   const leave = (i: number) => setActive((a) => (a === i ? null : a));
 
   return (
-    <ul className="grid grid-cols-1 gap-snapshot-grid sm:grid-cols-2 lg:grid-cols-4 lg:items-start stage:relative stage:block stage:h-snapshot-stage">
+    <ul
+      style={{ "--reveal-stagger": "var(--snapshot-reveal-stagger)" } as CSSProperties}
+      className="grid grid-cols-1 gap-snapshot-grid sm:grid-cols-2 lg:grid-cols-4 lg:items-start stage:relative stage:block stage:h-snapshot-stage"
+    >
       {photos.map((photo, i) => {
         const l = LAYOUT[i];
         const vars = {
@@ -114,21 +122,22 @@ export default function AboutSnapshots({ photos }: { photos: Snapshot[] }) {
           "--fw": `${l.w + FRAME}px`,
           "--tilt": `${l.tilt}deg`,
           "--z": i + 1,
+          "--reveal-i": i, // blurs in after the heading, 100ms apart
           "--cap-x": `${CAPTIONS[i].x}px`,
           "--cap-y": `${CAPTIONS[i].y}px`,
           "--cap-w": `${CAPTIONS[i].w}px`,
         } as CSSProperties;
         const isActive = active === i;
         return (
-          <li key={photo.caption} style={vars} className="stage:absolute stage:top-(--cy) stage:left-(--cx) stage:size-0">
+          <li key={photo.caption} data-reveal-item style={vars} className="stage:absolute stage:top-(--cy) stage:left-(--cx) stage:size-0">
             <figure>
               <div
                 data-snap-card
                 data-active={isActive || undefined}
                 tabIndex={stage ? 0 : undefined}
-                onPointerEnter={(e) => e.pointerType === "mouse" && enter(i)}
+                onPointerEnter={(e) => e.pointerType === "mouse" && enter(i, e.currentTarget)}
                 onPointerLeave={() => leave(i)}
-                onFocus={() => enter(i)}
+                onFocus={(e) => enter(i, e.currentTarget)}
                 onBlur={() => leave(i)}
                 className="outline-offset-4 focus-visible:outline-2 focus-visible:outline-accent stage:absolute stage:top-0 stage:left-0 stage:w-(--fw)"
               >

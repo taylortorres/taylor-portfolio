@@ -59,7 +59,7 @@ export default function AboutBigOn({ items, headingId }: { items: Item[]; headin
           };
           const heading = headingId ? document.getElementById(headingId) : null;
           if (heading?.hasAttribute("data-typing")) {
-            heading.addEventListener(HEADING_TYPED, () => (timer = window.setTimeout(spread, ABOUT_MOTION.fanAfterHeadingMs)), { once: true });
+            heading.addEventListener(HEADING_TYPED, () => (timer = window.setTimeout(spread, ABOUT_MOTION.afterHeadingMs)), { once: true });
           } else {
             spread();
           }

@@ -13,10 +13,16 @@ export const ABOUT_MOTION = {
   introTextMs: 500,
   introTextRisePx: 8,
 
-  // Section headings ("snapshots of my life...", "taylor is big on..."): typed once when 40% in view.
-  headingThreshold: 0.4,
-  headingTypeMsPerChar: 40,
-  fanAfterHeadingMs: 150, // the "big on" fan-out waits for its heading to finish typing, then this
+  // Section headings ("snapshots of my life...", "taylor is big on...", "experience"): typed
+  // once, when the whole heading is inside the top 65% of the screen (the bottom 35% is ignored).
+  headingRootMargin: "0px 0px -35% 0px",
+  headingThreshold: 0.99, // the whole heading (0.99 allows for subpixel rounding)
+  headingTypeMsPerChar: 35,
+  // After a heading finishes typing, its content enters this much later: the snapshots and
+  // experience rows blur in (the intro headline's values), the "big on" pile fans out.
+  afterHeadingMs: 150,
+  snapshotRevealStaggerMs: 100,
+  experienceRevealStaggerMs: 80, // per row, top to bottom
 
   // Portrait polaroid: straightens and grows on hover or focus.
   portraitMs: 380,
@@ -60,6 +66,9 @@ export const ABOUT_MOTION = {
 export function aboutMotionVars(): CSSProperties {
   const m = ABOUT_MOTION;
   return {
+    "--after-heading": `${m.afterHeadingMs}ms`,
+    "--snapshot-reveal-stagger": `${m.snapshotRevealStaggerMs}ms`,
+    "--experience-reveal-stagger": `${m.experienceRevealStaggerMs}ms`,
     "--about-text-start": `${m.introTextStartMs}ms`,
     "--about-text-stagger": `${m.introTextStaggerMs}ms`,
     "--about-text-ms": `${m.introTextMs}ms`,
