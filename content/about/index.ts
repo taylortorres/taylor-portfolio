@@ -95,7 +95,7 @@ export const about = {
       },
       {
         photo: { src: bigOnConcert, alt: "Taylor and two friends holding up concert photo cards in a crowded venue lobby" },
-        cursorCaption: "#riizeandrealize",
+        cursorCaption: "#gobigorgohome",
         title: "fangirling at concertsss",
         text: "There’s truly nothing quite like the collective serotonin boost of screaming your lungs out at a concert with your favorite people.",
         funFact: "I braved the BTS ticket war 3x!",
