@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+/* About page snapshots: the overlapping, hover-driven layout needs a mouse and
+   room for Figma's 1200px stage. Elsewhere they sit straight in a grid. */
+@custom-variant stage (@media (width >= 80rem) and (hover: hover) and (pointer: fine));
+
 /* Design tokens from Figma: Taylor's Portfolio Website, node 2606:48270.
    Fractional Figma values are rounded to the nearest whole pixel. */
 :root {
@@ -66,6 +70,17 @@
   --nda-border: rgba(97, 105, 122, 0.1); /* its border */
   --nda-ink: #61697a; /* its text (5.2:1 on the fill) */
   --caution-ink: #946800; /* "COULD BE IMPROVED" (Figma #e9ab10 darkened to meet WCAG AA, 4.95:1; "WORKS GREAT!" uses choice-ink) */
+  /* About page (Figma 2748:5479) */
+  --about-ink: rgba(41, 30, 30, 0.9); /* body text, snapshot captions, experience companies (12:1) */
+  --about-strong: rgba(41, 30, 30, 0.95); /* "[01] follow your curiosity" leads */
+  --about-soft: rgba(41, 30, 30, 0.65); /* "taylor is big on" text (Figma value, 5.06:1) */
+  --about-faint: rgba(41, 30, 30, 0.62); /* experience roles and dates (Figma 0.5 darkened to meet WCAG AA, 4.59:1) */
+  --polaroid: #fdfdfd; /* snapshot and "big on" polaroid frames */
+  --polaroid-border: #fafafa; /* their 1px border */
+  --polaroid-shadow: rgba(158, 158, 158, 0.25);
+  --portrait-shadow: rgba(0, 0, 0, 0.1); /* portrait polaroid (white frame) */
+  --big-on-square: rgba(69, 71, 165, 0.75); /* square before each "big on" title (decorative) */
+  --logo-border: #eae8e8; /* Stanford Health logo tile */
 }
 
 @theme inline {
@@ -123,6 +138,18 @@
   --color-crit-teal-text: var(--crit-teal-text);
   --color-crit-purple: var(--crit-purple);
   --color-pick-border: var(--pick-border);
+  --color-about-ink: var(--about-ink);
+  --color-about-strong: var(--about-strong);
+  --color-about-soft: var(--about-soft);
+  --color-about-faint: var(--about-faint);
+  --color-polaroid: var(--polaroid);
+  --color-polaroid-border: var(--polaroid-border);
+  --color-big-on-square: var(--big-on-square);
+  --color-logo-border: var(--logo-border);
+
+  /* Font weights */
+  --font-weight-book: 375; /* About intro paragraphs (Geist; Figma 375) */
+  --font-weight-lead: 450; /* About belief leads, "[01] follow your curiosity" (Figma 450) */
 
   /* Fonts (variables set by next/font in layout.tsx) */
   --font-display: var(--font-newsreader);
@@ -272,6 +299,29 @@
   --text-nda-title--letter-spacing: -0.64px;
   --text-feature: 17px; /* its description (Geist; Figma Inter 16.7–17.4, unified) */
   --text-feature--line-height: 22px;
+  /* About page (Figma 2748:5479) */
+  --text-about-lede: 32px; /* "I'm Taylor, a product designer..." (Newsreader italic) */
+  --text-about-lede--line-height: 36px;
+  --text-about-lede-sm: 26px; /* below lg */
+  --text-about-lede-sm--line-height: 30px;
+  --text-about-body: 18px; /* intro paragraphs and beliefs (Geist 375; leads 450) */
+  --text-about-body--line-height: 24px;
+  --text-about-label: 18px; /* "A FEW THINGS I BELIEVE IN..." (Geist Mono medium; Figma IBM Plex Mono) */
+  --text-about-label--line-height: 28px;
+  --text-about-heading: 32px; /* section headings: snapshots, big on, experience (Newsreader medium italic) */
+  --text-about-heading--line-height: 38px;
+  --text-about-heading-sm: 26px; /* below lg */
+  --text-about-heading-sm--line-height: 31px;
+  --text-polaroid-caption: 14px; /* "hiii, welcome!!!" (Geist Mono medium; Figma IBM Plex Mono, line height normal) */
+  --text-polaroid-caption--line-height: 18px;
+  --text-snapshot-caption: 18px; /* typed caption under a snapshot (Newsreader medium italic) */
+  --text-snapshot-caption--line-height: 22px;
+  --text-big-on-title: 24px; /* "exploring the world" (Newsreader medium italic) */
+  --text-big-on-title--line-height: 38px;
+  --text-big-on: 16px; /* its text (Geist; "Fun fact:" semibold) */
+  --text-big-on--line-height: 22px;
+  --text-experience: 20px; /* experience rows (Geist; company medium) */
+  --text-experience--line-height: 28px;
 
   /* Spacing → p-*, gap-*, h-*, max-w-* */
   --spacing-nav-h: 64px;
@@ -408,6 +458,40 @@
   --spacing-play: 68px; /* play button on the video poster */
   --spacing-video-top: 29px; /* paragraph to the video panel */
   --spacing-video-bottom: 41px; /* video panel to the next paragraph */
+  /* About page (Figma 2748:5479) */
+  --spacing-about-max: 1200px; /* content width (x=120 at 1440) */
+  --spacing-about-top: 103px; /* nav to the intro (from lg; Figma 167 − 64) */
+  --spacing-about-top-sm: 48px; /* below lg */
+  --spacing-about-section: 225px; /* between sections (from lg; Figma 225 intro → snapshots, 222 big on → experience: unified) */
+  --spacing-about-section-sm: 120px; /* below lg */
+  --spacing-about-bottom: 155px; /* experience to the footer (from lg): Figma 250, minus the footer's own 95px top margin */
+  --spacing-about-intro-gap: 73px; /* portrait to the intro text (from lg) */
+  --spacing-about-text: 733px; /* intro text column */
+  --spacing-about-stack: 20px; /* lede, paragraphs and beliefs */
+  --spacing-belief-gap: 2px; /* "A FEW THINGS..." to the list */
+  --spacing-portrait-w: 275px; /* portrait photo (Figma 275 × 316) */
+  --spacing-portrait-h: 316px;
+  --spacing-portrait-x: 18px; /* white frame around it: sides */
+  --spacing-portrait-y: 25px; /* top and bottom */
+  --spacing-portrait-caption: 20px; /* photo to "hiii, welcome!!!" */
+  --spacing-portrait-box: 334px; /* the tilted portrait's footprint beside the text (Figma 333.65) */
+  --spacing-polaroid-pad: 9px; /* snapshot and "big on" frames (Figma 8.9–10.4: unified) */
+  --spacing-about-heading-gap: 28px; /* snapshots heading to the photos (from xl) */
+  --spacing-snapshot-stage: 455px; /* overlapping snapshots, room for the tallest typed caption included (from xl) */
+  --spacing-snapshot-caption: 24px; /* photo to its caption (Figma 24–27) */
+  --spacing-snapshot-after: 78px; /* reserved caption room to the "big on" heading (Figma caption → heading) */
+  --spacing-snapshot-grid: 32px; /* gap between straight snapshots (below xl or on touch) */
+  --spacing-big-on-heading-gap: 84px; /* "big on" heading to the row (from lg; the pile reaches 45px below the heading) */
+  --spacing-big-on-gap: 41px; /* between "big on" columns (from lg) */
+  --spacing-big-on-row-gap: 56px; /* between stacked cards below lg */
+  --spacing-big-on-text-top: 14px; /* photo to the title */
+  --spacing-big-on-title-gap: 16px; /* title to its text (Figma 15–16: unified) */
+  --spacing-big-on-square: 14px; /* square before the title */
+  --spacing-experience-gap: 45px; /* heading to the first row */
+  --spacing-experience-row: 35px; /* between rows (from md) */
+  --spacing-experience-role: 242px; /* row start to the role column (Figma 242–243) */
+  --spacing-logo: 40px; /* company logo tile */
+  --spacing-logo-gap: 14px; /* logo to the company (Figma 14–15) */
 
   /* Radius */
   --radius-tag: 6px;
@@ -424,6 +508,8 @@
   --radius-effort: 4px; /* effort bars (Figma 3.6) */
   --radius-phone: 18px; /* phone frame around a demo video */
   --radius-feature: 15px; /* Treeats feature phone recordings */
+  --radius-logo: 6px; /* About experience logo tile (Stanford Health) */
+  --radius-square: 2px; /* square before each "big on" title */
   --radius-screenshot: 6px; /* Treeats Fizz posts in the Research collage, site screenshots (Figma 6–6.6) */
 
   /* Shadows */
@@ -431,6 +517,8 @@
   --shadow-post: 0 6px 13px rgb(0 0 0 / 0.06), 0 18px 23px rgb(0 0 0 / 0.09), 0 9px 32px rgb(0 0 0 / 0.05), 0 94px 37px rgb(0 0 0 / 0.01); /* Treeats Fizz post (Figma 12.75 / 23.25 / 31.5 / 37.1 blurs) */
   --shadow-feature: 0 5px 40px rgb(0 0 0 / 0.25); /* Treeats feature phones */
   --shadow-site: 0 2px 9px rgb(0 0 0 / 0.08); /* Treeats Research site screenshots (Figma 0 2.2 8.4–8.7) */
+  --shadow-polaroid: 0 3px 8px var(--polaroid-shadow); /* snapshot and "big on" polaroids (Figma 0 2.6–3.2 7.1–9.7: unified) */
+  --shadow-portrait: 0 0 9px var(--portrait-shadow); /* portrait polaroid (Figma 0 0 9.375) */
   --shadow-card: 0 4px 12px rgb(182 181 181 / 0.12); /* unframed Design Evolution cards: Wait Times, Handgloves (Figma 0 3.75 15 / 6.4 at 8–12%: unified) */
 
   /* Signature handwriting reveal. Each stroke sets its own delay and
@@ -732,5 +820,115 @@ body {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+}
+
+/* About page interactions (AboutPortrait, AboutSnapshots, AboutBigOn). The
+   timings are CSS variables set on the page's <main> from
+   src/lib/about-motion.ts, the one place they live. Transform, opacity and
+   filter only. With reduced motion every state change is instant. */
+
+/* Portrait polaroid: tilted; on hover, keyboard focus or (touch) once in view,
+   it straightens and grows while the pink character rises from behind it. */
+:root {
+  --portrait-tilt: -3.14deg; /* Figma */
+  /* Pink character, from the straight frame (Figma 2824:12270, drawn at the
+     1.05 hover scale; values here are before that scale). The PNG has its
+     21.44° tilt baked in, so it isn't rotated in CSS. */
+  --character-w: 112px; /* Figma 117.34 ÷ 1.05 */
+  --character-x: 78.4%; /* its center across the 311px polaroid (243.7px) */
+  --character-peek: -85px; /* its top above the polaroid's top edge (Figma −89.61 ÷ 1.05) */
+  --character-hidden: 10px; /* resting: fully behind the polaroid, 10px below its top edge */
+}
+[data-portrait-card] {
+  transform: rotate(var(--portrait-tilt));
+  transition: transform var(--portrait-ms) var(--portrait-ease);
+}
+[data-portrait-character] {
+  width: var(--character-w);
+  left: var(--character-x);
+  transform: translate(-50%, var(--character-hidden));
+  transition: transform var(--character-out-ms) var(--character-out-ease);
+}
+@media (hover: hover) and (pointer: fine) {
+  [data-portrait]:hover [data-portrait-card] {
+    transform: rotate(0deg) scale(var(--portrait-scale));
+  }
+  [data-portrait]:hover [data-portrait-character] {
+    transform: translate(-50%, var(--character-peek));
+    transition: transform var(--character-in-ms) var(--character-in-ease) var(--character-in-delay);
+  }
+}
+:is([data-portrait]:focus-visible, [data-portrait][data-active]) [data-portrait-card] {
+  transform: rotate(0deg) scale(var(--portrait-scale));
+}
+:is([data-portrait]:focus-visible, [data-portrait][data-active]) [data-portrait-character] {
+  transform: translate(-50%, var(--character-peek));
+  transition: transform var(--character-in-ms) var(--character-in-ease) var(--character-in-delay);
+}
+
+/* Snapshots (stage layout only): each card is centered on its Figma spot,
+   tilted. The active one straightens, grows and comes to the front; z-index
+   eases back down as it leaves, so it never drops under a neighbor mid-shrink. */
+@media (width >= 80rem) and (hover: hover) and (pointer: fine) {
+  [data-snap-card] {
+    z-index: var(--z);
+    transform: translate(-50%, -50%) rotate(var(--tilt));
+    transition:
+      transform var(--snapshot-ms) var(--snapshot-ease),
+      z-index var(--snapshot-ms) linear;
+  }
+  [data-snap-card][data-active] {
+    z-index: 30;
+    transform: translate(-50%, -50%) rotate(0deg) scale(var(--snapshot-scale));
+    transition: transform var(--snapshot-ms) var(--snapshot-ease);
+  }
+}
+
+/* "Taylor is big on" (from lg): before the fan-out each card sits on the
+   pile at the row's center, tilted, Paris on top; the texts are hidden. Then
+   the cards fan out one by one and each text blurs in after its card lands. */
+@media (width >= 64rem) {
+  [data-fan="pile"] [data-fan-item] {
+    z-index: var(--pile-z);
+  }
+  [data-fan="pile"] [data-fan-card] {
+    transform: translate(
+        calc((1.5 - var(--i)) * (100% + var(--spacing-big-on-gap)) + var(--pile-dx)),
+        var(--pile-dy)
+      )
+      rotate(var(--pile-rot));
+  }
+  [data-fan="spread"] [data-fan-card] {
+    transition: transform var(--fan-ms) var(--fan-ease) calc(var(--i) * var(--fan-stagger));
+  }
+  [data-fan="pile"] [data-fan-text] {
+    opacity: 0;
+    filter: blur(var(--fan-text-blur));
+    transform: translateY(var(--fan-text-rise));
+  }
+  [data-fan="spread"] [data-fan-text] {
+    transition-property: opacity, filter, transform;
+    transition-duration: var(--fan-text-ms);
+    transition-timing-function: ease-out;
+    transition-delay: calc(var(--i) * var(--fan-stagger) + var(--fan-ms));
+  }
+  /* No cursor captions or hover until the row has landed. */
+  [data-fan="pile"] [data-cursor-label],
+  [data-fan="spread"] [data-cursor-label] {
+    pointer-events: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-portrait-card],
+  [data-portrait-character],
+  [data-portrait] [data-portrait-card],
+  [data-portrait] [data-portrait-character],
+  [data-snap-card],
+  [data-snap-card][data-active],
+  [data-fan-card],
+  [data-fan-text] {
+    transition: none !important;
   }
 }

@@ -202,7 +202,16 @@ Tags have a 6px radius (`rounded-tag`) and a 1px `tag` border. Thumbnails have s
 - The public address is `SITE_URL` (`https://taylortorres.me`) in `src/lib/site.ts`; never hardcode a domain (no `.vercel.app`). The root layout sets `metadataBase` from it, so relative metadata URLs become absolute.
 - Every page sets its own canonical link and Open Graph / Twitter tags with `pageMetadata({ path, title, description, type })` from `src/lib/site.ts` (Next replaces `openGraph` wholesale per page). The home page is `website`, case studies `article`. Titles: "Taylor Torres" on the home page, "<case study title> · Taylor Torres" on case studies. The home page description is `SITE_DESCRIPTION`, case studies use `meta.description`.
 - Share image: `public/og-image.png` (1200 × 630 PNG, about 150 KB, scaled from the 6000 × 3150 `design-assets/og-image.png`) is the og:image and twitter:image (`summary_large_image`) on every page, with alt text (`DEFAULT_SHARE_IMAGE` in `src/lib/site.ts`; the root layout uses it too, so not-found pages have it). A case study can use its own with optional `meta.shareImage: { image: "./share.png", alt: "..." }` (1200 × 630, in its folder).
-- `src/app/sitemap.ts` lists the home page and every case study page (not link-out projects or `/dev`); `src/app/robots.ts` disallows `/dev/` and points to the sitemap. New case studies appear in the sitemap automatically.
+- `src/app/sitemap.ts` lists the home page, `/about` and every case study page (not link-out projects or `/dev`); `src/app/robots.ts` disallows `/dev/` and points to the sitemap. New case studies appear in the sitemap automatically.
+
+## About page
+- `/about` (Figma 2748:5479): one column, no sidebar. Copy, captions, photos and experience rows live in `content/about/index.ts` (typed; edit there, not in the components). Photos are Figma's own fills (no raw originals; kept as `design-assets/about/*-figma-export.png`), cropped to Figma's frames and saved at about 3x their CSS width as JPEG in `content/about/`. Company logos are in `public/about/` (each SVG merges Figma's two layers: the 1px outline and the mark). Nothing on the page is zoomable.
+- Components: `AboutPortrait`, `AboutSnapshots`, `AboutBigOn`, `AboutExperience`, `AboutHeading`, `Polaroid` (the off-white frame, border and shadow in CSS around a bare photo). Section headings start with a decorative kaomoji (`aria-hidden`); the intro lede is the page's `h1`.
+- Every timing is in `src/lib/about-motion.ts`; the page sets them as CSS variables on `<main>` and the interaction CSS sits in one "About page interactions" block at the end of `globals.css`. Reduced motion turns every transition off and shows final states.
+- Portrait: tilted −3.14°; hover or keyboard focus straightens it and scales 1.05 (Figma's straight frame, 2824:12270) while the pink character (`content/about/pink-character.png`, 336px wide, its 21.44° tilt baked in; raw file `design-assets/about/pink-character.png`) rises from 10px behind the top edge to 85px above it, centered 78.4% across (the `--character-*` values in `globals.css`). Touch screens play it once at 60% in view and stay straight.
+- Snapshots: the overlapping, tilted layout (Figma's positions, in `AboutSnapshots`) only with a mouse from xl (the `stage` variant). The hovered or focused photo straightens, scales 1.1, comes to the front and types its caption (grapheme by grapheme, so emoji stay whole; the typed copy is `aria-hidden`, the full caption is a screen-reader-only figcaption). Elsewhere they sit straight in a grid (1 / 2 from sm / 4 from lg) with captions showing.
+- "Big on": from lg, the four photos start as Figma's pile (Paris on top) while the row is still below the screen, then fan out once at 50% in view and each text blurs in after its photo lands; cursor captions (lowercase, `CursorCaption keepCase`) work only after that. Below lg (2 columns from sm, 1 below) and with reduced motion it's always the final layout.
+- Experience: logo, company, role 242px from the row start, dates right-aligned (from md); stacked below md. Roles and dates use `about-faint` (Figma 0.5 darkened for AA).
 
 ## Case studies (MDX)
 - Each case study is a folder: `content/case-studies/<slug>/`, holding `index.mdx` and its images.
@@ -256,6 +265,8 @@ Tags have a 6px radius (`rounded-tag`) and a 1px `tag` border. Thumbnails have s
 
 - **Only images go in a case study folder.** The loader imports images from a path with a variable in it (`content/case-studies/${slug}/${file}`), so the bundler processes every file in those folders. A video, ZIP or other non-image there breaks `next dev` with "Unknown module type". Files in `public/` are served as-is, so videos are safe there.
 - When there's no raw original for a Figma image, use the image fill from `get_design_context` and keep that export in `design-assets/<case-study>/` (the Treeats hero is Figma's 1536 × 862 fill, saved as `hero-figma-export.png`).
+
+- Footer contacts: Twitter is hidden (`hidden: true` in `contacts` in `Footer.tsx`) until it has a URL; delete the flag to restore it.
 
 ## Workflow
 - Work in small steps: one section at a time (Nav → Hero → Projects grid → Footer → case study pages).

@@ -6,13 +6,13 @@ import Image from "next/image";
 // scaled to the remaining width between lg and xl. Below lg the text stacks
 // and the artwork becomes a full-width band that scales with the screen.
 
-type ContactLink = { label: string; href: string };
+// `hidden` links aren't rendered; delete the flag to bring one back.
+type ContactLink = { label: string; href: string; hidden?: boolean };
 
-// Placeholder: Twitter has no URL yet.
 const contacts: ContactLink[] = [
   { label: "Email", href: "mailto:tjulest@stanford.edu" },
   { label: "LinkedIn", href: "https://www.linkedin.com/in/taylor-jtorres/" },
-  { label: "Twitter", href: "#" },
+  { label: "Twitter", href: "#", hidden: true }, // no URL yet
 ];
 
 // Artwork, positioned in % so the band can scale on mobile. Boxes are
@@ -118,7 +118,7 @@ export default function Footer() {
             Say hi!!<span aria-hidden="true"> ⸜(｡˃ ᵕ ˂ )⸝♡</span>
           </h2>
           <ul className="mt-footer-link-gap flex flex-col gap-footer-link-gap font-mono text-footer-link font-medium text-footer-text uppercase">
-            {contacts.map((contact) => (
+            {contacts.filter((contact) => !contact.hidden).map((contact) => (
               <li key={contact.label} className="flex min-h-11 items-center lg:h-footer-row lg:min-h-0">
                 <Contact {...contact} />
               </li>
