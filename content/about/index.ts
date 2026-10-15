@@ -98,7 +98,7 @@ export const about = {
         cursorCaption: "#riizeandrealize",
         title: "fangirling at concertsss",
         text: "There’s truly nothing quite like the collective serotonin boost of screaming your lungs out at a concert with your favorite people.",
-        funFact: "I braved the BTS ticket war and ...",
+        funFact: "I braved the BTS ticket war 3x!",
       },
       {
         photo: { src: bigOnFood, alt: "Taylor leaning in to taste a spoonful from a plate of food" },

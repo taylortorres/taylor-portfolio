@@ -21,8 +21,8 @@ export default function AboutExperience({ rows }: { rows: Row[] }) {
                 <Image src={row.logo} alt="" aria-hidden="true" width={40} height={39} className="block size-full object-cover" />
               </span>
             ) : (
-              // The SVG includes Figma's 1px outline around the 40px tile.
-              <Image src={row.logo} alt="" aria-hidden="true" width={42} height={42} className="absolute -top-px -left-px max-w-none" />
+              // The SVG includes Figma's 1px outline around its 40px tile (2.5% on each side), so it overhangs the tile by that much.
+              <Image src={row.logo} alt="" aria-hidden="true" width={42} height={42} className="absolute -top-[2.5%] -left-[2.5%] size-[105%] max-w-none" />
             )}
           </span>
           <span className="col-start-2 font-medium text-about-ink md:col-start-auto">{row.company}</span>

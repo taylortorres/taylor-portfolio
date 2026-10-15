@@ -320,8 +320,8 @@
   --text-big-on-title--line-height: 38px;
   --text-big-on: 16px; /* its text (Geist; "Fun fact:" semibold) */
   --text-big-on--line-height: 22px;
-  --text-experience: 20px; /* experience rows (Geist; company medium) */
-  --text-experience--line-height: 28px;
+  --text-experience: 18px; /* experience rows (Geist; company medium) */
+  --text-experience--line-height: 24px;
 
   /* Spacing → p-*, gap-*, h-*, max-w-* */
   --spacing-nav-h: 64px;
@@ -488,10 +488,10 @@
   --spacing-big-on-title-gap: 16px; /* title to its text (Figma 15–16: unified) */
   --spacing-big-on-square: 14px; /* square before the title */
   --spacing-experience-gap: 45px; /* heading to the first row */
-  --spacing-experience-row: 35px; /* between rows (from md) */
+  --spacing-experience-row: 31px; /* between rows (from md) */
   --spacing-experience-role: 242px; /* row start to the role column (Figma 242–243) */
-  --spacing-logo: 40px; /* company logo tile */
-  --spacing-logo-gap: 14px; /* logo to the company (Figma 14–15) */
+  --spacing-logo: 36px; /* company logo tile */
+  --spacing-logo-gap: 13px; /* logo to the company */
 
   /* Radius */
   --radius-tag: 6px;
